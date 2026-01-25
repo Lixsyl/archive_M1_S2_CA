@@ -1,3 +1,5 @@
+package com.paracamplus.ilp1.treecompiler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.Stream;
