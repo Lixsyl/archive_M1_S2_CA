@@ -4,7 +4,11 @@ import java.util.*;
 
 import com.paracamplus.ilp1.compiler.CompilationException;
 import com.paracamplus.ilp1.interfaces.*;
+import com.paracamplus.ilp1.interfaces.IASTblock.IASTbinding;
+import com.paracamplus.ilp1.interpreter.interfaces.ILexicalEnvironment;
+import com.paracamplus.ilp1.interpreter.interfaces.IOperator;
 import com.paracamplus.ilp1.compiler.interfaces.*;
+import com.paracamplus.ilp1.compiler.normalizer.INormalizationEnvironment;
 import com.paracamplus.ilp1.treecompiler.tast.*;
 import com.paracamplus.ilp1.treecompiler.interfaces.*;
 import com.paracamplus.ilp1.treecompiler.TypingException;
@@ -85,20 +89,42 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
   }
 
   @Override
-  public ITASTexpression visit(IASTvariable iast, Void context)
-    throws TypingException {
-    throw new TypingException("IASTvariable not implemented yet");
+  public ITASTexpression visit(IASTvariable iast, Void context) throws TypingException {
+	  String varn = iast.getMangledName();
+	  ITASTvariable var = lookupVariable(varn);
+	  if (var != null) {
+		  return new TASTvariable(varn, var.getType());
+	  }
+	  throw new TypingException("Type variable");
   }
 
   @Override
   public ITASTexpression visit(IASTunaryOperation iast, Void context) throws TypingException {
-    throw new TypingException("IASTunaryOperation not implemented yet");
+	  try {
+		  ITASTexpression operandt = iast.getOperand().accept(this, null);
+	      IASToperator operator = iast.getOperator();
+	      String op = operatorEnvironment.getUnaryOperator(operator);
+	      if (op == "-") {
+	    	  return new TASTunaryOperation(operator, operandt, operandt.getType());
+	      }
+	      if (op == "!") {
+	    	  return new TASTunaryOperation(operator, operandt, Type.BOOL);
+	      }
+	      throw new TypingException("Type unaryOperation : not - or ! ");
+	  } catch (CompilationException e) {
+		  e.printStackTrace();
+	  }
+	  throw new TypingException("Type unaryOperation");
   }
 
-  protected ITASTexpression
-    typePlus(IASTbinaryOperation iast, ITASTexpression l, ITASTexpression r)
-    throws TypingException {
-    throw new TypingException("typePlus not implemented yet");
+  protected ITASTexpression typePlus(IASTbinaryOperation iast, ITASTexpression l, ITASTexpression r) throws TypingException {
+	  Type lt = l.getType();
+	  Type rt = r.getType();
+	  if (lt == Type.STRING || rt == Type.STRING) {
+		  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.STRING);
+	  } else {
+	      return new TASTbinaryOperation(iast.getOperator(), l, r, Type.unify(lt, rt));
+	  }
   }
 
   protected ITASTexpression typeNumeric(
@@ -106,21 +132,23 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
     String op,
     ITASTexpression l,
     ITASTexpression r) throws TypingException {
-    throw new TypingException("typeNumeric not implemented yet");
+	  Type lt = l.getType();
+	  Type rt = r.getType();
+	  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.unify(lt, rt));
   }
 
   protected ITASTexpression
     typeModulo(IASTbinaryOperation iast,
                ITASTexpression l,
                ITASTexpression r) throws TypingException {
-    throw new TypingException("typeModulo not implemented yet");
+	  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.INT);
   }
 
   protected ITASTexpression typeAlwaysBool(
     IASTbinaryOperation iast,
     ITASTexpression l,
     ITASTexpression r) throws TypingException {
-    throw new TypingException("typeAlwaysBool not implemented yet");
+	  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.BOOL);
   }
 
   protected ITASTexpression
@@ -128,7 +156,7 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
                    String op,
                    ITASTexpression l,
                    ITASTexpression r) throws TypingException {
-    throw new TypingException("typeComparison not implemented yet");
+	  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.BOOL);
   }
 
   @Override
@@ -177,22 +205,64 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
 
   @Override
   public ITASTexpression visit(IASTsequence iast, Void context) throws TypingException {
-    throw new TypingException("IASTsequence not implemented yet");
+	  IASTexpression[] expressions = iast.getExpressions();
+	  ITASTexpression[] exprs = new ITASTexpression[expressions.length];
+	  ITASTexpression lastValue = null;
+      for ( int i=0 ; i< expressions.length ; i++ ) {
+    	  lastValue = expressions[i].accept(this, null);
+          exprs[i] = lastValue;
+      }
+      return new TASTsequence(exprs, lastValue.getType());
   }
 
   @Override
   public ITASTexpression visit(IASTalternative iast, Void context) throws TypingException {
-    throw new TypingException("IASTalternative not implemented yet");
+	  ITASTexpression c = iast.getConsequence().accept(this, null);
+	  ITASTexpression a = iast.getAlternant().accept(this, null);
+	  return new TASTalternative(iast.getCondition().accept(this, null), c, a, Type.unify(c.getType(), a.getType()));
   }
 
   @Override
   public ITASTexpression visit(IASTblock iast, Void context) throws TypingException {
-    throw new TypingException("IASTblock not implemented yet");
+	  IASTbinding[] bindings = iast.getBindings();
+      ITASTblock.ITASTbinding[] newbindings = new ITASTblock.ITASTbinding[bindings.length];
+      enterScope();
+      for ( int i=0 ; i<bindings.length ; i++ ) {
+    	  IASTbinding binding = bindings[i];
+          IASTexpression expr = binding.getInitialisation();
+          ITASTexpression newexpr = expr.accept(this, null);
+          IASTvariable variable = binding.getVariable();
+          ITASTvariable newvariable = (ITASTvariable)variable.accept(this, null);
+          bindVariableAs(newvariable.getMangledName(), newvariable);
+          newbindings[i] = new TASTblock.TASTbinding(newvariable, newexpr);
+      }
+      ITASTexpression newbody = iast.getBody().accept(this, null);
+      leaveScope();
+      return new TASTblock(newbindings, newbody, newbody.getType());
   }
 
   @Override
-  public ITASTexpression visit(IASTinvocation iast, Void context)
-    throws TypingException {
-    throw new TypingException("IASTinvocation not implemented yet");
+  public ITASTexpression visit(IASTinvocation iast, Void context) throws TypingException {
+	  ITASTexpression fun = iast.getFunction().accept(this, null);
+	  IASTexpression[] args = iast.getArguments();
+	  ITASTexpression[] newargs = new ITASTexpression[args.length];
+	  enterScope();
+	  for ( int i=0 ; i<args.length ; i++ ) {
+		  IASTexpression argument = args[i];
+		  ITASTexpression arg = argument.accept(this, null);
+		  newargs[i] = arg;
+	  }
+	  /*
+	  if (iast instanceof Inamed) {
+		  Inamed nam = (Inamed)iast;
+		  for (Map<String,Type> func : functionTypes) {
+		      if (fun.containsKey(nam.getMangledName()))
+		      return new ITASTinvocation(fun, newargs, func.get(nam.getMangledName()));
+		  }
+	  }
+	  */
+	  
+	  return null;
+	  
   }
 }
