@@ -99,21 +99,9 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
 
   @Override
   public ITASTexpression visit(IASTunaryOperation iast, Void context) throws TypingException {
-	  try {
-		  ITASTexpression operandt = iast.getOperand().accept(this, null);
-	      IASToperator operator = iast.getOperator();
-	      String op = operatorEnvironment.getUnaryOperator(operator);
-	      /*if (op == "-") {*/
-	    	  return new TASTunaryOperation(operator, operandt, operandt.getType());/*
-	      }
-	      if (op == "!") {
-	    	  return new TASTunaryOperation(operator, operandt, Type.BOOL);
-	      }
-	      throw new TypingException("Type unaryOperation : not - or ! ");*/
-	  } catch (CompilationException e) {
-		  e.printStackTrace();
-	  }
-	  throw new TypingException("Type unaryOperation");
+	  ITASTexpression operandt = iast.getOperand().accept(this, null);
+	  IASToperator operator = iast.getOperator();
+	  return new TASTunaryOperation(operator, operandt, operandt.getType());
   }
 
   protected ITASTexpression typePlus(IASTbinaryOperation iast, ITASTexpression l, ITASTexpression r) throws TypingException {
