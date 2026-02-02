@@ -5,13 +5,9 @@ import java.util.*;
 import com.paracamplus.ilp1.compiler.CompilationException;
 import com.paracamplus.ilp1.interfaces.*;
 import com.paracamplus.ilp1.interfaces.IASTblock.IASTbinding;
-import com.paracamplus.ilp1.interpreter.interfaces.ILexicalEnvironment;
-import com.paracamplus.ilp1.interpreter.interfaces.IOperator;
 import com.paracamplus.ilp1.compiler.interfaces.*;
-import com.paracamplus.ilp1.compiler.normalizer.INormalizationEnvironment;
 import com.paracamplus.ilp1.treecompiler.tast.*;
 import com.paracamplus.ilp1.treecompiler.interfaces.*;
-import com.paracamplus.ilp1.treecompiler.TypingException;
 
 public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException> {
 
@@ -95,6 +91,9 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
 	  if (var != null) {
 		  return new TASTvariable(varn, var.getType());
 	  }
+	  if (functionTypes.containsKey(varn)) {
+		  return new TASTvariable(varn, functionTypes.get(varn));
+	  }
 	  throw new TypingException("Type variable");
   }
 
@@ -104,13 +103,13 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
 		  ITASTexpression operandt = iast.getOperand().accept(this, null);
 	      IASToperator operator = iast.getOperator();
 	      String op = operatorEnvironment.getUnaryOperator(operator);
-	      if (op == "-") {
-	    	  return new TASTunaryOperation(operator, operandt, operandt.getType());
+	      /*if (op == "-") {*/
+	    	  return new TASTunaryOperation(operator, operandt, operandt.getType());/*
 	      }
 	      if (op == "!") {
 	    	  return new TASTunaryOperation(operator, operandt, Type.BOOL);
 	      }
-	      throw new TypingException("Type unaryOperation : not - or ! ");
+	      throw new TypingException("Type unaryOperation : not - or ! ");*/
 	  } catch (CompilationException e) {
 		  e.printStackTrace();
 	  }
@@ -218,6 +217,9 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
   @Override
   public ITASTexpression visit(IASTalternative iast, Void context) throws TypingException {
 	  ITASTexpression c = iast.getConsequence().accept(this, null);
+	  if (iast.getAlternant() == null) {
+		  return new TASTalternative(iast.getCondition().accept(this, null), c, null, c.getType());
+	  }
 	  ITASTexpression a = iast.getAlternant().accept(this, null);
 	  return new TASTalternative(iast.getCondition().accept(this, null), c, a, Type.unify(c.getType(), a.getType()));
   }
@@ -232,7 +234,7 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
           IASTexpression expr = binding.getInitialisation();
           ITASTexpression newexpr = expr.accept(this, null);
           IASTvariable variable = binding.getVariable();
-          ITASTvariable newvariable = (ITASTvariable)variable.accept(this, null);
+          ITASTvariable newvariable = new TASTvariable(variable.getMangledName(), newexpr.getType());
           bindVariableAs(newvariable.getMangledName(), newvariable);
           newbindings[i] = new TASTblock.TASTbinding(newvariable, newexpr);
       }
@@ -243,26 +245,22 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
 
   @Override
   public ITASTexpression visit(IASTinvocation iast, Void context) throws TypingException {
-	  ITASTexpression fun = iast.getFunction().accept(this, null);
-	  IASTexpression[] args = iast.getArguments();
-	  ITASTexpression[] newargs = new ITASTexpression[args.length];
-	  enterScope();
-	  for ( int i=0 ; i<args.length ; i++ ) {
-		  IASTexpression argument = args[i];
-		  ITASTexpression arg = argument.accept(this, null);
-		  newargs[i] = arg;
+	  if ((iast.getFunction() instanceof IASTvariable) && (iast.getFunction() instanceof Inamed)) {
+			  IASTvariable fun = (IASTvariable)iast.getFunction();
+			  String funN = fun.getMangledName();
+			  if (functionTypes.containsKey(funN)) {
+				  ITASTvariable funT = new TASTvariable(funN, functionTypes.get(funN));
+				  IASTexpression[] args = iast.getArguments();
+				  ITASTexpression[] argsT = new ITASTexpression[args.length];
+				  enterScope();
+				  for ( int i=0 ; i<args.length ; i++ ) {
+					  IASTexpression argument = args[i];
+					  ITASTexpression arg = argument.accept(this, null);
+					  argsT[i] = arg;
+				  }
+				  return new TASTinvocation(funT, argsT, functionTypes.get(funN));
+			  }
 	  }
-	  /*
-	  if (iast instanceof Inamed) {
-		  Inamed nam = (Inamed)iast;
-		  for (Map<String,Type> func : functionTypes) {
-		      if (fun.containsKey(nam.getMangledName()))
-		      return new ITASTinvocation(fun, newargs, func.get(nam.getMangledName()));
-		  }
-	  }
-	  */
-	  
-	  return null;
-	  
+	  throw new TypingException("Type invocation");
   }
 }
