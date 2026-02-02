@@ -107,11 +107,7 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
   protected ITASTexpression typePlus(IASTbinaryOperation iast, ITASTexpression l, ITASTexpression r) throws TypingException {
 	  Type lt = l.getType();
 	  Type rt = r.getType();
-	  if (lt == Type.STRING || rt == Type.STRING) {
-		  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.STRING);
-	  } else {
-	      return new TASTbinaryOperation(iast.getOperator(), l, r, Type.unify(lt, rt));
-	  }
+	  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.unify(lt, rt));
   }
 
   protected ITASTexpression typeNumeric(
@@ -121,7 +117,10 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
     ITASTexpression r) throws TypingException {
 	  Type lt = l.getType();
 	  Type rt = r.getType();
-	  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.unify(lt, rt));
+	  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType()))) {
+		  return new TASTbinaryOperation(iast.getOperator(), l, r, Type.unify(lt, rt));
+	  }
+	  throw new TypingException("Type numeric");
   }
 
   protected ITASTexpression

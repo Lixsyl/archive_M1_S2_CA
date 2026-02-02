@@ -128,12 +128,22 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
 
   public ITASTexpression resolvePlus(ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
-       throw new ResolutionException("resolvePlus not implemented yet");
+	   try {
+		   Type t = Type.unify(l.getType(), r.getType());
+		   ITASTexpression nl = castIfNeeded(l, t);
+		   ITASTexpression nr = castIfNeeded(r, t);
+		   System.out.println("");
+		   return new TASTbinaryOperation(new ASToperator("ILP_Plus"), nl, nr, t);
+	   } catch (TypingException e) {
+		   e.printStackTrace();
+	   }
+       throw new ResolutionException("Typer resolvePlus ");
   }
 
   // Numeric arithmetic (+ - * / except plus special-cased)
   private ITASTexpression resolveNumeric(String op, ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
+	   System.out.println(op);
        throw new ResolutionException("resolveNumeric not implemented yet");
   }
 
