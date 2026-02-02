@@ -105,7 +105,7 @@ compile_file() {
 
 
     java -cp out:Java/src:target/generated-sources/antlr4:Java/jars/* \
-         CompilerMain2 "$f" -o "$hir_file"
+         com.paracamplus.ilp2.treecompiler.CompilerMain2 "$f" -o "$hir_file"
     rc=$?
     [ "$rc" -ne 0 ] && return "$rc"
 

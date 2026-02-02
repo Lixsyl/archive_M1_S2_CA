@@ -81,7 +81,7 @@ operators and then compile the resolved representation
 ### First Steps
 run `make`. This will compile the project.
 
-run `./ja.sh Samples/u01-1.hir`. This will compile the ilpml source file and produce
+run `./ja.sh Samples/u01-1.ilpml`. This will compile the ilpml source file and produce
 (among other things) the Tree file: Samples/u01-1.hir
 
 run `ls Samples/u01-1.*` and examine the produced files.
