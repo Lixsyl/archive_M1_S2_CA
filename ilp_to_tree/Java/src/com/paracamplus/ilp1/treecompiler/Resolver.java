@@ -3,7 +3,6 @@ package com.paracamplus.ilp1.treecompiler;
 import com.paracamplus.ilp1.ast.ASToperator;
 import com.paracamplus.ilp1.compiler.interfaces.*;
 import com.paracamplus.ilp1.compiler.CompilationException;
-import com.paracamplus.ilp1.treecompiler.interfaces.ITASTvisitor;
 import com.paracamplus.ilp1.treecompiler.interfaces.*;
 import com.paracamplus.ilp1.treecompiler.tast.*;
 
@@ -132,8 +131,15 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
 		   Type t = Type.unify(l.getType(), r.getType());
 		   ITASTexpression nl = castIfNeeded(l, t);
 		   ITASTexpression nr = castIfNeeded(r, t);
-		   System.out.println("");
-		   return new TASTbinaryOperation(new ASToperator("ILP_Plus"), nl, nr, t);
+		   if (t == Type.STRING) {
+			   return new TASTbinaryOperation(new ASToperator("concat"), nl, nr, t);
+		   }
+		   if (t == Type.FLOAT) {
+			   return new TASTbinaryOperation(new ASToperator("ILP_Plus_Float"), nl, nr, t);
+		   }
+		   if (t == Type.INT) {
+			   return new TASTbinaryOperation(new ASToperator("ILP_Plus_Int"), nl, nr, t);
+		   }
 	   } catch (TypingException e) {
 		   e.printStackTrace();
 	   }
@@ -141,22 +147,67 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
   }
 
   // Numeric arithmetic (+ - * / except plus special-cased)
-  private ITASTexpression resolveNumeric(String op, ITASTexpression l, ITASTexpression r)
-    throws ResolutionException {
-	   System.out.println(op);
-       throw new ResolutionException("resolveNumeric not implemented yet");
+  private ITASTexpression resolveNumeric(String op, ITASTexpression l, ITASTexpression r)throws ResolutionException {
+	  try {
+		  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType()))) {
+			  Type t = Type.unify(l.getType(), r.getType());
+			  ITASTexpression nl = castIfNeeded(l, t);
+			  ITASTexpression nr = castIfNeeded(r, t);
+			  return new TASTbinaryOperation(new ASToperator(op), nl, nr, t);
+		  }
+	  } catch (TypingException e) {
+		  e.printStackTrace();
+	  }
+	  throw new ResolutionException("Typer resolveNumeric ");
   }
 
   private ITASTexpression resolveEquality(String op, ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
-       throw new ResolutionException("resolveEquality not implemented yet");
+	  ITASTexpression[] exprs = new ITASTexpression[3];
+	  exprs[0] = l.accept(this, null);
+	  exprs[1] = r.accept(this, null);
+	  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType())) && (l.accept(this, null) == r.accept(this, null))) {
+		  try {
+			   Type t = Type.unify(l.getType(), r.getType());
+			   ITASTexpression nl = castIfNeeded(exprs[0], t);
+			   ITASTexpression nr = castIfNeeded(exprs[1], t);
+			   exprs[0] = nl;
+			   exprs[1] = nr;
+			   exprs[2] = new TASTboolean("true", Type.BOOL);
+			   return new TASTsequence(exprs, Type.BOOL);
+		   } catch (TypingException e) {
+			   e.printStackTrace();
+		   }
+	  }
+	  if ((l.getType() == r.getType()) && (l.accept(this, null) == r.accept(this, null))) {
+		  exprs[2] = new TASTboolean("true", Type.BOOL);
+		  return new TASTsequence(exprs, Type.BOOL);
+	  } else {
+		  exprs[2] = new TASTboolean("false", Type.BOOL);
+		  return new TASTsequence(exprs, Type.BOOL);
+	  }
   }
-
 
   // Comparisons (< <= > >=)
   private ITASTexpression resolveComparison(String op, ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
-       throw new ResolutionException("resolveComparison not implemented yet");
+	  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType()))) {
+		  try {
+			  Type t = Type.unify(l.getType(), r.getType());
+			  ITASTexpression[] exprs = new ITASTexpression[3];
+			  exprs[0] = castIfNeeded(l.accept(this, null), t);
+			  exprs[1] = castIfNeeded(r.accept(this, null), t);
+			  if (exprs[0] == exprs[1]) {
+				  exprs[2] = new TASTboolean("true", Type.BOOL);
+			  } else {
+				  exprs[2] = new TASTboolean("false", Type.BOOL);
+			  }
+			  return new TASTsequence(exprs, Type.BOOL);
+		  } catch (TypingException e) {
+			  e.printStackTrace();
+		  }
+	  }
+	  throw new ResolutionException("Resolver resolveComparison");
   }
 
   // Logical operators: and / or / xor
