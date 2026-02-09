@@ -12,7 +12,7 @@ sxp
     sxp
       call
         name print
-        name L_str_0        
+        name null        
       call end
     const 0
 label end

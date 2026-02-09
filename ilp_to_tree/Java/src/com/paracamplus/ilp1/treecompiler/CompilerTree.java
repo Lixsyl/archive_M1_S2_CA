@@ -153,8 +153,10 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 
   @Override
 	public Void visit(ITASTboolean iast, Void context)
-    throws CompilationException {
-       throw new CompilationException("ITASTboolean not implemented yet");
+    throws CompilationException { 
+	  if (iast.getValue() == true) emit("const 1");
+	  else emit ("const 0");
+	  return null;
   }
 
   @Override
@@ -174,19 +176,38 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
   public Void visit(ITASTstring iast, Void context)
     throws CompilationException {
-       throw new CompilationException("ITASTstring not implemented yet");
+	  emit("name " + lookupVariable(iast.getDescription()));
+	  return null;
   }
 
   @Override
 	public Void visit(ITASTvariable iast, Void context)
     throws CompilationException {
-       throw new CompilationException("ITASTvariable not implemented yet");
+	  emit("temp " + lookupVariable(iast.getMangledName()));
+	  return null;
   }
 
   @Override
 	public Void visit(ITASTunaryOperation iast, Void context)
     throws CompilationException {
-       throw new CompilationException("ITASTvariable not implemented yet");
+	  /*
+	  if (iast.getOperator().getMangledName().equals("ILP_Not_INT")) {
+		  emit("-" + iast.getOperand().accept(this, context)); ////////////////////////////////////
+		  return null;
+	  }
+	  if (iast.getOperator().getMangledName().equals("ILP_Not_FLOAT")) {
+		  emit("-" + iast.getOperand().accept(this, context));
+		  return null;
+	  }
+	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_INT")) {
+		  iast.getOperand().accept(this, context);
+		  return null;
+	  }
+	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_FLOAT")) {
+		  iast.getOperand().accept(this, context);
+		  return null;
+	  }*/
+	  throw new CompilationException("compiler variable");
   }
 
   private void emitStringCompare(ITASTbinaryOperation iast, Void context, String relop)
