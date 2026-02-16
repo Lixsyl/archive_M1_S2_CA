@@ -148,6 +148,8 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
    */
   private void typeFunctionBody(IASTfunctionDefinition fdef, FunctionKey key)
     throws TypingException {
+	  if (specializations.containsKey(key)) return;
+	  specializedReturnTypes.put(key, Type.PARAM);
 	  enterScope();
 	  IASTvariable[] vars = fdef.getVariables();
 	  ITASTvariable[] newvars = new TASTvariable[vars.length];
@@ -158,6 +160,8 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
 		  newvars[i] = newvar;
 	  }
 	  ITASTvariable v = (ITASTvariable)fdef.getFunctionVariable().accept(this, null);
+	  TASTfunctionDefinition ftmp = new TASTfunctionDefinition(v, newvars, null, null);
+	  specializations.put(key, ftmp);
 	  ITASTexpression e = fdef.getBody().accept(this, null);
 	  TASTfunctionDefinition newf = new TASTfunctionDefinition(v, newvars, e, e.getType());
 	  specializations.put(key, newf);

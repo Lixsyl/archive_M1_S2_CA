@@ -1,4 +1,4 @@
 function deuxfois(x)
-concat(x, x);
+(x ILP_Plus_INT x);
 (print(deuxfois("cou")); print(string_of_int(deuxfois(2)))
 )
