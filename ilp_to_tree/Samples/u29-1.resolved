@@ -1,0 +1,5 @@
+(
+    let x = 3 in
+    (
+        let x = (x ILP_Plus_INT x) in
+        (x ILP_Times x)))

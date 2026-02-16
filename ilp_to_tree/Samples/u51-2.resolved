@@ -1,0 +1,4 @@
+(
+    let x = 49 in
+    (print(string_of_int(x)); (x = (x ILP_Plus_INT 1)); print(string_of_int(x)); (x = (x ILP_Plus_INT 1)); print(string_of_int(x)); x
+    ))

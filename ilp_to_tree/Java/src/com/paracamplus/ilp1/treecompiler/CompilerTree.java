@@ -9,6 +9,7 @@ import com.paracamplus.ilp1.interfaces.*;
 import com.paracamplus.ilp1.treecompiler.interfaces.*;
 import com.paracamplus.ilp1.treecompiler.tast.*;
 import com.paracamplus.ilp1.treecompiler.tast.Type;
+import com.paracamplus.ilp1.interpreter.interfaces.IOperator;
 
 public class CompilerTree implements ITASTvisitor<Void, Void, CompilationException>{
 
@@ -190,29 +191,43 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
 	public Void visit(ITASTunaryOperation iast, Void context)
     throws CompilationException {
-	  /*
-	  if (iast.getOperator().getMangledName().equals("ILP_Not_INT")) {
+	  
+	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_INT")) {
 		  emit("-" + iast.getOperand().accept(this, context)); ////////////////////////////////////
 		  return null;
 	  }
-	  if (iast.getOperator().getMangledName().equals("ILP_Not_FLOAT")) {
+	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_FLOAT")) {
 		  emit("-" + iast.getOperand().accept(this, context));
 		  return null;
 	  }
-	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_INT")) {
+	  if (iast.getOperator().getMangledName().equals("ILP_Not")) {
 		  iast.getOperand().accept(this, context);
 		  return null;
 	  }
-	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_FLOAT")) {
-		  iast.getOperand().accept(this, context);
-		  return null;
-	  }*/
-	  throw new CompilationException("compiler variable");
+	  throw new CompilationException("compiler unary op");
   }
 
   private void emitStringCompare(ITASTbinaryOperation iast, Void context, String relop)
     throws CompilationException {
-       throw new CompilationException("ITASTboolean not implemented yet");
+	  if (relop == "eq") {
+		  emit("strcmp " + iast.getLeftOperand().accept(this, context) + iast.getRightOperand().accept(this, context));
+	  }
+	  if (relop == "ne") {
+		  
+	  }
+	  if (relop == "lt") {
+		  
+	  }
+	  if (relop == "le") {
+		  
+	  }
+	  if (relop == "gt") {
+		  
+	  }
+	  if (relop == "ge") {
+		  
+	  }
+	  throw new CompilationException("ITASTboolean not implemented yet");
   }
 
   private void emitBoolOp(ITASTbinaryOperation iast, Void context)

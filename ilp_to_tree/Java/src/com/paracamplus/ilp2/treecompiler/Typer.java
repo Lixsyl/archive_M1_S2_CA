@@ -7,6 +7,7 @@ import com.paracamplus.ilp1.compiler.interfaces.IGlobalVariableEnvironment;
 import com.paracamplus.ilp1.interfaces.IASTexpression;
 import com.paracamplus.ilp1.interfaces.IASTinvocation;
 import com.paracamplus.ilp1.interfaces.IASTvariable;
+import com.paracamplus.ilp1.interfaces.IASTblock.IASTbinding;
 import com.paracamplus.ilp2.interfaces.IASTprogram;
 import com.paracamplus.ilp2.interfaces.IASTassignment;
 import com.paracamplus.ilp2.interfaces.IASTloop;
@@ -15,6 +16,7 @@ import com.paracamplus.ilp2.interfaces.IASTvisitor;
 import com.paracamplus.ilp1.treecompiler.interfaces.*;
 import com.paracamplus.ilp1.treecompiler.tast.Type;
 import com.paracamplus.ilp1.treecompiler.tast.TASTvariable;
+import com.paracamplus.ilp1.treecompiler.tast.TASTblock;
 import com.paracamplus.ilp1.treecompiler.tast.TASTinvocation;
 import com.paracamplus.ilp1.treecompiler.TypingException;
 import com.paracamplus.ilp2.treecompiler.tast.*;
@@ -146,31 +148,58 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
    */
   private void typeFunctionBody(IASTfunctionDefinition fdef, FunctionKey key)
     throws TypingException {
-    throw new TypingException("typeFunctionBody(ilp2) not implemented yet");
+	  enterScope();
+	  IASTvariable[] vars = fdef.getVariables();
+	  ITASTvariable[] newvars = new TASTvariable[vars.length];
+	  List<Type> args = key.argTypes;
+	  for ( int i=0 ; i<vars.length ; i++ ) {
+		  ITASTvariable newvar = new TASTvariable(vars[i].getMangledName(), args.get(i));
+		  bindVariableAs(newvar.getMangledName(), newvar);
+		  newvars[i] = newvar;
+	  }
+	  ITASTvariable v = (ITASTvariable)fdef.getFunctionVariable().accept(this, null);
+	  ITASTexpression e = fdef.getBody().accept(this, null);
+	  TASTfunctionDefinition newf = new TASTfunctionDefinition(v, newvars, e, e.getType());
+	  specializations.put(key, newf);
+	  specializedReturnTypes.put(key, newf.getType());
+      leaveScope();
   }
 
   @Override
   public ITASTexpression visit(IASTinvocation iast, Void context)
     throws TypingException {
-    // function must be a variable
-    IASTexpression f = iast.getFunction();
-    if (!(f instanceof IASTvariable))
-      typeError("Only named functions can be invoked");
-    String fname = ((IASTvariable) f).getName();
-    IASTfunctionDefinition fdef = functions.get(fname);
-    // primitive
-    if (fdef == null) return super.visit(iast,context);
-
-    throw new TypingException("ITASTinvocation(ilp2) not implemented yet");
+	// function must be a variable
+	IASTexpression f = iast.getFunction();
+	if (!(f instanceof IASTvariable))
+	  typeError("Only named functions can be invoked");
+	String fname = ((IASTvariable) f).getName();
+	IASTfunctionDefinition fdef = functions.get(fname);
+	// primitive
+	if (fdef == null) return super.visit(iast,context);
+	
+	IASTexpression[] args = iast.getArguments();
+	ITASTexpression[] newargs = new ITASTexpression[args.length];
+	List<Type> l = new ArrayList<Type>();
+	for ( int i=0 ; i<args.length ; i++ ) {
+		ITASTexpression e = args[i].accept(this, context);
+		newargs[i] = e;
+		l.add(e.getType());
+	}
+	FunctionKey k = new FunctionKey(fname, l);
+	typeFunctionBody(fdef, k);
+	return new TASTinvocation(iast.getFunction().accept(this, context), newargs, specializedReturnTypes.get(k));
   }
 
   @Override
   public ITASTexpression visit(IASTloop iast, Void context) throws TypingException {
-    throw new TypingException("ITASTloop not implemented yet");
+	  return new TASTloop(iast.getBody().accept(this, context), iast.getCondition().accept(this, context), Type.BOOL);
   }
 
   @Override
   public ITASTexpression visit(IASTassignment iast, Void context) throws TypingException {
-    throw new TypingException("ITASTassignment not implemented yet");
+	  ITASTexpression e = iast.getExpression().accept(this, context);
+	  ITASTvariable v = new TASTvariable(iast.getVariable().getMangledName(), e.getType());
+      bindVariableAs(v.getMangledName(), v);
+      return new TASTassignment(v, e, e.getType());
   }
 }

@@ -1,0 +1,4 @@
+function deuxfois(x)
+concat(x, x);
+(print(deuxfois("cou")); print(string_of_int(deuxfois(2)))
+)

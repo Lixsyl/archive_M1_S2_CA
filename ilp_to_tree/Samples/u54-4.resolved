@@ -1,0 +1,3 @@
+function deuxfois(x)
+(float_of_int(2) ILP_Times x);
+print(string_of_float(deuxfois(1.25)))

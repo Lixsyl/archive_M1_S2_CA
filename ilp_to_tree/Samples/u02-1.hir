@@ -7,8 +7,5 @@
 # Routine main
 label main
 sxp
-  binop
-    sub    
-    const 0    
-    const 34
+  const 34  -null
 label end

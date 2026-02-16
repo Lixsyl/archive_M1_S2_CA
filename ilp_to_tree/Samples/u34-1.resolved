@@ -1,1 +1,1 @@
-("debut" concat "fin")
+concat("debut", "fin")

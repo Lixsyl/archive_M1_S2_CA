@@ -1,0 +1,6 @@
+print(
+    (if (4; 4.0; false
+            )
+        then "true"
+        else "false"
+    ))

@@ -1,0 +1,3 @@
+function deuxfois(x)
+(2 ILP_Times x);
+print(string_of_int(deuxfois(27)))
