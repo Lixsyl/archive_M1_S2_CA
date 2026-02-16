@@ -38,6 +38,21 @@ and temps_stmt s =
 let collect_temps (prog : stmt list) : SSet.t =
   List.fold_left (fun acc x -> SSet.union acc (temps_stmt x)) SSet.empty prog
 
+(* True if a temporary represents a function parameter *)
+let is_parameter (t : string) : bool =
+  let len = String.length t in
+  if len = 0 then false
+  else
+    match t.[0] with
+    | 'i' -> len > 1 && t.[1] >= '0' && t.[1] <= '9'
+    | 'f' -> len > 2 && t.[1] = 'i' && t.[2] >= '0' && t.[2] <= '9'
+    | _ -> false
+
+(** builds the set of parameters (i0,i1,..., f0, f1, ...) that appear in a
+    program *)
+let collect_parameters (prog : stmt list) : SSet.t =
+  SSet.filter is_parameter (collect_temps prog)
+
 (** Collects the set of string litterals that appear in an expression *)
 let rec litterals_expr e =
   match e.payload with
