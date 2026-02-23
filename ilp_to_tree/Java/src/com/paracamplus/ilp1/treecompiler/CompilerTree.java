@@ -177,13 +177,14 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
   public Void visit(ITASTstring iast, Void context)
     throws CompilationException {
-	  emit("name " + lookupVariable(iast.getDescription()));
+	  emit("name " + strCollect.getStringTable().get(iast.getDescription()));
 	  return null;
   }
 
   @Override
 	public Void visit(ITASTvariable iast, Void context)
     throws CompilationException {
+	  //throw new CompilationException("test");
 	  emit("temp " + lookupVariable(iast.getMangledName()));
 	  return null;
   }
@@ -209,25 +210,13 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 
   private void emitStringCompare(ITASTbinaryOperation iast, Void context, String relop)
     throws CompilationException {
-	  if (relop == "eq") {
-		  emit("strcmp " + iast.getLeftOperand().accept(this, context) + iast.getRightOperand().accept(this, context));
-	  }
-	  if (relop == "ne") {
-		  
-	  }
-	  if (relop == "lt") {
-		  
-	  }
-	  if (relop == "le") {
-		  
-	  }
-	  if (relop == "gt") {
-		  
-	  }
-	  if (relop == "ge") {
-		  
-	  }
-	  throw new CompilationException("ITASTboolean not implemented yet");
+	  emit("strcmp\n");
+	  indent();
+	  emit(relop + "\n");
+	  iast.getLeftOperand().accept(this, context);
+	  emit("\n");
+	  iast.getRightOperand().accept(this, context);
+	  emit("\n");
   }
 
   private void emitBoolOp(ITASTbinaryOperation iast, Void context)
@@ -406,13 +395,68 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
 	public Void visit(ITASTsequence iast, Void context)
     throws CompilationException {
-       throw new CompilationException("ITASTsequence not implemented yet");
+	  ITASTexpression[] expr = iast.getExpressions();
+	  if (expr.length > 1) {
+		  emit ("eseq\n");
+	      indent();
+		  enterSeq();
+		  for (int i = 0 ; i < expr.length -1 ; i++) {
+			  emit ("sxp\n");
+		      indent();
+			  expr[i].accept(this, context);
+			  emit ("\n");
+		      dedent();
+		  }
+		  exitSeq();
+	  }
+	  expr[expr.length -1].accept(this, context);
+      emit ("\n");
+      return null;
   }
 
   @Override
   public Void visit(ITASTalternative iast, Void context)
     throws CompilationException {
-       throw new CompilationException("ITASTalternative not implemented yet");
+	  String r;
+	  if (iast.getType() == Type.INT || iast.getType() == Type.BOOL) {
+		  r = newTemp();
+	  }
+	  else if (iast.getType() == Type.FLOAT) {
+		  r = newFloatTemp();
+	  }
+	  else if (iast.getType() == Type.STRING) {
+		  r = newLabel();
+	  }
+	  else {
+		  throw new CompilationException("compiler alternative");
+	  }
+	  
+	  String lTrue  = newLabel();
+	  String lFalse = newLabel();
+	  String lEnd   = newLabel();
+	  
+	  emit ("eseq\n");
+      indent();
+	  enterSeq();
+	  emit ("cjump\n");
+      indent();
+	  emit ("ne\n");
+	  iast.getCondition().accept(this, context);
+	  emit ("\n");
+	  emit ("const 0\n");
+	  emit("name " + lTrue + "\n");
+	  emit("name " + lFalse + "\n");
+	  dedent();
+	  emit("label " + lTrue + "\n");
+	  emitMoveToTemp(r, iast.getConsequence());
+	  emit("jump name " + lEnd + "\n");
+	  emit("label " + lFalse + "\n");
+	  emitMoveToTemp(r, iast.getAlternant());
+	  emit("label " + lEnd + "\n");
+	  exitSeq();
+	  emit("temp " + r + "\n");
+	  dedent();
+	  return null;
   }
 
   /**
@@ -429,14 +473,51 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
   public Void visit(ITASTblock iast, Void context)
     throws CompilationException {
-       throw new CompilationException("ITASTsequence not implemented yet");
+	  enterScope();
+	  ITASTblock.ITASTbinding[] bs = iast.getBindings();
+	  emit ("eseq\n");
+	  for (ITASTblock.ITASTbinding b : bs) {
+		  String v;
+		  if (b.getInitialisation().getType() == Type.FLOAT) {
+			  v = newFloatTemp();
+			  envStack.peek().put(b.getVariable().getMangledName(), v);
+		  } else {
+			  v = bindVariable(b.getVariable().getMangledName());
+		  }
+		  enterSeq();
+		  emitMoveToTemp(v, b.getInitialisation());
+		  exitSeq();
+	  }
+	  iast.getBody().accept(this, context);
+	  leaveScope();
+      return null;
   }
 
   // handling of function returning bool, int, float and string.
   // functions that return void (e.g print) cant be handled here
   protected void emitCall(String name, Type returnType, ITASTexpression[] args)
     throws CompilationException {
-    throw new CompilationException("emitCall not implemented yet");
+	  if (returnType == Type.INT || returnType == Type.BOOL || returnType == Type.STRING) {
+	      emit("call\n");
+	      indent();
+	      emit("name " + name + "\n");
+	      args[0].accept(this,null);
+	      emit("\n");
+	      dedent();
+	      emit("call end\n");
+	  } 
+	  else if (returnType == Type.FLOAT) {
+		  emit("callF\n");
+	      indent();
+	      emit("name " + name + "\n");
+	      args[0].accept(this,null);
+	      emit("\n");
+	      dedent();
+	      emit("call end\n");
+	  }
+	  else {
+		  throw new CompilationException("compiler emitCall");
+	  }
   }
 
   @Override

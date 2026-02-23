@@ -1,3 +1,3 @@
 function man_3agle(n)
-(n ILP_Divide 2);
-man_3agle((2 ILP_Times 5490))
+(n ILP_Divide_INT 2);
+man_3agle((2 ILP_Times_INT 5490))

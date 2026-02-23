@@ -27,31 +27,38 @@ const 0
         seq
           cjump
           ne
-          eseq 
-            sxp
-              const 710              
-            const 1          
+          eseq
+            seq
+              sxp
+                const 710                
+            seq end
+            const 1            
+            
 const 0
-          name L4
-          name L5
-          label L4
-          move
-          temp t2
-          const 1
-          jump name L6
-          label L5
-          move
-          temp t2
-          eseq 
-            sxp
-              const 2              
-            const 1          
-          label L6
+            name L4
+            name L5
+            label L4
+            move
+            temp t2
+            const 1
+            jump name L6
+            label L5
+            move
+            temp t2
+            eseq
+              seq
+                sxp
+                  const 2                  
+              seq end
+              const 1              
+              
+              label L6
+            seq end
+            temp t2
+          
+          
+          label L3
         seq end
-        temp t2
-      
-      label L3
-    seq end
-    temp t1
-
+        temp t1
+    
 label end

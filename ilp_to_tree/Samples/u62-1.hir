@@ -13,10 +13,10 @@ sxp
       call
         name print
         eseq
-          move
-            temp t1
-            name L_str_0            
-          temp t1        
+        move
+        temp t1
+        name L_str_0        
+        temp t1        
       call end
     const 0
 label end

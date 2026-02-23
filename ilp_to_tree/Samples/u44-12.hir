@@ -9,21 +9,25 @@ label L_str_0 "Pourquoi ce message ne s'affiche pas? Il s'agit probablement d'un
 # Routine main
 label main
 sxp
-  eseq 
-    seq 
+  eseq
+    seq
       sxp
-        eseq 
-          sxp
-            eseq
-              sxp
-                call
-                  name print
-                  name L_str_0                  
-                call end
-              const 0            
-          name L_str_1        
-      sxp
-        const 1        
-    seq end
-    const 0
+        eseq
+          seq
+            sxp
+              eseq
+                sxp
+                  call
+                    name print
+                    name L_str_0                    
+                  call end
+                const 0              
+          seq end
+          name L_str_1          
+          
+        sxp
+          const 1          
+      seq end
+      const 0      
+    
 label end

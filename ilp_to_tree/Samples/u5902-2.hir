@@ -2,24 +2,25 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : foo__int */
+/* function : pseudosequence */
 # Routine: L1
 label L1
   # Body
   move
   temp rv
-  binop
-  mul  
-  const 2  
-  temp i0  label end
+  temp i1  label end
   
-  /* function : pseudosequence__int__int */
+  /* function : foo */
     # Routine: L2
   label L2
     # Body
     move
     temp rv
-    temp i1    label end
+    binop
+    mul    
+    const 2    
+    temp i0    
+    label end
     
     
     /* Main */
@@ -28,23 +29,26 @@ label L1
     sxp
       eseq
       seq
-      move
+        move
         temp t1
-        const 12      
+        const 12        
       seq end
       call
-        name L1
+        name L2
         call
-          name L2
+          name L1
           eseq
-            move
-              temp t1
-              call
-                name L1
-                temp t1                
-              call end              
-            temp t1          
+          move
+          temp t1
+          call
+            name L2
+            temp t1            
+          call end
+          
           temp t1          
-        call end        
-      call end    
+          temp t1          
+        call end
+        
+      call end
+    
 label end

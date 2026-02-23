@@ -3,5 +3,5 @@
     and y = 22 in
     (
         let x = (x ILP_Plus_INT y)
-        and y = (x ILP_Times y) in
-        (x ILP_Times y)))
+        and y = (x ILP_Times_INT y) in
+        (x ILP_Times_INT y)))

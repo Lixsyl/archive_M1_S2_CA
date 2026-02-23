@@ -12,6 +12,6 @@ sxp
   call
     name concat
     name L_str_0    
-    name L_str_1    
   call end
+
 label end

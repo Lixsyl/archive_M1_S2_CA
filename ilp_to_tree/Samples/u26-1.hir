@@ -9,9 +9,9 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 11  
+    const 11    
   seq end
   temp t1
 label end

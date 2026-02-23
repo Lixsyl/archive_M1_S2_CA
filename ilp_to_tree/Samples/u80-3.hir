@@ -1,6 +1,6 @@
 /* == High Level Intermediate representation. == */
 /* String Litterals */
-label L_str_0 "FUNCTION"
+label L_str_0 "BOOL"
 
 /* Function Definitions */
 
@@ -12,7 +12,13 @@ sxp
     sxp
       call
         name print
-        name L_str_0        
-      call end
-    const 0
+        eseq
+          seq
+            sxp
+              temp null              
+          seq end
+          name L_str_0          
+          
+        call end
+      const 0  
 label end

@@ -17,29 +17,31 @@ sxp
           seq
             cjump
               ne
-              eseq 
-                seq 
+              eseq
+                seq
                   sxp
                     name L_str_0                    
                   sxp
                     const 1                    
                 seq end
-                const 1              
-              const 0
-              name L1
-              name L2
-            label L1
-            move
-            temp t1
-            name L_str_0            
-            jump name L3
-            label L2
-            move
-            temp t1
-            name L_str_1            
-            label L3
-          seq end
-          temp t1        
-      call end
-    const 0
+                const 0                
+                
+                const 0
+                name L2
+                name L3
+              label L2
+              move
+              temp L1
+              name L_str_0              
+              jump name L4
+              label L3
+              move
+              temp L1
+              name L_str_1              
+              label L4
+            seq end
+            temp L1
+          
+        call end
+      const 0  
 label end

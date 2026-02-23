@@ -3,7 +3,7 @@ f3(f1(f3(x)));
 function f1(x)
 (if ((x ILP_LessThan_INT 74); true
         )
-    then (2 ILP_Times x)
+    then (2 ILP_Times_INT x)
     else x
 );
 function f2(x, y)

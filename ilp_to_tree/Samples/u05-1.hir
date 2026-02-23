@@ -8,5 +8,5 @@ label L_str_0 "foobar"
 # Routine main
 label main
 sxp
-  name null
+  name L_str_0
 label end

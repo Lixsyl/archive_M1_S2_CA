@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : man_3agle__int */
+/* function : man_3agle */
 # Routine: L1
 label L1
   # Body
@@ -11,7 +11,8 @@ label L1
   binop
   div  
   temp i0  
-  const 2  label end
+  const 2  
+  label end
   
   
   /* Main */
@@ -24,5 +25,6 @@ label L1
       mul      
       const 2      
       const 5490      
-    call end  
+    call end
+  
 label end

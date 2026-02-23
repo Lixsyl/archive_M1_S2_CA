@@ -124,12 +124,63 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
 
   @Override
   public Void visit(ITASTloop iast, Void context) throws CompilationException {
-    throw new CompilationException("ITASTloop not implemented yet");
+	  String r;
+	  if (iast.getType() == Type.INT || iast.getType() == Type.BOOL) {
+		  r = newTemp();
+	  }
+	  else if (iast.getType() == Type.FLOAT) {
+		  r = newFloatTemp();
+	  }
+	  else if (iast.getType() == Type.STRING) {
+		  r = newLabel();
+	  }
+	  else {
+		  throw new CompilationException("compiler alternative");
+	  }
+
+	  String lStart = newLabel();
+	  String lTrue  = newLabel();
+	  String lFalse = newLabel();
+	  
+	  emit ("eseq\n");
+      indent();
+	  enterSeq();
+	  emit("label " + lStart + "\n");
+	  emit ("cjump\n");
+      indent();
+	  emit ("ne\n");
+	  iast.getCondition().accept(this, context);
+	  emit ("\n");
+	  emit ("const 0\n");
+	  emit("name " + lTrue + "\n");
+	  emit("name " + lFalse + "\n");
+	  dedent();
+	  emit("label " + lTrue + "\n");
+	  iast.getBody().accept(this, context);
+	  emit("jump name " + lStart + "\n");
+	  emit("label " + lFalse + "\n");
+	  exitSeq();
+	  dedent();
+	  return null;
   }
 
   @Override
   public Void visit(ITASTassignment iast, Void context) throws CompilationException {
-    throw new CompilationException("ITASTassignment not implemented yet");
+	  emit("eseq\n");
+	  String v;
+	  if (lookupVariable(iast.getVariable().getMangledName()) == null) {
+		  if (iast.getType() == Type.FLOAT) {
+			  v = newFloatTemp();
+			  envStack.peek().put(iast.getVariable().getMangledName(), v);
+		  } else {
+			  v = bindVariable(iast.getVariable().getMangledName());
+		  }
+	  } else {
+		  v = lookupVariable(iast.getVariable().getMangledName());
+	  }
+	  emitMoveToTemp(v, iast.getExpression());
+	  emit("temp " + v);
+	  return null;
   }
 
   @Override
@@ -139,6 +190,27 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
     ITASTvariable v = (ITASTvariable) function;
     // primitive, call super method
     if(!funNames.containsKey(v.getName())) return super.visit(iast,context);
-    throw new CompilationException("ITASTinvocation(ilp2) not implemented yet");
+    if (iast.getType() == Type.FLOAT) {
+		  emit("callF\n");
+	      indent();
+	      emit("name " + funNames.get(v.getMangledName()) + "\n");
+	      for (ITASTexpression e : iast.getArguments()) {
+		      e.accept(this,context);
+	      }
+	      emit("\n");
+	      dedent();
+	      emit("call end\n");
+    } else {
+    	emit("call\n");
+	      indent();
+	      emit("name " + funNames.get(v.getMangledName()) + "\n");
+	      for (ITASTexpression e : iast.getArguments()) {
+		      e.accept(this,context);
+	      }
+	      emit("\n");
+	      dedent();
+	      emit("call end\n");
+    }
+  return null;
   }
 }

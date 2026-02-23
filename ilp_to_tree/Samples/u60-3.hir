@@ -9,8 +9,11 @@ label L_str_1 "STRING"
 # Routine main
 label main
 sxp
-  eseq 
-    sxp
-      name L_str_0      
-    name L_str_1
+  eseq
+    seq
+      sxp
+        name L_str_0        
+    seq end
+    name L_str_1    
+  
 label end

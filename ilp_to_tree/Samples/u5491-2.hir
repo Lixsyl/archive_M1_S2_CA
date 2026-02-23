@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : f__int */
+/* function : f */
 # Routine: L1
 label L1
   # Body
@@ -11,7 +11,8 @@ label L1
   binop
   div  
   temp i0  
-  const 3  label end
+  const 3  
+  label end
   
   
   /* Main */
@@ -24,5 +25,6 @@ label L1
       mul      
       const 3      
       const 5491      
-    call end  
+    call end
+  
 label end

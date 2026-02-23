@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : deuxfois__int */
+/* function : deuxfois */
 # Routine: L1
 label L1
   # Body
@@ -11,7 +11,8 @@ label L1
   binop
   mul  
   const 2  
-  temp i0  label end
+  temp i0  
+  label end
   
   
   /* Main */
@@ -21,5 +22,6 @@ label L1
     call
       name L1
       const 27      
-    call end  
+    call end
+  
 label end

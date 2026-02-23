@@ -2,4 +2,4 @@
     let x = 2 in
     (
         let y = 3 in
-        (x ILP_Times x)))
+        (x ILP_Times_INT x)))

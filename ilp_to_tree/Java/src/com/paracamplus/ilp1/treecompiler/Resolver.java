@@ -155,11 +155,11 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
   private ITASTexpression resolveNumeric(String op, ITASTexpression l, ITASTexpression r)throws ResolutionException {
 	  if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
 		   if (l.getType() == Type.INT && r.getType() == Type.INT) {
-			   return new TASTbinaryOperation(new ASToperator(op), l, r, Type.INT);
+			   return new TASTbinaryOperation(new ASToperator(op + "_INT"), l, r, Type.INT);
 		   }
 		   ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
 		   ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
-		   return new TASTbinaryOperation(new ASToperator(op), nl, nr, Type.FLOAT);
+		   return new TASTbinaryOperation(new ASToperator(op + "_FLOAT"), nl, nr, Type.FLOAT);
 	  }
 	  throw new ResolutionException("Resolver resolveNumeric ");
   }

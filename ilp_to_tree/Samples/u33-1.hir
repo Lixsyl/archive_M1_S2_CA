@@ -10,15 +10,18 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 33  
+    const 33    
   seq end
-  eseq 
-    sxp
-      name L_str_0      
+  eseq
+    seq
+      sxp
+        name L_str_0        
+    seq end
     binop
     add    
     temp t1    
-    const 22
+    const 22    
+  
 label end

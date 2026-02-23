@@ -6,4 +6,4 @@ foo(
         else 1
     ), (
         let x = 8 in
-        (x ILP_Times x)))
+        (x ILP_Times_INT x)))

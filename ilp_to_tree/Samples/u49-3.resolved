@@ -1,1 +1,1 @@
-concat(string_of_float((5.0 ILP_Divide float_of_int(2))), "*")
+concat(string_of_float((5.0 ILP_Divide_FLOAT float_of_int(2))), "*")

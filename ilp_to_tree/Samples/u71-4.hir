@@ -13,11 +13,12 @@ sxp
         ne
         eseq
         seq
-        move
+          move
           temp t2
-          const 1        
+          const 1          
         seq end
         temp t2        
+        
         const 0
         name L1
         name L2
@@ -33,4 +34,5 @@ sxp
       label L3
     seq end
     temp t1
+
 label end

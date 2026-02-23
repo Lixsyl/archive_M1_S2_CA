@@ -9,15 +9,15 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp f1
-    constF 2.2  
+    constF 2.2    
   seq end
   eseq
   seq
-  move
+    move
     temp f2
-    constF 6.3  
+    constF 6.3    
   seq end
   binop
   addF  

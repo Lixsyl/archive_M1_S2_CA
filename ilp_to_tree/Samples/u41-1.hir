@@ -11,10 +11,14 @@ sxp
     sxp
       call
         name print
-        binop
-        add        
-        const 20        
-        const 1        
+        call
+          name string_of_int
+          binop
+          add          
+          const 20          
+          const 1          
+        call end
+        
       call end
     const 0
 label end

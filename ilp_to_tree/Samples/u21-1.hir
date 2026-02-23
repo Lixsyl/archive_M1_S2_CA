@@ -8,8 +8,8 @@ label L_str_0 "foobar"
 # Routine main
 label main
 sxp
-  eseq 
-    seq 
+  eseq
+    seq
       sxp
         const 1        
       sxp
@@ -17,5 +17,6 @@ sxp
       sxp
         const 1        
     seq end
-    name L_str_0
+    name L_str_0    
+  
 label end

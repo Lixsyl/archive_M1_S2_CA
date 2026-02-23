@@ -9,16 +9,19 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 1  
+    const 1    
   seq end
-  eseq 
-    sxp
-      eseq
+  eseq
+    seq
+      sxp
+        eseq
         move
-          temp t2
-          const 59          
-        temp t2      
-    temp t2
+        temp t2
+        const 59        
+        temp t2        
+    seq end
+    temp t2    
+  
 label end

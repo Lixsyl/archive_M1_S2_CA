@@ -9,15 +9,15 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 22  
+    const 22    
   seq end
   eseq
   seq
-  move
+    move
     temp f2
-    constF 6.3  
+    constF 6.3    
   seq end
   binop
   addF  
@@ -26,4 +26,5 @@ sxp
     name float_of_int
     temp t1    
   call end
+
 label end

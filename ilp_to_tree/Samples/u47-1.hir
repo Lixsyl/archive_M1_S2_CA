@@ -8,33 +8,37 @@ label L_str_0 "invisible"
 # Routine main
 label main
 sxp
-  eseq 
-    sxp
-      eseq
-        seq
-          cjump
-            ne
+  eseq
+    seq
+      sxp
+        eseq
+          seq
+            cjump
+              ne
+              const 0              
+              const 0
+              name L1
+              name L2
+            label L1
+            move
+            temp t1
+            eseq
+              sxp
+                call
+                  name print
+                  name L_str_0                  
+                call end
+              const 0            
+            jump name L3
+            label L2
+            move
+            temp t1
             const 0            
-            const 0
-            name L1
-            name L2
-          label L1
-          move
+            label L3
+          seq end
           temp t1
-          eseq
-            sxp
-              call
-                name print
-                name L_str_0                
-              call end
-            const 0          
-          jump name L3
-          label L2
-          move
-          temp t1
-          const 0          
-          label L3
-        seq end
-        temp t1      
-    const 47
+        
+    seq end
+    const 47    
+  
 label end

@@ -10,8 +10,8 @@ label L_str_2 "trois."
 # Routine main
 label main
 sxp
-  eseq 
-    seq 
+  eseq
+    seq
       sxp
         eseq
           sxp
@@ -35,5 +35,6 @@ sxp
           name print
           name L_str_2          
         call end
-      const 0
+      const 0    
+  
 label end

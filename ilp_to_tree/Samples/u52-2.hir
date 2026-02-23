@@ -9,17 +9,31 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 50  
+    const 50    
   seq end
-  eseq 
-    sxp
-      eseq
-        seq
-          label L1
-          cjump
-            ne
+  eseq
+    seq
+      sxp
+        eseq
+          seq
+            label L1
+            cjump
+              ne
+              eseq
+              move
+              temp t1
+              binop
+              add              
+              temp t1              
+              const 1              
+              temp t1              
+              
+              const 0
+              name L2
+              name L3
+            label L2
             eseq
               seq
                 cjump
@@ -30,33 +44,21 @@ sxp
                   name L5
                 label L4
                 move
-                temp t2
+                temp t3
                 const 1
                 jump name L6
                 label L5
                 move
-                temp t2
+                temp t3
                 const 0
                 label L6
               seq end
-              temp t2
-            
-            const 0
-            name L2
-            name L3
-          label L2
-          sxp
-            eseq
-              move
-                temp t1
-                binop
-                add                
-                temp t1                
-                const 1                
-              temp t1            
-          jump name L1
-          label L3
-        seq end
-        const 0      
-    temp t1
+              temp t3
+            jump name L1
+            label L3
+          seq end
+        
+    seq end
+    temp t1    
+  
 label end

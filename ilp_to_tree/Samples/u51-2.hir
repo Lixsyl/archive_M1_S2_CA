@@ -9,12 +9,12 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 49  
+    const 49    
   seq end
-  eseq 
-    seq 
+  eseq
+    seq
       sxp
         eseq
           sxp
@@ -23,18 +23,19 @@ sxp
               call
                 name string_of_int
                 temp t1                
-              call end              
+              call end
+              
             call end
           const 0        
       sxp
         eseq
-          move
-            temp t1
-            binop
-            add            
-            temp t1            
-            const 1            
-          temp t1        
+        move
+        temp t1
+        binop
+        add        
+        temp t1        
+        const 1        
+        temp t1        
       sxp
         eseq
           sxp
@@ -43,18 +44,19 @@ sxp
               call
                 name string_of_int
                 temp t1                
-              call end              
+              call end
+              
             call end
           const 0        
       sxp
         eseq
-          move
-            temp t1
-            binop
-            add            
-            temp t1            
-            const 1            
-          temp t1        
+        move
+        temp t1
+        binop
+        add        
+        temp t1        
+        const 1        
+        temp t1        
       sxp
         eseq
           sxp
@@ -63,9 +65,11 @@ sxp
               call
                 name string_of_int
                 temp t1                
-              call end              
+              call end
+              
             call end
           const 0        
     seq end
-    temp t1
+    temp t1    
+  
 label end

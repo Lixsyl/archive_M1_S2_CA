@@ -9,12 +9,14 @@ label main
 sxp
   eseq
   seq
-  move
+    move
     temp t1
-    const 1  
-  move
+    const 1    
+  seq end
+  seq
+    move
     temp t2
-    const 2  
+    const 2    
   seq end
   binop
   add  

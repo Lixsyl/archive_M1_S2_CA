@@ -8,11 +8,14 @@ label L_str_0 "INT"
 # Routine main
 label main
 sxp
-  eseq 
-    sxp
-      binop
-      add      
-      const 2      
-      const 2      
-    name L_str_0
+  eseq
+    seq
+      sxp
+        binop
+        add        
+        const 2        
+        const 2        
+    seq end
+    name L_str_0    
+  
 label end

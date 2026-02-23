@@ -8,5 +8,5 @@ label L_str_0 "Il dit \"Salut\"!"
 # Routine main
 label main
 sxp
-  name null
+  name L_str_0
 label end

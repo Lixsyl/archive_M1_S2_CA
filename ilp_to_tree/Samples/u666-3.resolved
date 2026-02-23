@@ -2,6 +2,6 @@ function fact(n)
 (if (n; 0; false
         )
     then 1
-    else int_of_float((float_of_int(n) ILP_Times fact((n ILP_Minus 1))))
+    else int_of_float((float_of_int(n) ILP_Times_FLOAT fact((n ILP_Minus_INT 1))))
 );
 print(string_of_int(fact(5)))

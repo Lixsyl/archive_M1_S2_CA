@@ -23,8 +23,9 @@ sxp
       label L2
       move
       temp f1
-      constF 0.      
+      constF 0.0      
       label L3
     seq end
     temp f1
+
 label end

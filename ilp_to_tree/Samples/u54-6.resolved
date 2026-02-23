@@ -1,5 +1,5 @@
 function deuxfois_plus_deux(x)
 (
     let y = (x ILP_Plus_INT 1) in
-    (2 ILP_Times y));
+    (2 ILP_Times_INT y));
 print(string_of_int(deuxfois_plus_deux(3)))
