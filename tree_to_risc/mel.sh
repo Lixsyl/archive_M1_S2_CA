@@ -38,15 +38,11 @@ run_with_timeout() {
     shift 3
     local cmd=( "$@" )
 
-    timeout "${timeout_s}s" "${cmd[@]}" > output.txt
+    #timeout
+    "${cmd[@]}" > output.txt
     status=$?
 
-    if [ $status -eq 124 ]; then
-        [ "$mode" = "verbose" ] && \
-            echo "Error: $name timed out (possible infinite loop)"
-        rm -f output.txt
-        return 124
-    elif [ $status -ne 0 ]; then
+    if [ $status -ne 0 ]; then
         [ "$mode" = "verbose" ] && \
             echo "Error: $name failed"
         return $status

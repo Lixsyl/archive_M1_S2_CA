@@ -1,0 +1,10 @@
+label L_str_0
+ "*"
+label main
+seq
+  move temp t1 call name string_of_int int const 12 call end 
+  move temp t0 name L_str_0 
+  sxp
+    call name concat int temp t1 int temp t0 call end
+seq end
+label end

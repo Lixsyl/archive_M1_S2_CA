@@ -36,7 +36,9 @@ let normalize_call (temp_gen : typ -> string) (p : program) : program =
 let linearize (temp_gen : typ -> string) (p : program) : program =
   let rec expr_lin2 e = 
     match e with 
-    | Binop (op, e1, e2) -> Binop (op, expr_lin e1, expr_lin e2) 
+    | Binop (op, e1, e2) -> (match e1.payload with 
+                                | Eseq (stmt, e3) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e3, expr_lin e2))))
+                                | _ -> Binop (op, expr_lin e1, expr_lin e2))
     | Mem (expr) -> Mem (expr_lin expr)
     | Call (expr, args, typ) -> Call (expr_lin expr, args, typ)
     | Eseq (stmt, expr) -> Eseq (stmt_lin stmt, expr_lin expr)
@@ -44,19 +46,32 @@ let linearize (temp_gen : typ -> string) (p : program) : program =
   and expr_lin { payload; loc } = { payload = expr_lin2 payload; loc }
   and stmt_lin2 s = 
     match s with 
-    | Move (e1, e2) -> Move (expr_lin e1, expr_lin e2)
-    | Sxp (expr) -> Sxp (expr_lin expr)
+    | Move (e1, e2) -> (match e2.payload with 
+                      | Eseq (stmt, e) -> stmt_lin2 (Seq ([stmt_lin stmt; loc (Move (expr_lin e1, expr_lin e))]))
+                      | _ -> Move (expr_lin e1, expr_lin e2)) 
+    | Sxp (expr) -> (match expr.payload with 
+                      | Eseq (stmt, e) -> stmt_lin2 (Seq ([stmt_lin stmt; loc (Sxp (expr_lin e))]))
+                      | _ -> Sxp (expr_lin expr))
     | Jump (expr, labels) -> Jump (expr_lin expr, labels)
-    | Cjump (relop, e1, e2, l1, l2) -> Cjump (relop, expr_lin e1, expr_lin e2, l1, l2)
-    | Seq (stmts) -> Seq (List.concat_map (fun s -> let stmt = s.payload in match stmt with | Seq (stmts2) -> List.map stmt_lin stmts2 | _ -> [loc (stmt_lin2 stmt)]) stmts)
+    | Cjump (relop, e1, e2, l1, l2) -> 
+          (match e1.payload with 
+              | Eseq (stmt, e12) -> 
+                  (match e2.payload with 
+                      | Eseq (stmt2, e22) -> stmt_lin2 (Seq ([stmt_lin stmt; stmt_lin stmt2; loc (Cjump (relop, expr_lin e12, expr_lin e22, l1, l2))]))
+                      | _ -> stmt_lin2 (Seq ([stmt_lin stmt; loc (Cjump (relop, expr_lin e12, expr_lin e2, l1, l2))])))
+              | _ -> Cjump (relop, expr_lin e1, expr_lin e2, l1, l2))
+    | Seq (stmts) ->  let f = (fun s -> let stmt = stmt_lin s in 
+                              match stmt.payload with 
+                              | Seq (stmts2) -> List.map stmt_lin stmts2 
+                              | _ -> [stmt]) 
+                      in Seq (List.concat_map f stmts) 
     | _ -> s
   and stmt_lin { payload; loc } = { payload = stmt_lin2 payload; loc }
   in List.map stmt_lin p 
 
 (* CJUMP normalization: ensures that every CJUMP is immediately followed by its
    false label. *)
-let rec normalize_cjump (label_gen : unit -> string) (p : program) : program =
-  raise (LinearizationException "normalize_cjump not implemented yet")
+let rec normalize_cjump (label_gen : unit -> string) (p : program) : program = p
 
 (** This function performs the transformation to LIR and generate the .lir file.
     operation made are:

@@ -1,0 +1,13 @@
+label main
+seq
+  cjump lt const 44 const 44 name L1 name L2 
+  label L1
+  move temp t1 const 1 
+  jump name L3 x
+  label L2
+  move temp t1 const 0 
+  label L3
+  sxp
+    temp t1
+seq end
+label end

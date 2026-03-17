@@ -1,0 +1,15 @@
+label L1
+move temp rv binop mul const 2 temp i0 
+label end
+label main
+seq
+  move
+    temp t0
+    call name string_of_int int call name L1 int const 27 call end call end
+    
+  sxp
+    call name print int temp t0 call end
+  sxp
+    const 0
+seq end
+label end

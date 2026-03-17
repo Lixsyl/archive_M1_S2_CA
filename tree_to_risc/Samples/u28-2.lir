@@ -1,0 +1,9 @@
+label main
+seq
+  move temp t1 const 1 
+  move temp t2 const 2 
+  move temp t3 const 3 
+  sxp
+    binop add temp t1 temp t3
+seq end
+label end

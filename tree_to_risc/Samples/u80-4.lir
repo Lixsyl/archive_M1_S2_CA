@@ -1,0 +1,28 @@
+label L_str_2
+ "E"
+label L_str_1
+ "BOOL"
+label L_str_0
+ "GEORGE "
+label main
+seq
+  move
+    temp t0
+    call
+      name concat
+      int eseq
+            sxp
+              eseq
+                sxp
+                  call name print int name L_str_0 call end
+                const 0
+            name L_str_1
+      int name L_str_2
+      call end
+    
+  sxp
+    call name print int temp t0 call end
+  sxp
+    const 0
+seq end
+label end
