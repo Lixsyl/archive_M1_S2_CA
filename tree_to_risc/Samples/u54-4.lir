@@ -1,22 +1,11 @@
 label L1
-move
-  temp fv
-  eseq
-    seq
-      move temp t0 const 2 
-    seq end
-    binop mulF callF name float_of_int int temp t0 call end temp fi0
-  
+move temp fv binop mulF callF name float_of_int int temp t0 call end temp fi0 
 label end
 label main
 seq
-  move
-    temp t1
-    call
-      name string_of_float
-      float callF name L1 float constF 1.25 call end
-      call end
-    
+  move temp f3 constF 1.25 
+  move temp f2 callF name L1 float temp f3 call end 
+  move temp t1 call name string_of_float float temp f2 call end 
   sxp
     call name print int temp t1 call end
   sxp

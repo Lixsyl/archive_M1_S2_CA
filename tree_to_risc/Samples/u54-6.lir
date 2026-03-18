@@ -6,10 +6,9 @@ seq end
 label end
 label main
 seq
-  move
-    temp t0
-    call name string_of_int int call name L1 int const 3 call end call end
-    
+  move temp t3 const 3 
+  move temp t2 call name L1 int temp t3 call end 
+  move temp t0 call name string_of_int int temp t2 call end 
   sxp
     call name print int temp t0 call end
   sxp

@@ -4,11 +4,11 @@ label end
 label main
 seq
   cjump ne const 1 const 0 name L2 name L3 
+  label L3
+  move temp t1 const 1 
   label L2
   move temp t1 const 8 
   jump name L4 x
-  label L3
-  move temp t1 const 1 
   label L4
   move temp t3 temp t1 
   move temp t2 const 8 

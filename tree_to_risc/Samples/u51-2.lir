@@ -1,7 +1,8 @@
 label main
 seq
   move temp t1 const 49 
-  move temp t0 call name string_of_int int temp t1 call end 
+  move temp t2 temp t1 
+  move temp t0 call name string_of_int int temp t2 call end 
   sxp
     call name print int temp t0 call end
   sxp
@@ -9,17 +10,19 @@ seq
   move temp t1 binop add temp t1 const 1 
   sxp
     temp t1
-  move temp t2 call name string_of_int int temp t1 call end 
+  move temp t4 temp t1 
+  move temp t3 call name string_of_int int temp t4 call end 
   sxp
-    call name print int temp t2 call end
+    call name print int temp t3 call end
   sxp
     const 0
   move temp t1 binop add temp t1 const 1 
   sxp
     temp t1
-  move temp t3 call name string_of_int int temp t1 call end 
+  move temp t6 temp t1 
+  move temp t5 call name string_of_int int temp t6 call end 
   sxp
-    call name print int temp t3 call end
+    call name print int temp t5 call end
   sxp
     const 0
   sxp

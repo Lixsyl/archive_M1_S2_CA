@@ -7,16 +7,10 @@ label end
 label main
 seq
   move temp t1 const 11 
-  move
-    temp t0
-    call
-      name L2
-      int eseq
-            move temp t1 binop add temp t1 const 1 
-            temp t1
-      int temp t1
-      call end
-    
+  move temp t1 binop add temp t1 const 1 
+  move temp t3 temp t1 
+  move temp t2 temp t1 
+  move temp t0 call name L2 int temp t3 int temp t2 call end 
   sxp
     call name L1 int temp t0 call end
 seq end

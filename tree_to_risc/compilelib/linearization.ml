@@ -11,7 +11,7 @@ let normalize_call (temp_gen : typ -> string) (p : program) : program =
     match e with 
     | Call (expr, args, typ) -> let (assigns, tmps) = 
                                     List.fold_right 
-                                    (fun (typ2, e2) (assigns, tmps)-> let tmp = loc (Temp (temp_gen typ2)) in (loc (Move (tmp, e2))::assigns, (typ2, tmp)::tmps)) 
+                                    (fun (typ2, e2) (assigns, tmps)-> let tmp = loc (Temp (temp_gen typ2)) in (loc (Move (tmp, expr_call e2))::assigns, (typ2, tmp)::tmps)) 
                                     args ([], [])
                                 in let s = loc (Seq (assigns))
                                 in let c = loc (Call (expr, tmps, typ))
@@ -36,9 +36,15 @@ let normalize_call (temp_gen : typ -> string) (p : program) : program =
 let linearize (temp_gen : typ -> string) (p : program) : program =
   let rec expr_lin2 e = 
     match e with 
-    | Binop (op, e1, e2) -> (match e1.payload with 
-                                | Eseq (stmt, e3) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e3, expr_lin e2))))
-                                | _ -> Binop (op, expr_lin e1, expr_lin e2))
+    | Binop (op, e1, e2) -> 
+        (match e1.payload with 
+          | Eseq (stmt, e3) -> 
+              (match e2.payload with 
+              | Eseq (stmt, e4) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e3, expr_lin e4))))
+              | _ -> Binop (op, expr_lin e3, expr_lin e2))
+          | _ -> (match e2.payload with 
+                  | Eseq (stmt, e3) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e1, expr_lin e3))))
+                  | _ -> Binop (op, expr_lin e1, expr_lin e2)))
     | Mem (expr) -> Mem (expr_lin expr)
     | Call (expr, args, typ) -> Call (expr_lin expr, args, typ)
     | Eseq (stmt, expr) -> Eseq (stmt_lin stmt, expr_lin expr)
@@ -69,9 +75,46 @@ let linearize (temp_gen : typ -> string) (p : program) : program =
   and stmt_lin { payload; loc } = { payload = stmt_lin2 payload; loc }
   in List.map stmt_lin p 
 
+let rec extract_block label liste =
+  let rec take_block acc = function
+    | [] -> (List.rev acc, [])
+    | ({ payload = Label l; _ } as x) :: rest when acc <> [] -> (List.rev acc, x :: rest)
+    | ({ payload = Jump (_, _); _ } as x) :: rest when acc <> [] -> (List.rev (x :: acc), rest)
+    | ({ payload = Cjump (relop, e1, e2, l1, l2); _ } as x) :: (y :: _ as rest) when acc <> [] -> 
+        if l2 = (match y.payload with Label l -> l | _ -> "") 
+            then (List.rev (x :: acc), rest)
+            else 
+                  let (block, rest2) = extract_block l2 rest
+                  in ((List.rev (x :: acc)) @ block, rest2)
+    | x :: rest -> take_block (x :: acc) rest
+  in let rec find = function
+    | [] -> raise (LinearizationException "normalize_call label block not found")
+    | ({ payload = Label l; _ } as x) :: rest when l = label ->
+        let (block, remaining) = take_block [x] rest in
+        (block, remaining)
+    | x :: rest ->
+        let (block, remaining) = find rest in
+        (block, x :: remaining)
+  in find liste
+
 (* CJUMP normalization: ensures that every CJUMP is immediately followed by its
    false label. *)
-let rec normalize_cjump (label_gen : unit -> string) (p : program) : program = p
+let rec normalize_cjump (label_gen : unit -> string) (p : program) : program = 
+  let rec aux lst =
+    match lst with
+    | x :: (y :: _ as rest) -> 
+        (match x.payload with
+        | Cjump (relop, e1, e2, l1, l2) ->  if l2 = (match y.payload with Label l -> l | _ -> "") 
+                                            then x :: aux rest
+                                            else 
+                                                  let (block, rest2) = extract_block l2 rest
+                                                  in x :: block @ aux rest2
+        | Seq (stmts) -> let s = aux stmts in loc (Seq (s)) :: aux rest
+        | _ -> x :: aux rest)
+    | [x] -> [x]
+    | [] -> []
+  in aux p
+
 
 (** This function performs the transformation to LIR and generate the .lir file.
     operation made are:

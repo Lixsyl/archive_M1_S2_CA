@@ -1,45 +1,51 @@
 label L1
 seq
-  move temp t0 call name L2 int call name L4 int temp i0 call end call end 
+  move temp t4 temp i0 
+  move temp t3 call name L4 int temp t4 call end 
+  move temp t0 call name L2 int temp t3 call end 
   move temp rv call name L4 int temp t0 call end 
 seq end
 label end
 label L2
 seq
   cjump lt temp i0 const 74 name L8 name L9 
+  label L9
+  move temp t2 const 0 
   label L8
   move temp t2 const 1 
   jump name L10 x
-  label L9
-  move temp t2 const 0 
   label L10
   cjump ne temp t2 const 0 name L5 name L6 
+  label L6
+  move temp t1 temp i0 
   label L5
   move temp t1 binop mul const 2 temp i0 
   jump name L7 x
-  label L6
-  move temp t1 temp i0 
   label L7
   move temp rv temp t1 
 seq end
 label end
 label L3
 seq
-  move temp t3 call name L2 int temp i0 call end 
-  move temp rv call name L2 int temp t3 call end 
+  move temp t6 temp i0 
+  move temp t5 call name L2 int temp t6 call end 
+  move temp rv call name L2 int temp t5 call end 
 seq end
 label end
 label L4
 seq
-  move temp t5 call name L2 int temp i0 call end 
-  move temp t4 call name L3 int temp i0 int temp i0 call end 
-  move temp rv call name L3 int temp t5 int temp t4 call end 
+  move temp t11 temp i0 
+  move temp t10 call name L2 int temp t11 call end 
+  move temp t9 temp i0 
+  move temp t8 temp i0 
+  move temp t7 call name L3 int temp t9 int temp t8 call end 
+  move temp rv call name L3 int temp t10 int temp t7 call end 
 seq end
 label end
 label main
 seq
-  move temp t6 const 74 
+  move temp t12 const 74 
   sxp
-    call name L1 int temp t6 call end
+    call name L1 int temp t12 call end
 seq end
 label end

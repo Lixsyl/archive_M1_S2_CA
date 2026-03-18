@@ -39,10 +39,15 @@ run_with_timeout() {
     local cmd=( "$@" )
 
     #timeout
-    "${cmd[@]}" > output.txt
+    gtimeout "${timeout_s}s" "${cmd[@]}" > output.txt
     status=$?
 
-    if [ $status -ne 0 ]; then
+    if [ $status -eq 124 ]; then
+        [ "$mode" = "verbose" ] && \
+            echo "Error: $name timed out (possible infinite loop)"
+        rm -f output.txt
+        return 124
+    elif [ $status -ne 0 ]; then
         [ "$mode" = "verbose" ] && \
             echo "Error: $name failed"
         return $status

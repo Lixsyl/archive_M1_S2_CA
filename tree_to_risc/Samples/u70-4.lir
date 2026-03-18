@@ -1,25 +1,25 @@
 label main
 seq
   cjump eq const 1 const 1 name L7 name L8 
+  label L8
+  move temp t3 const 0 
   label L7
   move temp t3 const 1 
   jump name L9 x
-  label L8
-  move temp t3 const 0 
   label L9
   cjump ne temp t3 const 0 name L4 name L5 
+  label L5
+  move temp t2 const 0 
   label L4
   move temp t2 const 1 
   jump name L6 x
-  label L5
-  move temp t2 const 0 
   label L6
   cjump ne temp t2 const 0 name L1 name L2 
+  label L2
+  move temp t1 const 4 
   label L1
   move temp t1 const 3 
   jump name L3 x
-  label L2
-  move temp t1 const 4 
   label L3
   sxp
     temp t1

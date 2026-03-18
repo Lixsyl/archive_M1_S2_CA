@@ -3,12 +3,12 @@ seq
   sxp
     const 22
   cjump ne const 1 const 0 name L1 name L2 
+  label L2
+  move temp f1 constF 1. 
   label L1
   move temp t0 const 1 
   move temp f1 callF name float_of_int int temp t0 call end 
   jump name L3 x
-  label L2
-  move temp f1 constF 1. 
   label L3
   sxp
     temp f1
