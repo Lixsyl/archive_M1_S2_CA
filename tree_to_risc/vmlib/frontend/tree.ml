@@ -205,7 +205,7 @@ and print_stmt fmt s =
   | Move (e1, e2) ->
       Format.fprintf fmt "@[<hv 2>move@ %a@ %a@ @]" print_expr e1 print_expr e2
   | Sxp e -> Format.fprintf fmt "@[<v 2>sxp@,%a@]" print_expr e
-  | Jump (e, _labs) -> Format.fprintf fmt "@[<hv 2>jump %a@ @]x" print_expr e
+  | Jump (e, _labs) -> Format.fprintf fmt "@[<hv 2>jump %a@ @]" print_expr e
   | Cjump (r, e1, e2, l1, l2) ->
       Format.fprintf fmt "@[<hv 2>cjump@ %s@ %a@ %a@ name %s@ name %s@ @]"
         (relop_to_string r) print_expr e1 print_expr e2 l1 l2
