@@ -69,6 +69,11 @@ seq
 seq end
 label end
 label main
-sxp
-  binop xor call name L2 int temp t10 call end const 1
+seq
+  move temp t11 const 56 
+  move temp t12 temp t11 
+  move temp t10 call name L2 int temp t12 call end 
+  sxp
+    binop xor temp t10 const 1
+seq end
 label end

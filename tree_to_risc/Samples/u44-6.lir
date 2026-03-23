@@ -4,17 +4,10 @@ label L_str_0
  "true"
 label main
 seq
-  cjump
-    neF
-    constF 1.0
-    eseq
-      seq
-        move temp t3 const 1 
-      seq end
-      callF name float_of_int int temp t3 call end
-    name L4
-    name L5
-    
+  move temp t3 const 1 
+  move temp t4 temp t3 
+  move temp f1 callF name float_of_int int temp t4 call end 
+  cjump neF constF 1.0 temp f1 name L4 name L5 
   label L5
   move temp t2 const 0 
   label L4

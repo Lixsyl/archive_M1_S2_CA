@@ -16,7 +16,24 @@ let normalize_call (temp_gen : typ -> string) (p : program) : program =
                                 in let s = loc (Seq (assigns))
                                 in let c = loc (Call (expr, tmps, typ))
                                 in Eseq (s, c)
-    | Binop (op, e1, e2) -> Binop (op, expr_call e1, expr_call e2) 
+    | Binop (op, e1, e2) -> (match e1.payload with 
+                            | Call (e3, a3, t3) -> let tmp1 = loc (Temp (temp_gen t3)) 
+                                                        in let fcall1 = expr_call e1
+                                                        in let move1 = (loc (Move (tmp1, fcall1)))
+                                                        in
+                                (match e2.payload with 
+                                | Call (e4, a4, t4) ->  let tmp2 = loc (Temp (temp_gen t4)) 
+                                                        in let fcall2 = expr_call e2
+                                                        in let move2 = (loc (Move (tmp2, fcall2)))
+                                                        in let s =  loc (Seq ([move1; move2]))
+                                                        in expr_call2 (Eseq (stmt_call s, loc (Binop (op, tmp1, tmp2))))
+                                | _ -> expr_call2 (Eseq (move1, loc (Binop (op, tmp1, expr_call e2))) ))
+                            | _ -> (match e2.payload with 
+                                    | Call (e4, a4, t4) -> let tmp2 = loc (Temp (temp_gen t4)) 
+                                                        in let fcall2 = expr_call e2
+                                                        in let move2 = (loc (Move (tmp2, fcall2)))
+                                                        in expr_call2 (Eseq (move2, loc (Binop (op, expr_call e1, tmp2))))
+                                    | _ -> Binop (op, expr_call e1, expr_call e2)))
     | Mem (expr) -> Mem (expr_call expr)
     | Eseq (stmt, expr) -> Eseq (stmt_call stmt, expr_call expr)
     | _ -> e
@@ -26,7 +43,24 @@ let normalize_call (temp_gen : typ -> string) (p : program) : program =
     | Move (e1, e2) -> Move (expr_call e1, expr_call e2)
     | Sxp (expr) -> Sxp (expr_call expr)
     | Jump (expr, labels) -> Jump (expr_call expr, labels)
-    | Cjump (relop, e1, e2, l1, l2) -> Cjump (relop, expr_call e1, expr_call e2, l1, l2)
+    | Cjump (relop, e1, e2, l1, l2) -> 
+          (match e1.payload with 
+            | Call (e3, a3, t3) -> let tmp1 = loc (Temp (temp_gen t3)) 
+                                        in let fcall1 = expr_call e1
+                                        in let move1 = (loc (Move (tmp1, fcall1)))
+                                        in
+                (match e2.payload with 
+                | Call (e4, a4, t4) ->  let tmp2 = loc (Temp (temp_gen t4)) 
+                                        in let fcall2 = expr_call e2
+                                        in let move2 = (loc (Move (tmp2, fcall2)))
+                                        in stmt_call2 (Seq ([move1; move2; loc (Cjump (relop, tmp1, tmp2, l1, l2))]))
+                | _ -> stmt_call2 (Seq [move1; loc (Cjump (relop, tmp1, expr_call e2, l1, l2))]) )
+            | _ -> (match e2.payload with 
+                    | Call (e4, a4, t4) -> let tmp2 = loc (Temp (temp_gen t4)) 
+                                        in let fcall2 = expr_call e2
+                                        in let move2 = (loc (Move (tmp2, fcall2)))
+                                        in stmt_call2 (Seq ([move2; loc (Cjump (relop, expr_call e1, tmp2, l1, l2))]))
+                    | _ -> Cjump (relop, expr_call e1, expr_call e2, l1, l2)))
     | Seq (stmts) -> Seq (List.map stmt_call stmts)
     | _ -> s
   and stmt_call { payload; loc } = { payload = stmt_call2 payload; loc }
@@ -43,7 +77,7 @@ let linearize (temp_gen : typ -> string) (p : program) : program =
               | Eseq (stmt, e4) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e3, expr_lin e4))))
               | _ -> Binop (op, expr_lin e3, expr_lin e2))
           | _ -> (match e2.payload with 
-                  | Eseq (stmt, e3) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e1, expr_lin e3))))
+                  | Eseq (stmt, e4) -> expr_lin2 (Eseq (stmt_lin stmt, loc (Binop (op, expr_lin e1, expr_lin e4))))
                   | _ -> Binop (op, expr_lin e1, expr_lin e2)))
     | Mem (expr) -> Mem (expr_lin expr)
     | Call (expr, args, typ) -> Call (expr_lin expr, args, typ)

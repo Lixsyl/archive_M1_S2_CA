@@ -6,15 +6,12 @@ label L_str_1
  "true"
 label main
 seq
+  move temp t5 name L_str_0 
   move temp t4 name L_str_0 
-  move temp t3 name L_str_0 
-  cjump
-    eq
-    call name strcmp int temp t4 int temp t3 call end
-    const 0
-    name L4
-    name L5
-    
+  move temp t7 temp t5 
+  move temp t6 temp t4 
+  move temp t3 call name strcmp int temp t7 int temp t6 call end 
+  cjump eq temp t3 const 0 name L4 name L5 
   label L5
   move temp t2 const 0 
   label L4

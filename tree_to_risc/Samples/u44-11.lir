@@ -8,15 +8,12 @@ label L_str_2
  "true"
 label main
 seq
-  move temp t13 name L_str_0 
-  move temp t12 name L_str_1 
-  cjump
-    lt
-    call name strcmp int temp t13 int temp t12 call end
-    const 0
-    name L4
-    name L5
-    
+  move temp t17 name L_str_0 
+  move temp t16 name L_str_1 
+  move temp t19 temp t17 
+  move temp t18 temp t16 
+  move temp t15 call name strcmp int temp t19 int temp t18 call end 
+  cjump lt temp t15 const 0 name L4 name L5 
   label L5
   move temp t2 const 0 
   label L4
@@ -30,20 +27,17 @@ seq
   move temp t1 name L_str_2 
   jump name L3 x
   label L3
-  move temp t11 temp t1 
+  move temp t14 temp t1 
   sxp
-    call name print int temp t11 call end
+    call name print int temp t14 call end
   sxp
     const 0
-  move temp t16 name L_str_0 
-  move temp t15 name L_str_1 
-  cjump
-    le
-    call name strcmp int temp t16 int temp t15 call end
-    const 0
-    name L10
-    name L11
-    
+  move temp t23 name L_str_0 
+  move temp t22 name L_str_1 
+  move temp t25 temp t23 
+  move temp t24 temp t22 
+  move temp t21 call name strcmp int temp t25 int temp t24 call end 
+  cjump le temp t21 const 0 name L10 name L11 
   label L11
   move temp t4 const 0 
   label L10
@@ -57,20 +51,17 @@ seq
   move temp t3 name L_str_2 
   jump name L9 x
   label L9
-  move temp t14 temp t3 
+  move temp t20 temp t3 
   sxp
-    call name print int temp t14 call end
+    call name print int temp t20 call end
   sxp
     const 0
-  move temp t19 name L_str_0 
-  move temp t18 name L_str_1 
-  cjump
-    gt
-    call name strcmp int temp t19 int temp t18 call end
-    const 0
-    name L16
-    name L17
-    
+  move temp t29 name L_str_0 
+  move temp t28 name L_str_1 
+  move temp t31 temp t29 
+  move temp t30 temp t28 
+  move temp t27 call name strcmp int temp t31 int temp t30 call end 
+  cjump gt temp t27 const 0 name L16 name L17 
   label L17
   move temp t6 const 0 
   label L16
@@ -84,20 +75,17 @@ seq
   move temp t5 name L_str_2 
   jump name L15 x
   label L15
-  move temp t17 temp t5 
+  move temp t26 temp t5 
   sxp
-    call name print int temp t17 call end
+    call name print int temp t26 call end
   sxp
     const 0
-  move temp t10 name L_str_0 
-  move temp t9 name L_str_1 
-  cjump
-    ge
-    call name strcmp int temp t10 int temp t9 call end
-    const 0
-    name L22
-    name L23
-    
+  move temp t11 name L_str_0 
+  move temp t10 name L_str_1 
+  move temp t13 temp t11 
+  move temp t12 temp t10 
+  move temp t9 call name strcmp int temp t13 int temp t12 call end 
+  cjump ge temp t9 const 0 name L22 name L23 
   label L23
   move temp t8 const 0 
   label L22
