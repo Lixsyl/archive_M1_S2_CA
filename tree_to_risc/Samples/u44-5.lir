@@ -15,7 +15,7 @@ seq
   move temp t1 name L_str_2 
   label L1
   move temp t1 name L_str_1 
-  jump name L3 x
+  jump name L3 
   label L3
   move temp t0 temp t1 
   sxp

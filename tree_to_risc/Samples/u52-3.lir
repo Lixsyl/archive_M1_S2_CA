@@ -7,7 +7,7 @@ seq
   move temp t2 const 0 
   label L4
   move temp t2 const 1 
-  jump name L6 x
+  jump name L6 
   label L6
   cjump ne temp t2 const 0 name L2 name L3 
   label L3
@@ -23,6 +23,6 @@ seq
   move temp t1 binop add temp t1 const 1 
   sxp
     temp t1
-  jump name L1 x
+  jump name L1 
 seq end
 label end

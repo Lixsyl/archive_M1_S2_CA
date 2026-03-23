@@ -47,6 +47,16 @@ let load_immediate ~temp ~imm =
       is_call = false;
     }
 
+let load_address ~temp ~lab =
+  Oper
+    {
+      assem = "la `d0, " ^ lab;
+      dst = [ temp ];
+      src = [];
+      jump = None;
+      is_call = false;
+    }
+
 (** Move instruction: mv rd, rs *)
 let move_instr ~dst ~src =
   match (Tree_helper.is_float_temp dst, Tree_helper.is_float_temp src) with

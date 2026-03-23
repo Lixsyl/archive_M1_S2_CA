@@ -8,7 +8,7 @@ seq
   label L1
   move temp t0 const 1 
   move temp f1 callF name float_of_int int temp t0 call end 
-  jump name L3 x
+  jump name L3 
   label L3
   sxp
     temp f1

@@ -15,10 +15,10 @@ seq
   move temp t3 const 1 
   label L4
   move temp t2 const 1 
-  jump name L6 x
+  jump name L6 
   label L7
   move temp t3 const 1 
-  jump name L9 x
+  jump name L9 
   label L9
   move temp t2 temp t3 
   label L6
@@ -27,7 +27,7 @@ seq
   move temp t1 name L_str_1 
   label L1
   move temp t1 name L_str_0 
-  jump name L3 x
+  jump name L3 
   label L3
   move temp t0 temp t1 
   sxp

@@ -5,7 +5,7 @@ seq
   move temp t2 const 0 
   label L6
   move temp t2 const 1 
-  jump name L8 x
+  jump name L8 
   label L8
   cjump ne temp t2 const 0 name L3 name L4 
   label L4
@@ -14,10 +14,10 @@ seq
   move temp t4 const 0 
   label L3
   move temp t1 const 1 
-  jump name L5 x
+  jump name L5 
   label L12
   move temp t4 const 1 
-  jump name L14 x
+  jump name L14 
   label L14
   cjump ne temp t4 const 0 name L9 name L10 
   label L10
@@ -27,7 +27,7 @@ seq
   move temp t3 const 1 
   label L9
   move temp t3 const 0 
-  jump name L11 x
+  jump name L11 
   label L11
   move temp t1 temp t3 
   label L5
@@ -41,7 +41,7 @@ seq
   move temp t6 const 0 
   label L18
   move temp t6 const 1 
-  jump name L20 x
+  jump name L20 
   label L20
   cjump ne temp t6 const 0 name L15 name L16 
   label L16
@@ -50,10 +50,10 @@ seq
   move temp t8 const 0 
   label L15
   move temp t5 const 0 
-  jump name L17 x
+  jump name L17 
   label L24
   move temp t8 const 1 
-  jump name L26 x
+  jump name L26 
   label L26
   cjump ne temp t8 const 0 name L21 name L22 
   label L22
@@ -61,7 +61,7 @@ seq
   move temp t7 call name L1 int temp t9 call end 
   label L21
   move temp t7 const 1 
-  jump name L23 x
+  jump name L23 
   label L23
   move temp t5 temp t7 
   label L17

@@ -13,14 +13,14 @@ seq
   move temp t2 const 0 
   label L8
   move temp t2 const 1 
-  jump name L10 x
+  jump name L10 
   label L10
   cjump ne temp t2 const 0 name L5 name L6 
   label L6
   move temp t1 temp i0 
   label L5
   move temp t1 binop mul const 2 temp i0 
-  jump name L7 x
+  jump name L7 
   label L7
   move temp rv temp t1 
 seq end

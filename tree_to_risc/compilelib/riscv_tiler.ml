@@ -146,10 +146,52 @@ let tile_const r =
         | _ -> assert false);
   }
 
+let tile_constF r =
+  {
+    cost = 1;
+    matches_exp = (function { payload = ConstF _; _ } -> true | _ -> false);
+    emit_exp =
+      (fun _ e _ ->
+        match e.payload with
+        | ConstF n ->
+            let t = r.fresh_temp Float in
+            ([ Asm.load_immediate ~temp:t ~imm:n ], t)
+        | _ -> assert false);
+  }
+(*
+let tile_name r =
+  {
+    cost = 1;
+    matches_exp = (function { payload = Name _; _ } -> true | _ -> false);
+    emit_exp =
+      (fun _ e _ ->
+        match e.payload with
+        | Name l -> match dst si oui utiliser sinon cree fresh_temp et load_adress
+          ([ Asm.label l ], t)
+        | _ -> assert false);
+  }*)
+
+let tile_binop r =
+  {
+    cost = 1;
+    matches_exp = (function { payload = Binop (_,_,_); _ } -> true | _ -> false);
+    emit_exp =
+      (fun f e _ ->
+        match e.payload with
+        | Binop (op, e1, e2) -> 
+            let ope = asm_of_binop op in
+            let t1 = f e1 in
+            let t2 = f e2 in
+            let t = r.fresh_temp Int in
+            ([Asm.binary_instr ~op:ope ~dst:t ~src1:t1 ~src2:t2], t)
+        | _ -> assert false);
+  }
 
 let tiles r =
   [
     tile_const r;
+    tile_constF r;
+    tile_binop r;
   ]
 
 let file_prologue =

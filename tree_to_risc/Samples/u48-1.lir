@@ -10,7 +10,7 @@ seq
   sxp
     call name print int temp t0 call end
   move temp t1 const 0 
-  jump name L3 x
+  jump name L3 
   label L3
   sxp
     temp t1
