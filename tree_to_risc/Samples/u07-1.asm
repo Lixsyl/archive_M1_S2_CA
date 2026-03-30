@@ -1,2 +1,2 @@
 // Routine main
-li t0, 0
+li f0, 3.14

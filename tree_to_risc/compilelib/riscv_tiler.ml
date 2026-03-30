@@ -121,6 +121,11 @@ let munch_stm (r : rewritter) (expr_to_temp : expr -> temp) (s : stmt) =
   | Tree.Move ({ payload = Temp t; _ }, src) ->
       let ts = expr_to_temp src in
       [ Asm.move_instr ~dst:t ~src:ts ]
+  | Tree.Label l -> [ Asm.label l ]
+  (*| Tree.Cjump (r, e1, e2, t_label, _) ->
+      let t1 = expr_to_temp e1 in
+      let t2 = expr_to_temp e2 in
+      [ -- ]*)
   | _ -> failwith (Format.asprintf "munch_stm: %a not supported" print_stmt s)
 
 (* Instruction-selection tile for integer constants.
@@ -158,6 +163,18 @@ let tile_constF r =
             ([ Asm.load_immediate ~temp:t ~imm:n ], t)
         | _ -> assert false);
   }
+
+let tile_temp r =
+  {
+    cost = 1;
+    matches_exp = (function { payload = Temp _; _ } -> true | _ -> false);
+    emit_exp =
+      (fun _ e _ ->
+        match e.payload with
+        | Temp t -> let t = r.fresh_temp Int in ([], t)
+        | _ -> assert false);
+  }
+
 (*
 let tile_name r =
   {
@@ -191,6 +208,7 @@ let tiles r =
   [
     tile_const r;
     tile_constF r;
+    tile_temp r;
     tile_binop r;
   ]
 
