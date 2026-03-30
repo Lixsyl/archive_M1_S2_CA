@@ -1,4 +1,5 @@
 open Treelib
+open Tree
 open Utils
 
 (* Abstract assembly language *)
@@ -116,6 +117,48 @@ let binary_instr_i ~op ~dst ~src imm =
     }
 
 let label l = Label { assem = l ^ ":"; lab = l }
+
+let jump_instr ~lab =
+  Oper
+    {
+      assem = "j " ^ lab;
+      dst = [ ];
+      src = [ ];
+      jump = Some [ lab ];
+      is_call = false;
+    }
+
+let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
+  Oper
+    {
+      assem = 
+        (match relop with 
+        (* float equality and nonequality *)
+        | EqF -> "feq.s " ^ temp ^ ", `s0, `s1\nbne " ^ temp ^ ", x0, " ^ lab
+        | NeqF -> "feq.s " ^ temp ^ ", `s0, `s1\nbeq " ^ temp ^ ", x0, " ^ lab
+        (* integer equality and nonequality (signed or unsigned) *)
+        | Eq -> "beq `s0, `s1, " ^ lab
+        | Neq -> "bne `s0, `s1, " ^ lab
+        (* signed integer inequalities *)
+        | LT -> "blt `s0, `s1, " ^ lab
+        | GT -> "blt `s1, `s0, " ^ lab
+        | LE -> "bge `s1, `s0, " ^ lab
+        | GE -> "bge `s0, `s1, " ^ lab
+        (* float inequalities *)
+        | LTF -> "flt.s " ^ temp ^ ", `s0, `s1\nbne " ^ temp ^ ", x0, " ^ lab
+        | GTF -> "flt.s " ^ temp ^ ", `s0, `s1\nbeq " ^ temp ^ ", x0, " ^ lab
+        | LEF -> "fle.s " ^ temp ^ ", `s0, `s1\nbne " ^ temp ^ ", x0, " ^ lab
+        | GEF -> "fle.s " ^ temp ^ ", `s0, `s1\nbeq " ^ temp ^ ", x0, " ^ lab
+        (* unsigned integer inequalities *)
+        | ULT -> "bltu `s0, `s1, " ^ lab
+        | ULE -> "bgeu `s1, `s0, " ^ lab
+        | UGT -> "bltu `s1, `s0, " ^ lab
+        | UGE -> "bgeu `s0, `s1, " ^ lab);
+      dst = [ temp ];
+      src = [ src1; src2 ];
+      jump = Some [ lab ];
+      is_call = false;
+    }
 
 
 (* Rewrites an abstract assembly instruction by replacing temporary
