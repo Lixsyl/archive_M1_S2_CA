@@ -5,6 +5,6 @@ label main
 seq
   move temp t0 const 27 
   sxp
-    call name L1 int temp t0 call end
+    call name L1 temp t0 call end
 seq end
 label end

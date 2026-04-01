@@ -9,6 +9,7 @@ seq
   sxp
     const 2
   move temp t2 const 1 
+  jump name L6 
   label L1
   move temp t1 const 1 
   jump name L3 

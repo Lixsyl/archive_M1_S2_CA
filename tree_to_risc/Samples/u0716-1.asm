@@ -6,6 +6,7 @@ L2:
 li t4, 3
 li t5, 1
 mv t1, t5
+j L3
 L1:
 li t6, 3
 li t7, 1

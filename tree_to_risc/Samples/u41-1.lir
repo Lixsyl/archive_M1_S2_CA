@@ -1,9 +1,9 @@
 label main
 seq
   move temp t1 binop add const 20 const 1 
-  move temp t0 call name string_of_int int temp t1 call end 
+  move temp t0 call name string_of_int temp t1 call end 
   sxp
-    call name print int temp t0 call end
+    call name print temp t0 call end
   sxp
     const 0
 seq end

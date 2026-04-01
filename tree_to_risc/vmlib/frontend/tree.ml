@@ -224,7 +224,8 @@ and print_args fmt args =
     (Format.pp_print_list ~pp_sep:Format.pp_print_space print_arg)
     args
 
-and print_arg fmt (t, a) = Format.fprintf fmt "%a %a" print_typ t print_expr a
+(*and print_arg fmt (t, a) = Format.fprintf fmt "%a %a" print_typ t print_expr a*)
+and print_arg fmt (_, a) = Format.fprintf fmt "%a" print_expr a
 
 and print_typ fmt = function
   | Int -> Format.fprintf fmt "int"

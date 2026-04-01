@@ -12,10 +12,11 @@ seq
   move temp t4 name L_str_1 
   move temp t7 temp t5 
   move temp t6 temp t4 
-  move temp t3 call name strcmp int temp t7 int temp t6 call end 
+  move temp t3 call name strcmp temp t7 temp t6 call end 
   cjump ne temp t3 const 0 name L4 name L5 
   label L5
   move temp t2 const 0 
+  jump name L6 
   label L4
   move temp t2 const 1 
   jump name L6 
@@ -23,13 +24,14 @@ seq
   cjump ne temp t2 const 0 name L1 name L2 
   label L2
   move temp t1 name L_str_3 
+  jump name L3 
   label L1
   move temp t1 name L_str_2 
   jump name L3 
   label L3
   move temp t0 temp t1 
   sxp
-    call name print int temp t0 call end
+    call name print temp t0 call end
   sxp
     const 0
 seq end

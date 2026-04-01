@@ -5,7 +5,7 @@ seq
   move temp t1 name L_str_0 
   move temp t0 temp t1 
   sxp
-    call name print int temp t0 call end
+    call name print temp t0 call end
   sxp
     const 0
 seq end

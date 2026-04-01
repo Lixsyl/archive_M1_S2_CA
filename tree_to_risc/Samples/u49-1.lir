@@ -3,9 +3,9 @@ label L_str_0
 label main
 seq
   move temp t2 const 12 
-  move temp t1 call name string_of_int int temp t2 call end 
+  move temp t1 call name string_of_int temp t2 call end 
   move temp t0 name L_str_0 
   sxp
-    call name concat int temp t1 int temp t0 call end
+    call name concat temp t1 temp t0 call end
 seq end
 label end

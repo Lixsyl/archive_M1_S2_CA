@@ -5,6 +5,7 @@ seq
   cjump lt temp t1 const 52 name L4 name L5 
   label L5
   move temp t2 const 0 
+  jump name L6 
   label L4
   move temp t2 const 1 
   jump name L6 
@@ -15,10 +16,12 @@ seq
     const 0
   sxp
     temp t1
+  jump name Lend 
   label L2
   move temp t1 binop add temp t1 const 1 
   sxp
     temp t1
   jump name L1 
+  label Lend
 seq end
 label end

@@ -10,19 +10,20 @@ seq
   cjump ne const 1 const 0 name L1 name L2 
   label L2
   move temp f6 constF 1.5 
-  move temp t2 call name string_of_float float temp f6 call end 
+  move temp t2 call name string_of_float temp f6 call end 
+  jump name L3 
   label L1
   move temp t5 temp t1 
-  move temp t4 call name string_of_int int temp t5 call end 
+  move temp t4 call name string_of_int temp t5 call end 
   move temp t3 name L_str_0 
   sxp
-    call name concat int temp t4 int temp t3 call end
+    call name concat temp t4 temp t3 call end
   move temp t2 name L_str_1 
   jump name L3 
   label L3
   move temp t0 temp t2 
   sxp
-    call name print int temp t0 call end
+    call name print temp t0 call end
   sxp
     const 0
 seq end

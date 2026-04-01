@@ -111,15 +111,19 @@ let linearize (temp_gen : typ -> string) (p : program) : program =
 
 let rec extract_block label liste =
   let rec take_block acc = function
-    | [] -> (List.rev acc, [])
-    | ({ payload = Label l; _ } as x) :: rest when acc <> [] -> (List.rev acc, x :: rest)
+    | [] -> let jump = (loc (Jump (loc (Name "Lend"), []))) in (List.rev (jump :: acc), [loc (Label "Lend")])
+    | ({ payload = Label l; _ } as x) :: rest when acc <> [] -> 
+          (match acc with
+          | [] -> assert false
+          | (y :: _) -> let jump = (loc (Jump (loc (Name l), []))) in (List.rev (jump :: acc), x :: rest))
     | ({ payload = Jump (_, _); _ } as x) :: rest when acc <> [] -> (List.rev (x :: acc), rest)
-    | ({ payload = Cjump (relop, e1, e2, l1, l2); _ } as x) :: (y :: _ as rest) when acc <> [] -> 
+    | ({ payload = Cjump (relop, e1, e2, l1, l2); _ } as x) :: (y :: rest) when acc <> [] -> 
         if l2 = (match y.payload with Label l -> l | _ -> "") 
-            then (List.rev (x :: acc), rest)
+            then  let (block, remaining) = take_block [y] rest in
+                  ((List.rev (x :: acc)) @ block, remaining)
             else 
-                  let (block, rest2) = extract_block l2 rest
-                  in ((List.rev (x :: acc)) @ block, rest2)
+                  let (block, remaining) = extract_block l2 (y :: rest) in
+                  ((List.rev (x :: acc)) @ block, remaining)
     | x :: rest -> take_block (x :: acc) rest
   in let rec find = function
     | [] -> raise (LinearizationException "normalize_call label block not found")

@@ -4,6 +4,7 @@ seq
   cjump ne temp t2 const 0 name L1 name L2 
   label L2
   move temp t1 const 2 
+  jump name L3 
   label L1
   move temp t1 const 1 
   jump name L3 

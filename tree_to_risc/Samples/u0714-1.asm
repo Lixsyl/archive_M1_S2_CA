@@ -6,6 +6,7 @@ bne t2, t3, L1
 L2:
 li t5, 1
 mv t1, t5
+j L3
 L1:
 li t6, 1
 li t7, 0

@@ -5,10 +5,11 @@ seq
   cjump ne const 0 const 0 name L1 name L2 
   label L2
   move temp t1 const 0 
+  jump name L3 
   label L1
   move temp t0 name L_str_0 
   sxp
-    call name print int temp t0 call end
+    call name print temp t0 call end
   move temp t1 const 0 
   jump name L3 
   label L3

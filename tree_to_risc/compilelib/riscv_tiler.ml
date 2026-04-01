@@ -206,7 +206,7 @@ let tile_binop r =
             ([Asm.binary_instr ~op:ope ~dst:t ~src1:t1 ~src2:t2], t)
         | _ -> assert false);
   }
-(*
+
 let tile_call r =
   {
     cost = 1;
@@ -215,11 +215,16 @@ let tile_call r =
       (fun f e _ ->
         match e.payload with
         | Call (expr, args, typ) -> 
-            let t1 = f expr in
-            let t = r.fresh_temp Int in
-            ([Asm.binary_instr ~op:ope ~dst:t ~src1:t1 ~src2:t2], t)
+            (match expr.payload with
+            | Name l -> let t = r.fresh_temp typ in
+                        let arg_temps = List.map (fun (t, e) -> f e) args in
+                        let param_moves = param_moves arg_temps in
+                        let call = Asm.call ~lab:l in
+                        let return = Asm.return_value ~dst:t in
+                        (param_moves @ [ call; return ], t)
+            | _ -> assert false)
         | _ -> assert false);
-  }*)
+  }
 
 let tiles r =
   [
@@ -228,6 +233,7 @@ let tiles r =
     tile_name r;
     tile_temp r;
     tile_binop r;
+    tile_call r;
   ]
 
 let file_prologue =

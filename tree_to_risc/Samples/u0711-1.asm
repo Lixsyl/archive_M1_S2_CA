@@ -11,6 +11,7 @@ L5:
 li t9, 2
 li t10, 1
 mv t2, t10
+j L6
 L1:
 li t11, 1
 mv t1, t11

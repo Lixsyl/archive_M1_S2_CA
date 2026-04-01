@@ -160,6 +160,16 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
       is_call = false;
     }
 
+let call ~lab =
+  Oper
+    {
+      assem = "jal " ^ lab;
+      dst = [ ];
+      src = [ ];
+      jump = Some [ lab ];
+      is_call = true;
+    }
+
 
 (* Rewrites an abstract assembly instruction by replacing temporary
    registers with their assigned physical registers.

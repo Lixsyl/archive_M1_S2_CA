@@ -3,6 +3,7 @@ seq
   cjump eq temp i0 const 0 name L6 name L7 
   label L7
   move temp t2 const 0 
+  jump name L8 
   label L6
   move temp t2 const 1 
   jump name L8 
@@ -12,6 +13,7 @@ seq
   cjump eq temp i0 const 1 name L12 name L13 
   label L13
   move temp t4 const 0 
+  jump name L14 
   label L3
   move temp t1 const 1 
   jump name L5 
@@ -23,8 +25,9 @@ seq
   label L10
   move temp t0 binop sub temp i0 const 1 
   sxp
-    call name L2 int temp t0 call end
+    call name L2 temp t0 call end
   move temp t3 const 1 
+  jump name L11 
   label L9
   move temp t3 const 0 
   jump name L11 
@@ -39,6 +42,7 @@ seq
   cjump eq temp i0 const 0 name L18 name L19 
   label L19
   move temp t6 const 0 
+  jump name L20 
   label L18
   move temp t6 const 1 
   jump name L20 
@@ -48,6 +52,7 @@ seq
   cjump eq temp i0 const 1 name L24 name L25 
   label L25
   move temp t8 const 0 
+  jump name L26 
   label L15
   move temp t5 const 0 
   jump name L17 
@@ -58,7 +63,8 @@ seq
   cjump ne temp t8 const 0 name L21 name L22 
   label L22
   move temp t9 binop sub temp i0 const 1 
-  move temp t7 call name L1 int temp t9 call end 
+  move temp t7 call name L1 temp t9 call end 
+  jump name L23 
   label L21
   move temp t7 const 1 
   jump name L23 
@@ -72,7 +78,7 @@ label main
 seq
   move temp t11 const 56 
   move temp t12 temp t11 
-  move temp t10 call name L2 int temp t12 call end 
+  move temp t10 call name L2 temp t12 call end 
   sxp
     binop xor temp t10 const 1
 seq end

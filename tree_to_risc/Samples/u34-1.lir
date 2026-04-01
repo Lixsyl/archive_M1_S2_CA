@@ -7,6 +7,6 @@ seq
   move temp t1 name L_str_0 
   move temp t0 name L_str_1 
   sxp
-    call name concat int temp t1 int temp t0 call end
+    call name concat temp t1 temp t0 call end
 seq end
 label end

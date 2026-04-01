@@ -6,6 +6,7 @@ seq
   cjump ne const 1 const 0 name L2 name L3 
   label L3
   move temp t1 const 1 
+  jump name L4 
   label L2
   move temp t1 const 8 
   jump name L4 
@@ -14,6 +15,6 @@ seq
   move temp t2 const 8 
   move temp t0 binop mul temp t2 temp t2 
   sxp
-    call name L1 int temp t3 int temp t0 call end
+    call name L1 temp t3 temp t0 call end
 seq end
 label end

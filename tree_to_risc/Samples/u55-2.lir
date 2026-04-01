@@ -5,6 +5,6 @@ label main
 seq
   move temp t0 binop add const 52 const 3 
   sxp
-    call name L1 int temp t0 call end
+    call name L1 temp t0 call end
 seq end
 label end

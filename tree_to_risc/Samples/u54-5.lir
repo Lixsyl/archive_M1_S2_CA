@@ -7,22 +7,22 @@ label L2
 seq
   move temp t1 temp i0 
   move temp t0 temp i0 
-  move temp rv call name concat int temp t1 int temp t0 call end 
+  move temp rv call name concat temp t1 temp t0 call end 
 seq end
 label end
 label main
 seq
   move temp t6 name L_str_0 
-  move temp t5 call name L2 int temp t6 call end 
+  move temp t5 call name L2 temp t6 call end 
   sxp
-    call name print int temp t5 call end
+    call name print temp t5 call end
   sxp
     const 0
   move temp t4 const 2 
-  move temp t3 call name L1 int temp t4 call end 
-  move temp t2 call name string_of_int int temp t3 call end 
+  move temp t3 call name L1 temp t4 call end 
+  move temp t2 call name string_of_int temp t3 call end 
   sxp
-    call name print int temp t2 call end
+    call name print temp t2 call end
   sxp
     const 0
 seq end

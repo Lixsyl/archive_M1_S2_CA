@@ -4,7 +4,7 @@ label main
 seq
   move temp t0 name L_str_0 
   sxp
-    call name print int temp t0 call end
+    call name print temp t0 call end
   sxp
     const 0
 seq end

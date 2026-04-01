@@ -3,6 +3,7 @@ seq
   cjump eq temp i0 const 0 name L5 name L6 
   label L6
   move temp t2 const 0 
+  jump name L7 
   label L5
   move temp t2 const 1 
   jump name L7 
@@ -10,7 +11,8 @@ seq
   cjump ne temp t2 const 0 name L2 name L3 
   label L3
   move temp t0 binop sub temp i0 const 1 
-  move temp t1 call name L1 int temp t0 call end 
+  move temp t1 call name L1 temp t0 call end 
+  jump name L4 
   label L2
   move temp t1 const 1 
   jump name L4 
@@ -22,6 +24,6 @@ label main
 seq
   move temp t3 const 5 
   sxp
-    call name L1 int temp t3 call end
+    call name L1 temp t3 call end
 seq end
 label end
