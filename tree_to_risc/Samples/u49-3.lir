@@ -3,8 +3,7 @@ label L_str_0
 label main
 seq
   move temp t4 const 2 
-  move temp t5 temp t4 
-  move temp f3 callF name float_of_int temp t5 call end 
+  move temp f3 callF name float_of_int temp t4 call end 
   move temp f2 binop divF constF 5.0 temp f3 
   move temp t1 call name string_of_float temp f2 call end 
   move temp t0 name L_str_0 

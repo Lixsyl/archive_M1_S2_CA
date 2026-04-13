@@ -35,19 +35,18 @@ let def (i : Asm.instr) : SSet.t =
    3. Stop when no set changes (fixed point reached).
 *)
 let analyze (instrs : Asm.instr list) : info array =
-  let analyze (instrs : Asm.instr list) : info array =
-  let n = len(instrs) in
-  let res = [{ live_in : SSet.empty; live_out : SSet.empty }] * n in
+  let n = List.length instrs in
+  let res = Array.init n (fun _ -> { live_in = SSet.empty; live_out = SSet.empty }) in
   let rec aux ins n acc = 
-    match ins with 
-    | [] -> acc
+    (match ins with 
+    | [] -> ()
     | x :: xs ->  let use1 = use x in
                   let def1 = def x in
-                  let lo = SSet.add acc res.(n).live_out in 
-                  let li = SSet.add (SSet.diff lo def1) (SSet.add use1 res.(n).live_in)
-                  in res.(n) <- { live_in = li; live_out = lo }
-                  in aux xs (n-1) li
-  in aux List.rev(instrs) (n-1) SSet.empty
+                  let lo = SSet.union acc res.(n).live_out in 
+                  let li = SSet.union (SSet.diff lo def1) (SSet.union use1 res.(n).live_in) in 
+                  let () = res.(n) <- { live_in = li; live_out = lo }
+                  in aux xs (n-1) li)
+  in let () = aux (List.rev(instrs)) (n-1) SSet.empty
   in res
 
 (* ---- Interference graph construction ---- *)
@@ -57,7 +56,30 @@ let analyze (instrs : Asm.instr list) : info array =
 *)
 let build_interference (instrs : Asm.instr list) (live : info array) :
     Graph.t * Graph.t =
-  raise (RegallocException (__FUNCTION__^" not implemented yet"))
+  let int_graph = Graph.empty () in
+  let float_graph = Graph.empty () in
+  let () = List.iteri
+          (fun i instr ->
+            let live_out = live.(i).live_out in
+            let defs = def instr in
+            let live_outs = SSet.diff live_out defs in
+            let lst_live = SSet.elements live_outs in
+            let rec aux = function
+              | [] -> ()
+              | x :: xs ->
+                  List.iter
+                    (fun y -> let x_is_float = Tree_helper.is_float_temp x in
+                              let y_is_float = Tree_helper.is_float_temp y in
+                              if x_is_float && y_is_float then
+                                Graph.add_edge float_graph x y
+                              else if not x_is_float && not y_is_float then
+                                Graph.add_edge int_graph x y
+                              else ())
+                    xs;
+                  aux xs
+            in aux lst_live)
+          instrs
+  in (int_graph, float_graph)
 
 (* ---- Simplify phase (graph reduction) ---- *)
 (* Implements the simplify phase of graph coloring.

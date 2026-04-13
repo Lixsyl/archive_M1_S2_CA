@@ -1,36 +1,33 @@
 // Routine main
-li t7, 49
-mv t1, t7
-mv t2, t8
-mv t10, a0
+li t4, 49
+mv t1, t4
+mv t6, a0
 jal string_of_int
-mv t9, a0
-mv t0, t9
-mv t12, a0
+mv t5, a0
+mv t0, t5
+mv t8, a0
 jal print
-mv t11, a0
-li t13, 0
-li t15, 1
-add t16, t14, t15
-mv t1, t16
-mv t4, t18
-mv t20, a0
+mv t7, a0
+li t9, 0
+li t11, 1
+add t12, t10, t11
+mv t1, t12
+mv t15, a0
 jal string_of_int
-mv t19, a0
-mv t3, t19
-mv t22, a0
+mv t14, a0
+mv t2, t14
+mv t17, a0
 jal print
-mv t21, a0
-li t23, 0
-li t25, 1
-add t26, t24, t25
-mv t1, t26
-mv t6, t28
-mv t30, a0
+mv t16, a0
+li t18, 0
+li t20, 1
+add t21, t19, t20
+mv t1, t21
+mv t24, a0
 jal string_of_int
-mv t29, a0
-mv t5, t29
-mv t32, a0
+mv t23, a0
+mv t3, t23
+mv t26, a0
 jal print
-mv t31, a0
-li t33, 0
+mv t25, a0
+li t27, 0

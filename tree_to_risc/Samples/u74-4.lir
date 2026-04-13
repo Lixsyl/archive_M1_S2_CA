@@ -1,7 +1,6 @@
 label L1
 seq
-  move temp t4 temp i0 
-  move temp t3 call name L4 temp t4 call end 
+  move temp t3 call name L4 temp i0 call end 
   move temp t0 call name L2 temp t3 call end 
   move temp rv call name L4 temp t0 call end 
 seq end
@@ -29,25 +28,21 @@ seq end
 label end
 label L3
 seq
-  move temp t6 temp i0 
-  move temp t5 call name L2 temp t6 call end 
-  move temp rv call name L2 temp t5 call end 
+  move temp t4 call name L2 temp i0 call end 
+  move temp rv call name L2 temp t4 call end 
 seq end
 label end
 label L4
 seq
-  move temp t11 temp i0 
-  move temp t10 call name L2 temp t11 call end 
-  move temp t9 temp i0 
-  move temp t8 temp i0 
-  move temp t7 call name L3 temp t9 temp t8 call end 
-  move temp rv call name L3 temp t10 temp t7 call end 
+  move temp t6 call name L2 temp i0 call end 
+  move temp t5 call name L3 temp i0 temp i0 call end 
+  move temp rv call name L3 temp t6 temp t5 call end 
 seq end
 label end
 label main
 seq
-  move temp t12 const 74 
+  move temp t7 const 74 
   sxp
-    call name L1 temp t12 call end
+    call name L1 temp t7 call end
 seq end
 label end

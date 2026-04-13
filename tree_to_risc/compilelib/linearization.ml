@@ -11,16 +11,20 @@ let normalize_call (temp_gen : typ -> string) (p : program) : program =
     match e with 
     | Call (expr, args, typ) -> let (assigns, tmps) = 
                                     List.fold_right 
-                                    (fun (typ2, e2) (assigns, tmps)-> let tmp = loc (Temp (temp_gen typ2)) in (loc (Move (tmp, expr_call e2))::assigns, (typ2, tmp)::tmps)) 
+                                    (fun (typ2, e2) (assigns, tmps)-> 
+                                        ( match e2.payload with 
+                                        | Temp t -> (assigns, (typ2, e2)::tmps)
+                                        | _ ->  let tmp = loc (Temp (temp_gen typ2)) 
+                                                in (loc (Move (tmp, expr_call e2))::assigns, (typ2, tmp)::tmps)) )
                                     args ([], [])
                                 in let s = loc (Seq (assigns))
                                 in let c = loc (Call (expr, tmps, typ))
                                 in Eseq (s, c)
     | Binop (op, e1, e2) -> (match e1.payload with 
                             | Call (e3, a3, t3) -> let tmp1 = loc (Temp (temp_gen t3)) 
-                                                        in let fcall1 = expr_call e1
-                                                        in let move1 = (loc (Move (tmp1, fcall1)))
-                                                        in
+                                                    in let fcall1 = expr_call e1
+                                                    in let move1 = (loc (Move (tmp1, fcall1)))
+                                                    in
                                 (match e2.payload with 
                                 | Call (e4, a4, t4) ->  let tmp2 = loc (Temp (temp_gen t4)) 
                                                         in let fcall2 = expr_call e2

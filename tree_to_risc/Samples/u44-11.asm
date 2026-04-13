@@ -1,153 +1,145 @@
 // Routine main
-la t32, L_str_0
-mv t17, t32
-la t33, L_str_1
-mv t16, t33
-mv t19, t34
-mv t18, t35
-mv t37, a0
-mv t38, a1
+la t24, L_str_0
+mv t15, t24
+la t25, L_str_1
+mv t14, t25
+mv t27, a0
+mv t28, a1
 jal strcmp
-mv t36, a0
-mv t15, t36
-li t40, 0
-blt t39, t40, L4
+mv t26, a0
+mv t13, t26
+li t30, 0
+blt t29, t30, L4
 L5:
-li t42, 0
-mv t2, t42
+li t32, 0
+mv t2, t32
 j L6
 L4:
-li t43, 1
-mv t2, t43
+li t33, 1
+mv t2, t33
 j L6
 L6:
-li t45, 0
-bne t44, t45, L1
+li t35, 0
+bne t34, t35, L1
 L2:
-la t47, L_str_3
-mv t1, t47
+la t37, L_str_3
+mv t1, t37
 j L3
 L1:
-la t48, L_str_2
-mv t1, t48
+la t38, L_str_2
+mv t1, t38
 j L3
 L3:
-mv t14, t49
-mv t51, a0
+mv t12, t39
+mv t41, a0
 jal print
-mv t50, a0
-li t52, 0
-la t53, L_str_0
-mv t23, t53
-la t54, L_str_1
-mv t22, t54
-mv t25, t55
-mv t24, t56
-mv t58, a0
-mv t59, a1
+mv t40, a0
+li t42, 0
+la t43, L_str_0
+mv t19, t43
+la t44, L_str_1
+mv t18, t44
+mv t46, a0
+mv t47, a1
 jal strcmp
-mv t57, a0
-mv t21, t57
-li t61, 0
-bge t61, t60, L10
+mv t45, a0
+mv t17, t45
+li t49, 0
+bge t49, t48, L10
 L11:
-li t63, 0
-mv t4, t63
+li t51, 0
+mv t4, t51
 j L12
 L10:
-li t64, 1
-mv t4, t64
+li t52, 1
+mv t4, t52
 j L12
 L12:
-li t66, 0
-bne t65, t66, L7
+li t54, 0
+bne t53, t54, L7
 L8:
-la t68, L_str_3
-mv t3, t68
+la t56, L_str_3
+mv t3, t56
 j L9
 L7:
-la t69, L_str_2
-mv t3, t69
+la t57, L_str_2
+mv t3, t57
 j L9
 L9:
-mv t20, t70
-mv t72, a0
+mv t16, t58
+mv t60, a0
 jal print
-mv t71, a0
-li t73, 0
-la t74, L_str_0
-mv t29, t74
-la t75, L_str_1
-mv t28, t75
-mv t31, t76
-mv t30, t77
-mv t79, a0
-mv t80, a1
+mv t59, a0
+li t61, 0
+la t62, L_str_0
+mv t23, t62
+la t63, L_str_1
+mv t22, t63
+mv t65, a0
+mv t66, a1
 jal strcmp
-mv t78, a0
-mv t27, t78
-li t82, 0
-blt t82, t81, L16
+mv t64, a0
+mv t21, t64
+li t68, 0
+blt t68, t67, L16
 L17:
-li t84, 0
-mv t6, t84
+li t70, 0
+mv t6, t70
 j L18
 L16:
-li t85, 1
-mv t6, t85
+li t71, 1
+mv t6, t71
 j L18
 L18:
-li t87, 0
-bne t86, t87, L13
+li t73, 0
+bne t72, t73, L13
 L14:
-la t89, L_str_3
-mv t5, t89
+la t75, L_str_3
+mv t5, t75
 j L15
 L13:
-la t90, L_str_2
-mv t5, t90
+la t76, L_str_2
+mv t5, t76
 j L15
 L15:
-mv t26, t91
-mv t93, a0
+mv t20, t77
+mv t79, a0
 jal print
-mv t92, a0
-li t94, 0
-la t95, L_str_0
-mv t11, t95
-la t96, L_str_1
-mv t10, t96
-mv t13, t97
-mv t12, t98
-mv t100, a0
-mv t101, a1
+mv t78, a0
+li t80, 0
+la t81, L_str_0
+mv t11, t81
+la t82, L_str_1
+mv t10, t82
+mv t84, a0
+mv t85, a1
 jal strcmp
-mv t99, a0
-mv t9, t99
-li t103, 0
-bge t102, t103, L22
+mv t83, a0
+mv t9, t83
+li t87, 0
+bge t86, t87, L22
 L23:
-li t105, 0
-mv t8, t105
+li t89, 0
+mv t8, t89
 j L24
 L22:
-li t106, 1
-mv t8, t106
+li t90, 1
+mv t8, t90
 j L24
 L24:
-li t108, 0
-bne t107, t108, L19
+li t92, 0
+bne t91, t92, L19
 L20:
-la t110, L_str_3
-mv t7, t110
+la t94, L_str_3
+mv t7, t94
 j L21
 L19:
-la t111, L_str_2
-mv t7, t111
+la t95, L_str_2
+mv t7, t95
 j L21
 L21:
-mv t0, t112
-mv t114, a0
+mv t0, t96
+mv t98, a0
 jal print
-mv t113, a0
-li t115, 0
+mv t97, a0
+li t99, 0

@@ -20,15 +20,14 @@ seq
   move temp t1 name L_str_0 
   jump name L3 
   label L3
-  move temp t9 temp t1 
+  move temp t8 temp t1 
   sxp
-    call name print temp t9 call end
+    call name print temp t8 call end
   sxp
     const 0
-  move temp t12 const 1 
-  move temp t13 temp t12 
-  move temp f11 callF name float_of_int temp t13 call end 
-  cjump gtF temp f11 constF 0. name L10 name L11 
+  move temp t11 const 1 
+  move temp f10 callF name float_of_int temp t11 call end 
+  cjump gtF temp f10 constF 0. name L10 name L11 
   label L11
   move temp t4 const 0 
   jump name L12 
@@ -44,14 +43,13 @@ seq
   move temp t3 name L_str_0 
   jump name L9 
   label L9
-  move temp t10 temp t3 
+  move temp t9 temp t3 
   sxp
-    call name print temp t10 call end
+    call name print temp t9 call end
   sxp
     const 0
   move temp t7 const 0 
-  move temp t8 temp t7 
-  move temp f1 callF name float_of_int temp t8 call end 
+  move temp f1 callF name float_of_int temp t7 call end 
   cjump gtF constF 1. temp f1 name L16 name L17 
   label L17
   move temp t6 const 0 

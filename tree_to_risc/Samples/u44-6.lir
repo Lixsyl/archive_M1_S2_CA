@@ -5,8 +5,7 @@ label L_str_0
 label main
 seq
   move temp t3 const 1 
-  move temp t4 temp t3 
-  move temp f1 callF name float_of_int temp t4 call end 
+  move temp f1 callF name float_of_int temp t3 call end 
   cjump neF constF 1.0 temp f1 name L4 name L5 
   label L5
   move temp t2 const 0 

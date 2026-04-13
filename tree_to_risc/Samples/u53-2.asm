@@ -1,65 +1,63 @@
 // Routine main
-li t7, 5
-mv t1, t7
+li t5, 5
+mv t1, t5
 L1:
-li t9, 53
-blt t8, t9, L4
+li t7, 53
+blt t6, t7, L4
 L5:
-li t11, 0
-mv t2, t11
+li t9, 0
+mv t2, t9
 j L6
 L4:
-li t12, 1
-mv t2, t12
+li t10, 1
+mv t2, t10
 j L6
 L6:
-li t14, 0
-bne t13, t14, L2
+li t12, 0
+bne t11, t12, L2
 L3:
-li t16, 0
+li t14, 0
 j Lend
 L2:
-mv t6, t18
-mv t20, a0
+mv t17, a0
 jal string_of_int
+mv t16, a0
+mv t4, t16
 mv t19, a0
-mv t5, t19
-mv t22, a0
 jal print
-mv t21, a0
-li t23, 0
-li t24, 2
-mul t26, t24, t25
-mv t1, t26
+mv t18, a0
+li t20, 0
+li t21, 2
+mul t23, t21, t22
+mv t1, t23
 L7:
-li t29, 53
-blt t29, t28, L10
+li t26, 53
+blt t26, t25, L10
 L11:
-li t31, 0
-mv t3, t31
+li t28, 0
+mv t3, t28
 j L12
 L10:
-li t32, 1
-mv t3, t32
+li t29, 1
+mv t3, t29
 j L12
 L12:
-li t34, 0
-bne t33, t34, L8
+li t31, 0
+bne t30, t31, L8
 L9:
-li t36, 0
+li t33, 0
 j L1
 L8:
-mv t4, t37
-mv t39, a0
+mv t35, a0
 jal string_of_int
-mv t38, a0
-mv t0, t38
-mv t41, a0
+mv t34, a0
+mv t0, t34
+mv t37, a0
 jal print
-mv t40, a0
-li t42, 0
-li t44, 3
-sub t45, t43, t44
-mv t1, t45
+mv t36, a0
+li t38, 0
+li t40, 3
+sub t41, t39, t40
+mv t1, t41
 j L7
 Lend:

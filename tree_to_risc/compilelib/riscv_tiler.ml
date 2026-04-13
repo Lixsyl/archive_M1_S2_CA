@@ -90,6 +90,26 @@ let asm_of_binop = function
   | RShift -> "srl"
   | ARshift -> "sra"
 
+let type_binop = function
+  (* integer *)
+  | Add -> Int
+  | Sub -> Int
+  | Mul -> Int
+  | Div -> Int
+  | And -> Int
+  | Or -> Int
+  | Xor -> Int
+  | Mod -> Int
+  (* floating-point *)
+  | AddF -> Float
+  | SubF -> Float
+  | MulF -> Float
+  | DivF -> Float
+  (* integer shifts *)
+  | LShift -> Int
+  | RShift -> Int
+  | ARshift -> Int
+
 
 (* Lowers a single IR statement (Tree.stmt) into one or more RISC-V assembly
    instructions (Asm.instr).
@@ -202,7 +222,7 @@ let tile_binop r =
             let ope = asm_of_binop op in
             let t1 = f e1 in
             let t2 = f e2 in
-            let t = r.fresh_temp Int in
+            let t = r.fresh_temp (type_binop op) in
             ([Asm.binary_instr ~op:ope ~dst:t ~src1:t1 ~src2:t2], t)
         | _ -> assert false);
   }

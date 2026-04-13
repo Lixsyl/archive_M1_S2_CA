@@ -10,9 +10,7 @@ label main
 seq
   move temp t5 name L_str_0 
   move temp t4 name L_str_1 
-  move temp t7 temp t5 
-  move temp t6 temp t4 
-  move temp t3 call name strcmp temp t7 temp t6 call end 
+  move temp t3 call name strcmp temp t5 temp t4 call end 
   cjump eq temp t3 const 0 name L4 name L5 
   label L5
   move temp t2 const 0 

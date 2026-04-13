@@ -18,10 +18,9 @@ seq
     temp t1
   jump name Lend 
   label L2
-  move temp t6 temp t1 
-  move temp t5 call name string_of_int temp t6 call end 
+  move temp t4 call name string_of_int temp t1 call end 
   sxp
-    call name print temp t5 call end
+    call name print temp t4 call end
   sxp
     const 0
   move temp t1 binop mul const 2 temp t1 
@@ -42,8 +41,7 @@ seq
     const 0
   jump name L1 
   label L8
-  move temp t4 temp t1 
-  move temp t0 call name string_of_int temp t4 call end 
+  move temp t0 call name string_of_int temp t1 call end 
   sxp
     call name print temp t0 call end
   sxp
