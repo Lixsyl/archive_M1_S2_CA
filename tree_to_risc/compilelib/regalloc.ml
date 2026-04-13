@@ -35,7 +35,20 @@ let def (i : Asm.instr) : SSet.t =
    3. Stop when no set changes (fixed point reached).
 *)
 let analyze (instrs : Asm.instr list) : info array =
-  raise (RegallocException (__FUNCTION__^" not implemented yet"))
+  let analyze (instrs : Asm.instr list) : info array =
+  let n = len(instrs) in
+  let res = [{ live_in : SSet.empty; live_out : SSet.empty }] * n in
+  let rec aux ins n acc = 
+    match ins with 
+    | [] -> acc
+    | x :: xs ->  let use1 = use x in
+                  let def1 = def x in
+                  let lo = SSet.add acc res.(n).live_out in 
+                  let li = SSet.add (SSet.diff lo def1) (SSet.add use1 res.(n).live_in)
+                  in res.(n) <- { live_in = li; live_out = lo }
+                  in aux xs (n-1) li
+  in aux List.rev(instrs) (n-1) SSet.empty
+  in res
 
 (* ---- Interference graph construction ---- *)
 (* Builds the integer and float interference graphs from liveness info.
