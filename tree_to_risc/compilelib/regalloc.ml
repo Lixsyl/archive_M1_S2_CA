@@ -95,7 +95,23 @@ let build_interference (instrs : Asm.instr list) (live : info array) :
    A copy of the graph is used so the original is preserved.
 *)
 let simplify ~(k : int) (g : Graph.t) : Asm.temp list =
-  raise (RegallocException (__FUNCTION__ ^" not implemented yet"))
+  let graph = Hashtbl.copy g in
+  let pick_node gr = 
+    let chosen =  Seq.find_map 
+                  (fun node -> if Graph.degree gr node < k then Some node else None) 
+                  (Hashtbl.to_seq_keys gr) in 
+    (match chosen with
+    | Some node -> Some node
+    | None -> (match Seq.uncons (Hashtbl.to_seq_keys gr) with
+              | Some (x, _) -> Some x
+              | None -> None)) in
+  let rec aux gr res = 
+    match pick_node gr with 
+    | Some node ->  let ress = node :: res in
+                    let () = Graph.remove_node gr node in
+                    aux gr ress
+    | None -> res
+  in aux graph []
 
 (* ---- Select phase (assign colors) ---- *)
 (* Pops nodes from the simplify stack and assigns registers.
