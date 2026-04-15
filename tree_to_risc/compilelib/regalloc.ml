@@ -35,19 +35,46 @@ let def (i : Asm.instr) : SSet.t =
    3. Stop when no set changes (fixed point reached).
 *)
 let analyze (instrs : Asm.instr list) : info array =
-  let n = List.length instrs in
-  let res = Array.init n (fun _ -> { live_in = SSet.empty; live_out = SSet.empty }) in
-  let rec aux ins n acc = 
+  let len_instrs = List.length instrs in
+  let res = Array.init len_instrs (fun _ -> { live_in = SSet.empty; live_out = SSet.empty }) in
+  let label_map =
+    let tbl = Hashtbl.create 16 in
+    List.iteri (fun i instr ->
+      match instr with
+      | Asm.Label { lab; _ } -> Hashtbl.add tbl lab i
+      | _ -> ()
+    ) instrs;
+    tbl in
+  let succ = 
+    let tbl = Array.init len_instrs (fun _ -> []) in
+    List.iteri
+      (fun i instr ->
+        if i < len_instrs - 1 then tbl.(i) <- [i+1] else ();
+        (match instr with
+        | Asm.Oper { jump = Some labels; _ } ->
+            List.iter 
+            (fun l ->
+              match Hashtbl.find_opt label_map l with
+              | Some lab_i -> tbl.(i) <- lab_i :: tbl.(i)
+              | None -> ()) 
+            labels
+        | _ -> ()))
+      instrs;
+    tbl in
+  let rec aux ins n changed = 
     (match ins with 
-    | [] -> ()
+    | [] -> changed
     | x :: xs ->  let use1 = use x in
                   let def1 = def x in
-                  let lo = SSet.union acc res.(n).live_out in 
-                  let li = SSet.union (SSet.diff lo def1) (SSet.union use1 res.(n).live_in) in 
-                  let () = res.(n) <- { live_in = li; live_out = lo }
-                  in aux xs (n-1) li)
-  in let () = aux (List.rev(instrs)) (n-1) SSet.empty
-  in res
+                  let lo = List.fold_left (fun acc i -> SSet.union acc res.(i).live_in) SSet.empty succ.(n) in
+                  let li = SSet.union use1 (SSet.diff lo def1) in 
+                  let ch = changed || not (SSet.equal li res.(n).live_in) || not (SSet.equal lo res.(n).live_out) in
+                  let () = res.(n) <- { live_in = li; live_out = lo } in 
+                  aux xs (n-1) ch) in 
+  let rec loop () =
+    let ch = aux (List.rev(instrs)) (len_instrs-1) false in
+    if ch then loop () else res
+  in loop ()
 
 (* ---- Interference graph construction ---- *)
 (* Builds the integer and float interference graphs from liveness info.
@@ -61,9 +88,7 @@ let build_interference (instrs : Asm.instr list) (live : info array) :
   let () = List.iteri
           (fun i instr ->
             let live_out = live.(i).live_out in
-            let defs = def instr in
-            let live_outs = SSet.diff live_out defs in
-            let lst_live = SSet.elements live_outs in
+            let lst_live = SSet.elements live_out in
             let rec aux = function
               | [] -> ()
               | x :: xs ->
@@ -128,7 +153,17 @@ let simplify ~(k : int) (g : Graph.t) : Asm.temp list =
 *)
 let select ~(registers : Asm.temp list) (g : Graph.t) (stack : Asm.temp list) :
     Asm.temp SMap.t * Asm.temp list =
-  raise (RegallocException (__FUNCTION__ ^" not implemented yet"))
+  let rec aux st assigned spilled = 
+    match st with
+    | [] -> (assigned, spilled)
+    | t :: ts ->
+        let neighbors = Graph.neighbors g t in
+        let used_colors = SSet.fold (fun n acc -> match SMap.find_opt n assigned with Some r -> SSet.add r acc | None -> acc) neighbors SSet.empty in
+        let available = List.filter (fun r -> not (SSet.mem r used_colors)) registers in
+        (match available with 
+        | [] -> let sp = t :: spilled in aux ts assigned sp
+        | x :: xs -> let ass = SMap.add t x assigned in aux ts ass spilled)
+  in aux stack SMap.empty []
 
 (* ---- Full graph coloring driver ---- *)
 type colorization = {
