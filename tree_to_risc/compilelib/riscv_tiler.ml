@@ -185,7 +185,7 @@ let tile_constF r =
             let t_addr = r.fresh_temp Int in
             let t = r.fresh_temp Float in
             let lab = Utils.SMap.find n lab_l in
-            ([ Asm.load_address ~temp:t ~lab:lab ; Asm.load_float ~dst:t ~src:t_addr], t)
+            ([ Asm.load_address ~temp:t_addr ~lab:lab ; Asm.load_float ~dst:t ~src:t_addr], t)
         | _ -> assert false);
   }
 
