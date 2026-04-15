@@ -85,6 +85,15 @@ let build_interference (instrs : Asm.instr list) (live : info array) :
     Graph.t * Graph.t =
   let int_graph = Graph.empty () in
   let float_graph = Graph.empty () in
+  let tmps = List.fold_left 
+              (fun acc instr -> SSet.union acc (SSet.union (use instr) (def instr))) 
+              SSet.empty instrs in
+  let () =  SSet.iter (fun t ->
+              if Tree_helper.is_float_temp t then
+                Graph.add_node float_graph t
+              else
+                Graph.add_node int_graph t
+            ) tmps in 
   let () = List.iteri
           (fun i instr ->
             let live_out = live.(i).live_out in

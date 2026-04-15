@@ -38,6 +38,7 @@ run_with_timeout() {
     shift 3
     local cmd=( "$@" )
 
+    #timeout -> gtimeout 
     gtimeout "${timeout_s}s" "${cmd[@]}" > output.txt
     status=$?
 
