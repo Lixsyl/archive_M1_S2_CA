@@ -1,0 +1,6 @@
+(
+    (if true
+        then print("invisible")
+        else false
+    ); 48
+)

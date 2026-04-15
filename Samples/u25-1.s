@@ -1,0 +1,33 @@
+.section .rodata
+L_float_0:
+	.double 0.0
+L_float_1:
+	.double 1.5
+.text
+.globl main
+main:
+  addi sp, sp, -16
+  sd ra, 8(sp)
+  # Call ILPmain
+  jal ra, ILPmain
+  li a0, 0
+  ld ra, 8(sp)
+  addi sp, sp, 16
+  ret
+
+# -------- Function main --------
+ILPmain:
+li s2, 1
+li s1, 0
+bne s2, s1, L1
+L2:
+li fs0, 0.0
+fmv.d fs0, fs0
+j L3
+L1:
+li fs0, 1.5
+fmv.d fs0, fs0
+j L3
+L3:
+end:
+# -------- End of function main --------

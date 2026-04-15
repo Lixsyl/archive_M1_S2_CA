@@ -1,0 +1,7 @@
+label main
+seq
+  move temp t1 const 11 
+  sxp
+    temp t1
+seq end
+label end

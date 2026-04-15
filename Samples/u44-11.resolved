@@ -1,0 +1,22 @@
+(print(
+        (if ("a"; "b"; false
+                )
+            then "true"
+            else "false"
+        )); print(
+        (if ("a"; "b"; false
+                )
+            then "true"
+            else "false"
+        )); print(
+        (if ("a"; "b"; false
+                )
+            then "true"
+            else "false"
+        )); print(
+        (if ("a"; "b"; false
+                )
+            then "true"
+            else "false"
+        ))
+)

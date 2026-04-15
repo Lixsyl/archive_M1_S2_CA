@@ -1,0 +1,5 @@
+(
+    let i = 22 in
+    (
+        let f = 6.3 in
+        (f ILP_Plus_FLOAT float_of_int(i))))

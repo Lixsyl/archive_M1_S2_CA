@@ -1,0 +1,2 @@
+(print(string_of_int((1 ILP_GreaterThan_INT 0))); print(string_of_float((1 ILP_GreaterThan_FLOAT 0.))); print(string_of_float((1. ILP_GreaterThan_FLOAT 0)))
+)

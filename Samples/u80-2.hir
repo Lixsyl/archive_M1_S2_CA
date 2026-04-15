@@ -1,0 +1,45 @@
+/* == High Level Intermediate representation. == */
+/* String Litterals */
+label L_str_1 "0"
+label L_str_0 "PARAM"
+
+/* Function Definitions */
+/* function : test */
+# Routine: L1
+label L1
+  # Body
+  move
+  temp rv
+  binop
+  add  
+  temp i0  
+  const 1  
+  label end
+  
+  
+  /* Main */
+  # Routine main
+  label main
+  sxp
+    eseq
+      sxp
+        call
+          name print
+          call
+            name concat
+            call
+              name concat
+              eseq
+                seq
+                  sxp
+                    temp null                    
+                seq end
+                name L_str_0                
+                
+              call end
+              
+            call end
+            
+          call end
+        const 0    
+label end

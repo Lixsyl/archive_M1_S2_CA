@@ -194,15 +194,20 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
     throws CompilationException {
 	  
 	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_INT")) {
-		  emit("-" + iast.getOperand().accept(this, context)); ////////////////////////////////////
+		  emit("const -" + ((ITASTinteger)iast.getOperand()).getValue().toString());
 		  return null;
 	  }
 	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_FLOAT")) {
-		  emit("-" + iast.getOperand().accept(this, context));
+		  emit("constF -"+ ((ITASTfloat)iast.getOperand()).getDescription().toString());
 		  return null;
 	  }
 	  if (iast.getOperator().getMangledName().equals("ILP_Not")) {
-		  iast.getOperand().accept(this, context);
+		  if (iast.getOperand() instanceof ITASTboolean) {
+			  if (((ITASTboolean)iast.getOperand()).getValue() == true) emit("const 0");
+			  else emit ("const 1");
+		  } else {
+			  iast.getOperand().accept(this, context); // temporaire ca marche pas : Samples/u56-2.ilpml 
+		  }
 		  return null;
 	  }
 	  throw new CompilationException("compiler unary op");
@@ -476,6 +481,7 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 	  enterScope();
 	  ITASTblock.ITASTbinding[] bs = iast.getBindings();
 	  emit ("eseq\n");
+	  enterSeq();
 	  for (ITASTblock.ITASTbinding b : bs) {
 		  String v;
 		  if (b.getInitialisation().getType() == Type.FLOAT) {
@@ -484,10 +490,9 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 		  } else {
 			  v = bindVariable(b.getVariable().getMangledName());
 		  }
-		  enterSeq();
 		  emitMoveToTemp(v, b.getInitialisation());
-		  exitSeq();
 	  }
+	  exitSeq();
 	  iast.getBody().accept(this, context);
 	  leaveScope();
       return null;

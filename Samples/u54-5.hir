@@ -1,0 +1,54 @@
+/* == High Level Intermediate representation. == */
+/* String Litterals */
+label L_str_0 "cou"
+
+/* Function Definitions */
+/* function : deuxfois */
+# Routine: L1
+label L1
+  # Body
+  move
+  temp rv
+  binop
+  add  
+  temp i0  
+  temp i0  
+  label end
+  
+  
+  /* Main */
+  # Routine main
+  label main
+  sxp
+    eseq
+      seq
+        sxp
+          eseq
+            sxp
+              call
+                name print
+                call
+                  name L1
+                  name L_str_0                  
+                call end
+                
+              call end
+            const 0          
+      seq end
+      eseq
+        sxp
+          call
+            name print
+            call
+              name string_of_int
+              call
+                name L1
+                const 2                
+              call end
+              
+            call end
+            
+          call end
+        const 0      
+    
+label end

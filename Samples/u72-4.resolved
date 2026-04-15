@@ -1,0 +1,9 @@
+function foo(x, y)
+(x ILP_Plus_INT y);
+foo(
+    (if true
+        then 8
+        else 1
+    ), (
+        let x = 8 in
+        (x ILP_Times_INT x)))

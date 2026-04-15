@@ -1,0 +1,25 @@
+label L_str_1
+ "false"
+label L_str_0
+ "true"
+label main
+seq
+  sxp
+    const 4
+  sxp
+    const 5
+  cjump ne const 0 const 0 name L2 name L3 
+  label L3
+  move temp L1 name L_str_1 
+  jump name L4 
+  label L2
+  move temp L1 name L_str_0 
+  jump name L4 
+  label L4
+  move temp t0 temp L1 
+  sxp
+    call name print temp t0 call end
+  sxp
+    const 0
+seq end
+label end

@@ -1,0 +1,6 @@
+print(
+    (if (true; false; false
+            )
+        then "true"
+        else "false"
+    ))

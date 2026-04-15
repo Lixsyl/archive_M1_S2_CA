@@ -1,0 +1,14 @@
+label L_str_0
+ "BOOL"
+label main
+seq
+  sxp
+    const 1
+  sxp
+    const 2
+  sxp
+    const 0
+  sxp
+    name L_str_0
+seq end
+label end

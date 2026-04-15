@@ -1,0 +1,9 @@
+(
+    let x = 1 in
+    print(
+        (if (x; true
+                )
+            then (concat(string_of_int(x), "coucou"); "STRING"
+                )
+            else string_of_float(1.5)
+        )))

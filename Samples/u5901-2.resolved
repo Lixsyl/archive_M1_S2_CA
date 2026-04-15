@@ -1,0 +1,7 @@
+function pseudosequence(one, two)
+two;
+function foo(x)
+(2 ILP_Times_INT x);
+(
+    let y = 11 in
+    foo(pseudosequence((y = (y ILP_Plus_INT 1)), y)))

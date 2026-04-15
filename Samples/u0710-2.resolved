@@ -1,0 +1,7 @@
+print(
+    (if (false ILP_Or ((710; true
+                    ) ILP_Or (2; true
+                    )))
+        then "true"
+        else "false"
+    ))

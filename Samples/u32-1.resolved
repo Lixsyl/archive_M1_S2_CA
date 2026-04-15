@@ -1,0 +1,5 @@
+(
+    let f1 = 2.2 in
+    (
+        let f2 = 6.3 in
+        (f1 ILP_Plus_FLOAT f2)))

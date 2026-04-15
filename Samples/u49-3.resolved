@@ -1,0 +1,1 @@
+concat(string_of_float((5.0 ILP_Divide_FLOAT float_of_int(2))), "*")
