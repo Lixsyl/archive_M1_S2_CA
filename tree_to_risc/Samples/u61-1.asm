@@ -5,7 +5,7 @@ li t7, 1
 li t8, 0
 bne t7, t8, L1
 L2:
-la f11, L4
+la f11, L_float_0
 flw f11, 0(t10)
 fmv.d f5, f11
 mv t13, a0

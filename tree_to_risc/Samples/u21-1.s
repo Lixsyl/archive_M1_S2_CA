@@ -19,7 +19,7 @@ main:
 # -------- Function main --------
 ILPmain:
 li s1, 1
-la fs0, L1
+la fs0, L_float_0
 flw fs0, 0(t1)
 li s1, 1
 la s1, L_str_0

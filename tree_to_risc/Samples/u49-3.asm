@@ -5,7 +5,7 @@ mv t5, a0
 jal float_of_int
 fmv.d f4, fa0
 fmv.d f3, f4
-la f7, L1
+la f7, L_float_0
 flw f7, 0(t6)
 fdiv.d f9, f7, t8
 fmv.d f2, f9

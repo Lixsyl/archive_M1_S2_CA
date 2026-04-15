@@ -1,7 +1,7 @@
 // Routine main
 li t0, 22
 mv t1, t0
-la f3, L1
+la f3, L_float_0
 flw f3, 0(t2)
 fmv.d f2, f3
 mv t5, a0

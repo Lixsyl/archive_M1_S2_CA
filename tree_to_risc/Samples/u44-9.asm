@@ -33,7 +33,7 @@ mv t27, a0
 jal float_of_int
 fmv.d f26, fa0
 fmv.d f10, f26
-la f30, L19
+la f30, L_float_0
 flw f30, 0(t29)
 flt.s t31, t28, f30
 beq t31, x0, L10
@@ -68,7 +68,7 @@ mv t45, a0
 jal float_of_int
 fmv.d f44, fa0
 fmv.d f1, f44
-la f47, L20
+la f47, L_float_1
 flw f47, 0(t46)
 flt.s t49, f47, t48
 beq t49, x0, L16

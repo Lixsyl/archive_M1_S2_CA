@@ -21,12 +21,12 @@ li s2, 1
 li s1, 0
 bne s2, s1, L1
 L2:
-la fs0, L4
+la fs0, L_float_0
 flw fs0, 0(t3)
 fmv.d fs0, fs0
 j L3
 L1:
-la fs0, L5
+la fs0, L_float_1
 flw fs0, 0(t5)
 fmv.d fs0, fs0
 j L3
