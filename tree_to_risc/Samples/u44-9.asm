@@ -33,65 +33,67 @@ mv t27, a0
 jal float_of_int
 fmv.d f26, fa0
 fmv.d f10, f26
-li f29, 0.
-flt.s t30, t28, f29
-beq t30, x0, L10
+la f30, L19
+flw f30, 0(t29)
+flt.s t31, t28, f30
+beq t31, x0, L10
 L11:
-li t31, 0
-mv t4, t31
-j L12
-L10:
-li t32, 1
+li t32, 0
 mv t4, t32
 j L12
+L10:
+li t33, 1
+mv t4, t33
+j L12
 L12:
-li t34, 0
-bne t33, t34, L7
+li t35, 0
+bne t34, t35, L7
 L8:
-la t36, L_str_1
-mv t3, t36
-j L9
-L7:
-la t37, L_str_0
+la t37, L_str_1
 mv t3, t37
 j L9
+L7:
+la t38, L_str_0
+mv t3, t38
+j L9
 L9:
-mv t9, t38
-mv t40, a0
+mv t9, t39
+mv t41, a0
 jal print
-mv t39, a0
-li t41, 0
+mv t40, a0
 li t42, 0
-mv t7, t42
-mv t44, a0
+li t43, 0
+mv t7, t43
+mv t45, a0
 jal float_of_int
-fmv.d f43, fa0
-fmv.d f1, f43
-li f45, 1.
-flt.s t47, f45, t46
-beq t47, x0, L16
+fmv.d f44, fa0
+fmv.d f1, f44
+la f47, L20
+flw f47, 0(t46)
+flt.s t49, f47, t48
+beq t49, x0, L16
 L17:
-li t48, 0
-mv t6, t48
+li t50, 0
+mv t6, t50
 j L18
 L16:
-li t49, 1
-mv t6, t49
+li t51, 1
+mv t6, t51
 j L18
 L18:
-li t51, 0
-bne t50, t51, L13
+li t53, 0
+bne t52, t53, L13
 L14:
-la t53, L_str_1
-mv t5, t53
+la t55, L_str_1
+mv t5, t55
 j L15
 L13:
-la t54, L_str_0
-mv t5, t54
+la t56, L_str_0
+mv t5, t56
 j L15
 L15:
-mv t0, t55
-mv t57, a0
+mv t0, t57
+mv t59, a0
 jal print
-mv t56, a0
-li t58, 0
+mv t58, a0
+li t60, 0

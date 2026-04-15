@@ -182,8 +182,10 @@ let tile_constF r =
       (fun _ e _ ->
         match e.payload with
         | ConstF n ->
+            let t_addr = r.fresh_temp Int in
             let t = r.fresh_temp Float in
-            ([ Asm.load_immediate ~temp:t ~imm:n ], t)
+            let lab = r.fresh_label () in
+            ([ Asm.load_address ~temp:t ~lab:lab ; Asm.load_float ~dst:t ~src:t_addr], t)
         | _ -> assert false);
   }
 

@@ -17,8 +17,10 @@ main:
 
 # -------- Function main --------
 ILPmain:
-li fs1, 3.1415926535
-li fs0, 0.1415926535
-fsub.d fs0, fs1, fs0
+la fs0, L1
+flw fs0, 0(t0)
+la fs1, L2
+flw fs1, 0(t2)
+fsub.d fs0, fs0, fs1
 end:
 # -------- End of function main --------

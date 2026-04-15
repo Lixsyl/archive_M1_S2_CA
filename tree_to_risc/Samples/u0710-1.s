@@ -12,9 +12,9 @@ main:
 
 # -------- Function main --------
 ILPmain:
-li s3, 0
+li s2, 0
 li s1, 0
-bne s3, s1, L1
+bne s2, s1, L1
 L2:
 li s1, 710
 li s3, 1

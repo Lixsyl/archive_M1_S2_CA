@@ -5,16 +5,17 @@ mv t5, a0
 jal float_of_int
 fmv.d f4, fa0
 fmv.d f3, f4
-li f6, 5.0
-fdiv.d f8, f6, t7
-fmv.d f2, f8
-mv t10, a0
+la f7, L1
+flw f7, 0(t6)
+fdiv.d f9, f7, t8
+fmv.d f2, f9
+mv t11, a0
 jal string_of_float
-mv t9, a0
-mv t1, t9
-la t11, L_str_0
-mv t0, t11
-mv t13, a0
-mv t14, a1
+mv t10, a0
+mv t1, t10
+la t12, L_str_0
+mv t0, t12
+mv t14, a0
+mv t15, a1
 jal concat
-mv t12, a0
+mv t13, a0
