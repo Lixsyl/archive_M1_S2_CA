@@ -5,30 +5,31 @@ li t7, 1
 li t8, 0
 bne t7, t8, L1
 L2:
-li f10, 1.5
-fmv.d f5, f10
-mv t12, a0
+la f11, L_float_0
+flw f11, 0(t10)
+fmv.d f5, f11
+mv t13, a0
 jal string_of_float
-mv t11, a0
-mv t2, t11
+mv t12, a0
+mv t2, t12
 j L3
 L1:
-mv t14, a0
+mv t15, a0
 jal string_of_int
-mv t13, a0
-mv t4, t13
-la t15, L_str_0
-mv t3, t15
-mv t17, a0
-mv t18, a1
+mv t14, a0
+mv t4, t14
+la t16, L_str_0
+mv t3, t16
+mv t18, a0
+mv t19, a1
 jal concat
-mv t16, a0
-la t19, L_str_1
-mv t2, t19
+mv t17, a0
+la t20, L_str_1
+mv t2, t20
 j L3
 L3:
-mv t0, t20
-mv t22, a0
+mv t0, t21
+mv t23, a0
 jal print
-mv t21, a0
-li t23, 0
+mv t22, a0
+li t24, 0
