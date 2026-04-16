@@ -486,11 +486,11 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 		  String v;
 		  if (b.getInitialisation().getType() == Type.FLOAT) {
 			  v = newFloatTemp();
-			  envStack.peek().put(b.getVariable().getMangledName(), v);
 		  } else {
-			  v = bindVariable(b.getVariable().getMangledName());
+			  v = newTemp();
 		  }
 		  emitMoveToTemp(v, b.getInitialisation());
+		  envStack.peek().put(b.getVariable().getMangledName(), v);
 	  }
 	  exitSeq();
 	  iast.getBody().accept(this, context);
@@ -506,6 +506,12 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 	      emit("call\n");
 	      indent();
 	      emit("name " + name + "\n");
+	      //for (int i = 0; i < args.length; i++) {
+	    	//  args[i].accept(this,null);
+	      //}
+	      //No temporary named "t2"               
+	      //Compiling: Samples/u49-3.ilpml ==> ./jamel.sh: ligne 213: stage_labels[rc-1] : variable sans liaison
+	      //make: *** [Makefile:15: test] Error 1
 	      args[0].accept(this,null);
 	      emit("\n");
 	      dedent();

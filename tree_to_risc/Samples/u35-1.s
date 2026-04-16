@@ -15,7 +15,7 @@ main:
 
 # -------- Function main --------
 ILPmain:
-la fs0, L_float_0
+la s1, L_float_0
 flw fs0, 0(t0)
 end:
 # -------- End of function main --------

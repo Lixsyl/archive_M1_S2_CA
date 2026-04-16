@@ -17,10 +17,10 @@ main:
 
 # -------- Function main --------
 ILPmain:
-la fs0, L_float_0
+la s1, L_float_0
 flw fs0, 0(t0)
 fmv.d fs0, fs0
-la fs0, L_float_1
+la s1, L_float_1
 flw fs0, 0(t4)
 fmv.d fs0, fs0
 fadd.d fs0, s2, s1

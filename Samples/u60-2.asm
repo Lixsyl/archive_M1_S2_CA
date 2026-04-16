@@ -1,3 +1,4 @@
 // Routine main
-li f0, 5.0
-la t1, L_str_0
+la t0, L_float_0
+flw f1, 0(t0)
+la t2, L_str_0

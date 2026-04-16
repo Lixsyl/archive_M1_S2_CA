@@ -12,8 +12,6 @@ sxp
     move
     temp t1
     const 1    
-  seq end
-  seq
     move
     temp t2
     const 2    

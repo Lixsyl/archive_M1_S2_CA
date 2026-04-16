@@ -1,20 +1,21 @@
 // Routine main
-li f0, 1.0
-li t1, 1
-li t2, 0
-li t3, 0
-bne t2, t3, L2
+la t1, L_float_0
+flw f2, 0(t1)
+li t3, 1
+li t4, 0
+li t5, 0
+bne t4, t5, L2
 L3:
-la t5, L_str_1
-mv L1, t5
+la t7, L_str_1
+mv L1, t7
 j L4
 L2:
-la t6, L_str_0
-mv L1, t6
+la t8, L_str_0
+mv L1, t8
 j L4
 L4:
-mv t0, t7
-mv t9, a0
+mv t0, t9
+mv t11, a0
 jal print
-mv t8, a0
-li t10, 0
+mv t10, a0
+li t12, 0

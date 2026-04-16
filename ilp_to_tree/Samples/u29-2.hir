@@ -12,8 +12,6 @@ sxp
     move
     temp t1
     const 11    
-  seq end
-  seq
     move
     temp t2
     const 22    
@@ -24,16 +22,14 @@ sxp
     temp t3
     binop
     add    
-    temp t3    
+    temp t1    
     temp t2    
-  seq end
-  seq
     move
     temp t4
     binop
     mul    
     temp t3    
-    temp t4    
+    temp t2    
   seq end
   binop
   mul  

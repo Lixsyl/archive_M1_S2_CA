@@ -19,8 +19,8 @@ sxp
     temp t2
     binop
     add    
-    temp t2    
-    temp t2    
+    temp t1    
+    temp t1    
   seq end
   binop
   mul  

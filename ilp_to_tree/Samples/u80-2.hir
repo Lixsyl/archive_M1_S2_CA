@@ -35,7 +35,19 @@ label L1
                     temp null                    
                 seq end
                 name L_str_0                
+                call
+                  name string_of_int
+                  call
+                    name L1
+                    const 2                    
+                  call end
+                  
+                call end
                 
+              call end
+              call
+                name L1
+                name L_str_1                
               call end
               
             call end
