@@ -179,11 +179,13 @@ let tile_constF r =
     cost = 1;
     matches_exp = (function { payload = ConstF _; _ } -> true | _ -> false);
     emit_exp =
-      (fun _ e _ ->
+      (fun _ e lab_l ->
         match e.payload with
         | ConstF n ->
+            let t_addr = r.fresh_temp Int in
             let t = r.fresh_temp Float in
-            ([ Asm.load_immediate ~temp:t ~imm:n ], t)
+            let lab = Utils.SMap.find n lab_l in
+            ([ Asm.load_address ~temp:t_addr ~lab:lab ; Asm.load_float ~dst:t ~src:t_addr], t)
         | _ -> assert false);
   }
 

@@ -37,7 +37,8 @@ let def (i : Asm.instr) : SSet.t =
 let analyze (instrs : Asm.instr list) : info array =
   let len_instrs = List.length instrs in
   let res = Array.init len_instrs (fun _ -> { live_in = SSet.empty; live_out = SSet.empty }) in
-  let label_map =
+  let succ = Asm.build_succ instrs in
+  (*let label_map =
     let tbl = Hashtbl.create 16 in
     List.iteri (fun i instr ->
       match instr with
@@ -60,7 +61,7 @@ let analyze (instrs : Asm.instr list) : info array =
             labels
         | _ -> ()))
       instrs;
-    tbl in
+    tbl in*)
   let rec aux ins n changed = 
     (match ins with 
     | [] -> changed
