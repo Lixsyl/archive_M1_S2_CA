@@ -21,5 +21,5 @@ li t12, 1
 mv t2, t12
 j L6
 L6:
-mv t1, t13
+mv t1, t2
 L3:

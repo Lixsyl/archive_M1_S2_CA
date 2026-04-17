@@ -1,14 +1,14 @@
 // Routine L1
 mv i0, a0
-li t2, 3
-div t3, t1, t2
-mv rv, t3
+li t1, 3
+div t2, i0, t1
+mv rv, t2
 end:
 // Routine main
-li t4, 3
-li t5, 5491
-mul t6, t4, t5
-mv t0, t6
-mv t8, a0
+li t3, 3
+li t4, 5491
+mul t5, t3, t4
+mv t0, t5
+mv t0, a0
 jal L1
-mv t7, a0
+mv t6, a0

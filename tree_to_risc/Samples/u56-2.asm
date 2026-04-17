@@ -1,51 +1,51 @@
 // Routine L1
 mv i0, a0
-li t13, 0
-beq t12, t13, L6
+li t12, 0
+beq i0, t12, L6
 L7:
-li t15, 0
-mv t2, t15
+li t14, 0
+mv t2, t14
 j L8
 L6:
-li t16, 1
-mv t2, t16
+li t15, 1
+mv t2, t15
 j L8
 L8:
-li t18, 0
-bne t17, t18, L3
+li t16, 0
+bne t2, t16, L3
 L4:
-li t21, 1
-beq t20, t21, L12
+li t18, 1
+beq i0, t18, L12
 L13:
-li t23, 0
-mv t4, t23
+li t20, 0
+mv t4, t20
 j L14
 L3:
-li t24, 1
-mv t1, t24
+li t21, 1
+mv t1, t21
 j L5
 L12:
-li t25, 1
-mv t4, t25
+li t22, 1
+mv t4, t22
 j L14
 L14:
-li t27, 0
-bne t26, t27, L9
+li t23, 0
+bne t4, t23, L9
 L10:
-li t30, 1
-sub t31, t29, t30
-mv t0, t31
-mv t33, a0
+li t25, 1
+sub t26, i0, t25
+mv t0, t26
+mv t0, a0
 jal L2
-mv t32, a0
-li t34, 1
-mv t3, t34
+mv t27, a0
+li t28, 1
+mv t3, t28
 j L11
 L9:
-li t35, 0
-mv t3, t35
+li t29, 0
+mv t3, t29
 j L11
 L11:
-mv t1, t36
+mv t1, t3
 L5:
-mv rv, t37
+mv rv, t1

@@ -21,21 +21,21 @@ li t14, 1
 mv t3, t14
 j L9
 L9:
-mv t2, t15
+mv t2, t3
 L6:
-li t17, 0
-bne t16, t17, L1
+li t15, 0
+bne t2, t15, L1
 L2:
-la t19, L_str_1
-mv t1, t19
+la t17, L_str_1
+mv t1, t17
 j L3
 L1:
-la t20, L_str_0
-mv t1, t20
+la t18, L_str_0
+mv t1, t18
 j L3
 L3:
-mv t0, t21
-mv t23, a0
+mv t0, t1
+mv t0, a0
 jal print
-mv t22, a0
-li t24, 0
+mv t19, a0
+li t20, 0

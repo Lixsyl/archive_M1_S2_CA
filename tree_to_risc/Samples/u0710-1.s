@@ -17,9 +17,9 @@ li s1, 0
 bne s2, s1, L1
 L2:
 li s1, 710
-li s3, 1
+li s2, 1
 li s1, 0
-bne s3, s1, L4
+bne s2, s1, L4
 L5:
 li s1, 2
 li s1, 1
@@ -34,7 +34,7 @@ li s1, 1
 mv s1, s1
 j L6
 L6:
-mv s1, s2
+mv s1, s1
 L3:
 end:
 # -------- End of function main --------

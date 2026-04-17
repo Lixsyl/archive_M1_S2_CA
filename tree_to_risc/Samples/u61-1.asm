@@ -1,35 +1,35 @@
 // Routine main
 li t5, 1
 mv t1, t5
-li t7, 1
-li t8, 0
-bne t7, t8, L1
+li t6, 1
+li t7, 0
+bne t6, t7, L1
 L2:
-la t10, L_float_0
-flw f11, 0(t10)
-fmv.d f5, f11
-mv t13, a0
+la t9, L_float_0
+flw f10, 0(t9)
+fmv.d f5, f10
+fmv.d f5, fa0
 jal string_of_float
-mv t12, a0
-mv t2, t12
+mv t11, a0
+mv t2, t11
 j L3
 L1:
-mv t15, a0
+mv t1, a0
 jal string_of_int
-mv t14, a0
-mv t4, t14
-la t16, L_str_0
-mv t3, t16
-mv t18, a0
-mv t19, a1
+mv t12, a0
+mv t4, t12
+la t13, L_str_0
+mv t3, t13
+mv t4, a0
+mv t3, a1
 jal concat
-mv t17, a0
-la t20, L_str_1
-mv t2, t20
+mv t14, a0
+la t15, L_str_1
+mv t2, t15
 j L3
 L3:
-mv t0, t21
-mv t23, a0
+mv t0, t2
+mv t0, a0
 jal print
-mv t22, a0
-li t24, 0
+mv t16, a0
+li t17, 0

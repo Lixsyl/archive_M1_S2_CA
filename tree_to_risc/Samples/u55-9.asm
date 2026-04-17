@@ -11,19 +11,19 @@ li t7, 1
 mv t2, t7
 j L6
 L6:
-li t9, 0
-bne t8, t9, L1
+li t8, 0
+bne t2, t8, L1
 L2:
-la t11, L_str_1
-mv t1, t11
+la t10, L_str_1
+mv t1, t10
 j L3
 L1:
-la t12, L_str_0
-mv t1, t12
+la t11, L_str_0
+mv t1, t11
 j L3
 L3:
-mv t0, t13
-mv t15, a0
+mv t0, t1
+mv t0, a0
 jal print
-mv t14, a0
-li t16, 0
+mv t12, a0
+li t13, 0

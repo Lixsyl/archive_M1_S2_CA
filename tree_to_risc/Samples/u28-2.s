@@ -12,12 +12,12 @@ main:
 
 # -------- Function main --------
 ILPmain:
-li s2, 1
-mv s1, s2
+li s1, 1
+mv s1, s1
 li s2, 2
 mv s1, s2
 li s2, 3
-mv s1, s2
-add s1, s3, s1
+mv s2, s2
+add s1, s1, s2
 end:
 # -------- End of function main --------

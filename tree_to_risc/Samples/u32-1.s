@@ -19,10 +19,10 @@ main:
 ILPmain:
 la s1, L_float_0
 flw fs0, 0(t0)
-fmv.d fs0, fs0
+fmv.d fs1, fs0
 la s1, L_float_1
 flw fs0, 0(t4)
 fmv.d fs0, fs0
-fadd.d fs0, s2, s1
+fadd.d fs0, fs1, fs0
 end:
 # -------- End of function main --------

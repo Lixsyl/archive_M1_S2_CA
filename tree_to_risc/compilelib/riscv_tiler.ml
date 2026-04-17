@@ -209,7 +209,7 @@ let tile_temp r =
     emit_exp =
       (fun _ e _ ->
         match e.payload with
-        | Temp t -> let t = r.fresh_temp Int in ([], t)
+        | Temp t -> ([], t)
         | _ -> assert false);
   }
 

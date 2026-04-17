@@ -11,4 +11,4 @@ li t5, 1
 mv t1, t5
 j L3
 L3:
-la t7, L_str_0
+la t6, L_str_0

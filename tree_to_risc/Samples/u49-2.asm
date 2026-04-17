@@ -11,14 +11,14 @@ li t8, 1
 mv t1, t8
 j L3
 L3:
-mv t3, t9
-mv t11, a0
+mv t3, t1
+mv t3, a0
 jal string_of_int
-mv t10, a0
-mv t2, t10
-la t12, L_str_0
-mv t0, t12
-mv t14, a0
-mv t15, a1
+mv t9, a0
+mv t2, t9
+la t10, L_str_0
+mv t0, t10
+mv t2, a0
+mv t0, a1
 jal concat
-mv t13, a0
+mv t11, a0

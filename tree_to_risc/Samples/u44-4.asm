@@ -3,35 +3,35 @@ la t6, L_str_0
 mv t5, t6
 la t7, L_str_1
 mv t4, t7
-mv t9, a0
-mv t10, a1
+mv t5, a0
+mv t4, a1
 jal strcmp
 mv t8, a0
 mv t3, t8
-li t12, 0
-beq t11, t12, L4
+li t9, 0
+beq t3, t9, L4
 L5:
-li t14, 0
-mv t2, t14
+li t11, 0
+mv t2, t11
 j L6
 L4:
-li t15, 1
-mv t2, t15
+li t12, 1
+mv t2, t12
 j L6
 L6:
-li t17, 0
-bne t16, t17, L1
+li t13, 0
+bne t2, t13, L1
 L2:
-la t19, L_str_3
-mv t1, t19
+la t15, L_str_3
+mv t1, t15
 j L3
 L1:
-la t20, L_str_2
-mv t1, t20
+la t16, L_str_2
+mv t1, t16
 j L3
 L3:
-mv t0, t21
-mv t23, a0
+mv t0, t1
+mv t0, a0
 jal print
-mv t22, a0
-li t24, 0
+mv t17, a0
+li t18, 0

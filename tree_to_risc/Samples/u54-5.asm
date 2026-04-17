@@ -1,12 +1,12 @@
 // Routine L1
 mv i0, a0
-add t7, t5, t6
-mv rv, t7
+add t5, i0, i0
+mv rv, t5
 end:
 // Routine L2
 mv i0, a0
-mv t9, a0
-mv t10, a1
+mv i0, a0
+mv i0, a1
 jal concat
-mv t8, a0
-mv rv, t8
+mv t6, a0
+mv rv, t6

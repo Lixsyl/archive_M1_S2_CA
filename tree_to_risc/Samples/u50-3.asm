@@ -11,21 +11,21 @@ li t8, 1
 mv t2, t8
 j L6
 L6:
-li t10, 0
-bne t9, t10, L1
+li t9, 0
+bne t2, t9, L1
 L2:
-la t12, L_str_1
-mv t1, t12
+la t11, L_str_1
+mv t1, t11
 j L3
 L1:
-la t13, L_str_0
-mv t1, t13
+la t12, L_str_0
+mv t1, t12
 j L3
 L3:
-mv t3, t14
-la t15, L_str_2
-mv t0, t15
-mv t17, a0
-mv t18, a1
+mv t3, t1
+la t13, L_str_2
+mv t0, t13
+mv t3, a0
+mv t0, a1
 jal concat
-mv t16, a0
+mv t14, a0
