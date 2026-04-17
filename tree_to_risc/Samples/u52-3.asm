@@ -14,16 +14,17 @@ mv t2, t8
 j L6
 L6:
 li t9, 0
-bne t2, t9, L2
+bne t10, t2, t9
+beq t10, x0, L2
 L3:
 li t11, 0
 mv t3, t1
-mv t3, a0
-jal string_of_int
+mv a0, t3
+jal ra, string_of_int
 mv t12, a0
 mv t0, t12
-mv t0, a0
-jal print
+mv a0, t0
+jal ra, print
 mv t13, a0
 li t14, 0
 j Lend

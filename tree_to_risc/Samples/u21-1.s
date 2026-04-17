@@ -20,7 +20,7 @@ main:
 ILPmain:
 li s1, 1
 la s1, L_float_0
-flw fs0, 0(t1)
+flw fs0, 0(s1)
 li s1, 1
 la s1, L_str_0
 end:

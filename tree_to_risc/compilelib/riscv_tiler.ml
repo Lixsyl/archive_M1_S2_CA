@@ -133,7 +133,7 @@ let param_moves params =
         if Tree_helper.is_float_temp temp then "fa" ^ string_of_int i
         else "a" ^ string_of_int i
       in
-      Asm.move_param ~dst:temp ~src:reg)
+      Asm.move_param ~dst:reg ~src:temp) (* --- j'ai inversé reg et temp parce que ca marchait pas *)
     params
 
 let munch_stm (r : rewritter) (expr_to_temp : expr -> temp) (s : stmt) =

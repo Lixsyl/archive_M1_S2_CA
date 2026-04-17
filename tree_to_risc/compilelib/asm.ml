@@ -61,9 +61,9 @@ let load_address ~temp ~lab =
 let load_float ~dst ~src =
   Oper
     {
-      assem = "flw `d0, 0(" ^ src ^ ")";
+      assem = "flw `d0, 0(`s0)";
       dst = [ dst ];
-      src = [];
+      src = [ src ];
       jump = None;
       is_call = false;
     }
@@ -144,21 +144,21 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
       assem = 
         (match relop with 
         (* float equality and nonequality *)
-        | EqF -> "feq.s " ^ temp ^ ", `s0, `s1\nbne " ^ temp ^ ", x0, " ^ lab
-        | NeqF -> "feq.s " ^ temp ^ ", `s0, `s1\nbeq " ^ temp ^ ", x0, " ^ lab
+        | EqF -> "feq.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | NeqF -> "feq.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* integer equality and nonequality (signed or unsigned) *)
-        | Eq -> "beq `s0, `s1, " ^ lab
-        | Neq -> "bne `s0, `s1, " ^ lab
+        | Eq -> "beq `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | Neq -> "bne `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* signed integer inequalities *)
         | LT -> "blt `s0, `s1, " ^ lab
         | GT -> "blt `s1, `s0, " ^ lab
         | LE -> "bge `s1, `s0, " ^ lab
         | GE -> "bge `s0, `s1, " ^ lab
         (* float inequalities *)
-        | LTF -> "flt.s " ^ temp ^ ", `s0, `s1\nbne " ^ temp ^ ", x0, " ^ lab
-        | GTF -> "flt.s " ^ temp ^ ", `s0, `s1\nbeq " ^ temp ^ ", x0, " ^ lab
-        | LEF -> "fle.s " ^ temp ^ ", `s0, `s1\nbne " ^ temp ^ ", x0, " ^ lab
-        | GEF -> "fle.s " ^ temp ^ ", `s0, `s1\nbeq " ^ temp ^ ", x0, " ^ lab
+        | LTF -> "flt.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | GTF -> "flt.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | LEF -> "fle.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | GEF -> "fle.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* unsigned integer inequalities *)
         | ULT -> "bltu `s0, `s1, " ^ lab
         | ULE -> "bgeu `s1, `s0, " ^ lab
@@ -173,7 +173,7 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
 let call ~lab =
   Oper
     {
-      assem = "jal " ^ lab;
+      assem = "jal ra, " ^ lab;
       dst = [ ];
       src = [ ];
       jump = Some [ lab ];

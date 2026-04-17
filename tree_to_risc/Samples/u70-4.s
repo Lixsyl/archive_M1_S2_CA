@@ -14,7 +14,8 @@ main:
 ILPmain:
 li s2, 1
 li s1, 1
-beq s2, s1, L7
+beq s1, s2, s1
+bne s1, x0, L7
 L8:
 li s1, 0
 mv s2, s1
@@ -25,7 +26,8 @@ mv s2, s1
 j L9
 L9:
 li s1, 0
-bne s2, s1, L4
+bne s1, s2, s1
+beq s1, x0, L4
 L5:
 li s1, 0
 mv s1, s1
@@ -36,7 +38,8 @@ mv s1, s1
 j L6
 L6:
 li s2, 0
-bne s1, s2, L1
+bne s1, s1, s2
+beq s1, x0, L1
 L2:
 li s1, 4
 mv s1, s1

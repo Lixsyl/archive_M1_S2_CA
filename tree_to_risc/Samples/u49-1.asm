@@ -1,13 +1,13 @@
 // Routine main
 li t3, 12
 mv t2, t3
-mv t2, a0
-jal string_of_int
+mv a0, t2
+jal ra, string_of_int
 mv t4, a0
 mv t1, t4
 la t5, L_str_0
 mv t0, t5
-mv t1, a0
-mv t0, a1
-jal concat
+mv a0, t1
+mv a1, t0
+jal ra, concat
 mv t6, a0

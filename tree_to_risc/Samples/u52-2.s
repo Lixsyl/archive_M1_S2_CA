@@ -27,7 +27,8 @@ mv s2, s1
 j L6
 L6:
 li s1, 0
-bne s2, s1, L2
+bne s1, s2, s1
+beq s1, x0, L2
 L3:
 li s1, 0
 j Lend

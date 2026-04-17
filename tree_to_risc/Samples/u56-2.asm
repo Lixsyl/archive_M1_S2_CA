@@ -1,7 +1,8 @@
 // Routine L1
-mv i0, a0
+mv a0, i0
 li t12, 0
-beq i0, t12, L6
+beq t13, i0, t12
+bne t13, x0, L6
 L7:
 li t14, 0
 mv t2, t14
@@ -12,10 +13,12 @@ mv t2, t15
 j L8
 L8:
 li t16, 0
-bne t2, t16, L3
+bne t17, t2, t16
+beq t17, x0, L3
 L4:
 li t18, 1
-beq i0, t18, L12
+beq t19, i0, t18
+bne t19, x0, L12
 L13:
 li t20, 0
 mv t4, t20
@@ -30,13 +33,14 @@ mv t4, t22
 j L14
 L14:
 li t23, 0
-bne t4, t23, L9
+bne t24, t4, t23
+beq t24, x0, L9
 L10:
 li t25, 1
 sub t26, i0, t25
 mv t0, t26
-mv t0, a0
-jal L2
+mv a0, t0
+jal ra, L2
 mv t27, a0
 li t28, 1
 mv t3, t28
