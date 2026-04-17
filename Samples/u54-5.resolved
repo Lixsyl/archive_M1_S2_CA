@@ -1,4 +1,6 @@
-function deuxfois(x)
+function deuxfois__int(x)
 (x ILP_Plus_INT x);
-(print(deuxfois("cou")); print(string_of_int(deuxfois(2)))
+function deuxfois__string(x)
+concat(x, x);
+(print(deuxfois__string("cou")); print(string_of_int(deuxfois__int(2)))
 )

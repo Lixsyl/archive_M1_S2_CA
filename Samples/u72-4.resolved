@@ -1,6 +1,6 @@
-function foo(x, y)
+function foo__int__int(x, y)
 (x ILP_Plus_INT y);
-foo(
+foo__int__int(
     (if true
         then 8
         else 1

@@ -1,12 +1,12 @@
-function fr3(x)
-f3(f1(f3(x)));
-function f1(x)
+function f1__int(x)
 (if (x ILP_LessThan_INT 74)
     then (2 ILP_Times_INT x)
     else x
 );
-function f2(x, y)
-f1(f1(x));
-function f3(x)
-f2(f1(x), f2(x, x));
-fr3(74)
+function fr3__int(x)
+f3__int(f1__int(f3__int(x)));
+function f2__int__int(x, y)
+f1__int(f1__int(x));
+function f3__int(x)
+f2__int__int(f1__int(x), f2__int__int(x, x));
+fr3__int(74)

@@ -4,57 +4,69 @@ label L_str_1 "0"
 label L_str_0 "FUNCTION"
 
 /* Function Definitions */
-/* function : test */
+/* function : test__int */
 # Routine: L1
 label L1
   # Body
   move
   temp rv
-  call
-    name concat
-    temp i0    call
-      name string_of_int
-      const 1      
-    call end
-    
-  call end
-  
+  binop
+  add  
+  temp i0  
+  const 1  
   label end
   
-  
-  /* Main */
-  # Routine main
-  label main
-  sxp
-    eseq
-      sxp
-        call
-          name print
+  /* function : test__string */
+    # Routine: L2
+  label L2
+    # Body
+    move
+    temp rv
+    call
+      name concat
+      temp i0      call
+        name string_of_int
+        const 1        
+      call end
+      
+    call end
+    
+    label end
+    
+    
+    /* Main */
+    # Routine main
+    label main
+    sxp
+      eseq
+        sxp
           call
-            name concat
+            name print
             call
               name concat
-              eseq
-                sxp
-                  temp L1                  
-                name L_str_0                
-                call
-                  name string_of_int
+              call
+                name concat
+                eseq
+                  sxp
+                    const 0                    
+                  name L_str_0                  
                   call
-                    name L1
-                    const 2                    
+                    name string_of_int
+                    call
+                      name L1
+                      const 2                      
+                    call end
+                    
                   call end
                   
                 call end
+                call
+                  name L2
+                  name L_str_1                  
+                call end
                 
-              call end
-              call
-                name L1
-                name L_str_1                
               call end
               
             call end
-            
-          call end
-        const 0    
+          const 0      
 label end

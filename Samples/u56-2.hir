@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : even */
+/* function : even__int */
 # Routine: L1
 label L1
   # Body
@@ -102,7 +102,7 @@ label L1
     
     label end
     
-    /* function : odd */
+    /* function : odd__int */
         # Routine: L2
     label L2
       # Body

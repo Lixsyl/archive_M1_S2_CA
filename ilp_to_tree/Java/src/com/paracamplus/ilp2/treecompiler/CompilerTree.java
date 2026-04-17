@@ -188,6 +188,7 @@ public Void visit(ITASTloop iast, Void context) throws CompilationException {
 	      indent();
 	      emit("name " + funNames.get(v.getMangledName()) + "\n");
 	      for (ITASTexpression e : iast.getArguments()) {
+	      	emit("float");
 		      e.accept(this,context);
 	      }
 	      emit("\n");

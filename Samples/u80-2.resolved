@@ -1,4 +1,6 @@
-function test(x)
+function test__int(x)
+(x ILP_Plus_INT 1);
+function test__string(x)
 concat(x, string_of_int(1));
 print(concat(concat((test; "FUNCTION"
-            ), string_of_int(test(2))), test("0")))
+            ), string_of_int(test__int(2))), test__string("0")))

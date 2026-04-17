@@ -159,7 +159,9 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
 		  bindVariableAs(newvar.getMangledName(), newvar);
 		  newvars[i] = newvar;
 	  }
-	  ITASTvariable v = (ITASTvariable)fdef.getFunctionVariable().accept(this, null);
+	  Type[] typesArray = key.argTypes.toArray(new Type[0]);
+	String mangledName = mangle(fdef.getName(), typesArray);
+	ITASTvariable v = new TASTvariable(mangledName, null);
 	  TASTfunctionDefinition ftmp = new TASTfunctionDefinition(v, newvars, null, null);
 	  specializations.put(key, ftmp);
 	  ITASTexpression e = fdef.getBody().accept(this, null);
@@ -191,7 +193,12 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
 	}
 	FunctionKey k = new FunctionKey(fname, l);
 	typeFunctionBody(fdef, k);
-	return new TASTinvocation(iast.getFunction().accept(this, context), newargs, specializedReturnTypes.get(k));
+	
+	Type[] typesArray = l.toArray(new Type[0]);
+	String mangledName = mangle(fname, typesArray);
+	ITASTvariable funVar = new TASTvariable(mangledName, specializedReturnTypes.get(k));
+	
+	return new TASTinvocation(funVar, newargs, specializedReturnTypes.get(k));
   }
 
   @Override
