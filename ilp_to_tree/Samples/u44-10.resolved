@@ -1,6 +1,5 @@
 print(
-    (if ("a"; "b"; false
-            )
+    (if ("a" ILP_LessThanOrEqual_STRING "b")
         then "true"
         else "false"
     ))

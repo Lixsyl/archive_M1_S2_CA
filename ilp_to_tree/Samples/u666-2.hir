@@ -14,58 +14,70 @@ label L1
         ne
         eseq
           seq
-            sxp
+            cjump
+              eq
               temp i0              
-            sxp
               const 0              
+              name L5
+              name L6
+            label L5
+            move
+            temp t2
+            const 1
+            jump name L7
+            label L6
+            move
+            temp t2
+            const 0
+            label L7
           seq end
-          const 0          
-          
-          
-          const 0
-          name L2
-          name L3
-        label L2
-        move
-        temp t1
-        const 1        
-        jump name L4
-        label L3
-        move
-        temp t1
-        call
-          name int_of_float
-          binop
-          mulF          
-          callF
-            name float_of_int
-            float            temp i0            
-          call end
-          
-          call
-            name L1
-            binop
-            sub            
-            temp i0            
-            const 1            
-          call end
-          
+          temp t2
+        
+        
+        const 0
+        name L2
+        name L3
+      label L2
+      move
+      temp t1
+      const 1      
+      jump name L4
+      label L3
+      move
+      temp t1
+      call
+        name int_of_float
+        binop
+        mulF        
+        callF
+          name float_of_int
+          temp i0          
         call end
         
-        label L4
-      seq end
-      temp t1
-    
-    label end
-    
-    
-    /* Main */
-    # Routine main
-    label main
-    sxp
-      call
-        name L1
-        const 5        
+        call
+          name L1
+          binop
+          sub          
+          temp i0          
+          const 1          
+        call end
+        
       call end
-    
+      
+      label L4
+    seq end
+    temp t1
+  
+  label end
+  
+  
+  /* Main */
+  # Routine main
+  label main
+  sxp
+    call
+      name L1
+      const 5      
+    call end
+  
 label end

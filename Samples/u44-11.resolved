@@ -1,21 +1,17 @@
 (print(
-        (if ("a"; "b"; false
-                )
+        (if ("a" ILP_LessThan_STRING "b")
             then "true"
             else "false"
         )); print(
-        (if ("a"; "b"; false
-                )
+        (if ("a" ILP_LessThanOrEqual_STRING "b")
             then "true"
             else "false"
         )); print(
-        (if ("a"; "b"; false
-                )
+        (if ("a" ILP_GreaterThan_STRING "b")
             then "true"
             else "false"
         )); print(
-        (if ("a"; "b"; false
-                )
+        (if ("a" ILP_GreaterThanOrEqual_STRING "b")
             then "true"
             else "false"
         ))

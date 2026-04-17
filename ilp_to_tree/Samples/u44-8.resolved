@@ -1,5 +1,5 @@
 print(
-    (if ("true"; true; false
+    (if ("true"; true; true
             )
         then "true"
         else "false"

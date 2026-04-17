@@ -1,6 +1,5 @@
 print(
-    (if ("aa"; "bb"; false
-            )
+    (if ("aa" ILP_Equal_STRING "bb")
         then "true"
         else "false"
     ))

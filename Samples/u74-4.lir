@@ -15,9 +15,7 @@ seq
   move temp t2 const 1 
   jump name L10 
   label L10
-  sxp
-    temp t2
-  cjump ne const 1 const 0 name L5 name L6 
+  cjump ne temp t2 const 0 name L5 name L6 
   label L6
   move temp t1 temp i0 
   jump name L7 

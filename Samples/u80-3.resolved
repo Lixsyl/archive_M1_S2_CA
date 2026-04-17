@@ -1,6 +1,2 @@
-print(
-    (if (print; "BOOL"
-            )
-        then "true"
-        else "false"
+print((print; "FUNCTION"
     ))

@@ -1,3 +1,2 @@
-((1; 2; false
-    ); "BOOL"
+((1 ILP_Equal_INT 2); "BOOL"
 )

@@ -1,6 +1,5 @@
 print(
-    (if (4; 4.0; false
-            )
+    (if (float_of_int(4) ILP_Equal_FLOAT 4.0)
         then "true"
         else "false"
     ))

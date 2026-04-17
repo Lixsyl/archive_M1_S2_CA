@@ -121,48 +121,41 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
     emit("label end\n");
   }
 
-
   @Override
-  public Void visit(ITASTloop iast, Void context) throws CompilationException {
-	  String r;
-	  if (iast.getType() == Type.INT || iast.getType() == Type.BOOL) {
-		  r = newTemp();
-	  }
-	  else if (iast.getType() == Type.FLOAT) {
-		  r = newFloatTemp();
-	  }
-	  else if (iast.getType() == Type.STRING) {
-		  r = newLabel();
-	  }
-	  else {
-		  throw new CompilationException("compiler alternative");
-	  }
+public Void visit(ITASTloop iast, Void context) throws CompilationException {
 
-	  String lStart = newLabel();
-	  String lTrue  = newLabel();
-	  String lFalse = newLabel();
-	  
-	  emit ("eseq\n");
-      indent();
-	  enterSeq();
-	  emit("label " + lStart + "\n");
-	  emit ("cjump\n");
-      indent();
-	  emit ("ne\n");
-	  iast.getCondition().accept(this, context);
-	  emit ("\n");
-	  emit ("const 0\n");
-	  emit("name " + lTrue + "\n");
-	  emit("name " + lFalse + "\n");
-	  dedent();
-	  emit("label " + lTrue + "\n");
-	  iast.getBody().accept(this, context);
-	  emit("jump name " + lStart + "\n");
-	  emit("label " + lFalse + "\n");
-	  exitSeq();
-	  dedent();
-	  return null;
-  }
+    String lStart = newLabel();
+    String lTrue  = newLabel();
+    String lFalse   = newLabel();
+
+    emit("eseq\n");
+    indent();
+    enterSeq();
+
+    emit("label " + lStart + "\n");
+    emit("cjump\n");
+    indent();
+    emit("ne\n");
+    iast.getCondition().accept(this, context);
+    emit("\nconst 0\n");
+    emit("name " + lTrue + "\n");
+    emit("name " + lFalse + "\n");
+    dedent();
+
+    emit("label " + lTrue + "\n");
+    emit("sxp\n");
+    indent();
+    iast.getBody().accept(this, context);
+    emit("\n");
+    dedent();
+
+    emit("jump name " + lStart + "\n");
+    emit("label " + lFalse + "\n");
+    exitSeq();
+    emit("const 0\n");
+    dedent();
+    return null;
+}
 
   @Override
   public Void visit(ITASTassignment iast, Void context) throws CompilationException {
@@ -214,6 +207,7 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
   return null;
   }
   
+  // car 80-1 ne passe pas 
   @Override
 	public Void visit(ITASTvariable iast, Void context)
     throws CompilationException {

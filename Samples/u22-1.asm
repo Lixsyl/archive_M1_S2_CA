@@ -12,7 +12,7 @@ j L3
 L1:
 li t7, 1
 mv t0, t7
-mv a0, t0
+mv t0, a0
 jal ra, float_of_int
 fmv.d f8, fa0
 fmv.d f1, f8

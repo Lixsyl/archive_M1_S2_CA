@@ -13,12 +13,12 @@ sxp
         name print
         call
           name string_of_float
-          binop
+          float          binop
           subF          
           constF 2.5          
           callF
             name float_of_int
-            float            const 1            
+            const 1            
           call end
           
         call end

@@ -1,6 +1,5 @@
 print(
-    (if (4; 5; false
-            )
+    (if (4 ILP_Equal_INT 5)
         then "true"
         else "false"
     ))

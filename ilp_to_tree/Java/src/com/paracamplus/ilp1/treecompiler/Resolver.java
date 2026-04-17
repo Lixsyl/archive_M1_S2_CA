@@ -166,24 +166,30 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
 
   private ITASTexpression resolveEquality(String op, ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
+	if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
+		if (l.getType() == Type.INT && r.getType() == Type.INT) {
+			return new TASTbinaryOperation(new ASToperator(op + "_INT"), l, r, Type.BOOL);
+		}
+
+		ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
+		ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
+		return new TASTbinaryOperation(new ASToperator(op + "_FLOAT"), nl, nr, Type.BOOL);
+	}
+	
+	if (l.getType() == r.getType()) {
+		return new TASTbinaryOperation(new ASToperator(op + "_" + l.getType()), l, r, Type.BOOL);
+	}
+	
 	  ITASTexpression[] exprs = new ITASTexpression[3];
 	  exprs[0] = l.accept(this, null);
 	  exprs[1] = r.accept(this, null);
-	  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType())) && (l.accept(this, null) == r.accept(this, null))) {
-		  if (!(l.getType() == Type.INT && r.getType() == Type.INT)) {
-			  exprs[0] = castIfNeeded(exprs[0], Type.FLOAT);
-			  exprs[1] = castIfNeeded(exprs[1], Type.FLOAT);
-		  }
-		  exprs[2] = new TASTboolean("true", Type.BOOL);
-		  return new TASTsequence(exprs, Type.BOOL);
-	  }
-	  if ((l.getType() == r.getType()) && (l.accept(this, null) == r.accept(this, null))) {
-		  exprs[2] = new TASTboolean("true", Type.BOOL);
-		  return new TASTsequence(exprs, Type.BOOL);
-	  } else {
-		  exprs[2] = new TASTboolean("false", Type.BOOL);
-		  return new TASTsequence(exprs, Type.BOOL);
-	  }
+	  
+	if (op == "ILP_Equal") {
+		exprs[2] = new TASTboolean("false", Type.BOOL);
+	} else {
+		exprs[2] = new TASTboolean("true", Type.BOOL);
+	}
+	return new TASTsequence(exprs, Type.BOOL);
   }
 
   // Comparisons (< <= > >=)
@@ -191,9 +197,11 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
     throws ResolutionException {
 	  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType()))) {
 		  if (l.getType() == Type.INT && r.getType() == Type.INT) {
-			  return binaryCast(op + "_INT", l, l.getType(), r, r.getType(), Type.INT);
+			  return binaryCast(op + "_INT", l, l.getType(), r, r.getType(), Type.BOOL);
 		  }
-		  return binaryCast(op + "_FLOAT", l, l.getType(), r, r.getType(), Type.FLOAT);
+		  return binaryCast(op + "_FLOAT", l, Type.FLOAT, r, Type.FLOAT, Type.BOOL);
+	  } else if ((l.getType() == Type.STRING) && (r.getType() == Type.STRING)) {
+	  	return new TASTbinaryOperation(new ASToperator(op + "_STRING"), l, r, Type.BOOL);
 	  } else {
 		  ITASTexpression[] exprs = new ITASTexpression[3];
 		  exprs[0] = l.accept(this, null);

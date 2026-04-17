@@ -2,8 +2,8 @@ label main
 seq
   move temp t3 const 1 
   move temp f2 callF name float_of_int temp t3 call end 
-  move temp t1 binop subF constF 2.5 temp f2 
-  move temp t0 call name string_of_float temp t1 call end 
+  move temp f1 binop subF constF 2.5 temp f2 
+  move temp t0 call name string_of_float temp f1 call end 
   sxp
     call name print temp t0 call end
   sxp

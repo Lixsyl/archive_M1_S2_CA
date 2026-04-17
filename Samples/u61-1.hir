@@ -24,45 +24,41 @@ sxp
             cjump
               ne
               eseq
-                seq
-                  sxp
-                    temp t1                    
-                seq end
+                sxp
+                  temp t1                  
                 const 1                
                 
                 const 0
+                name L1
                 name L2
-                name L3
-              label L2
+              label L1
               move
-              temp L1
+              temp t2
               eseq
-                seq
-                  sxp
+                sxp
+                  call
+                    name concat
                     call
-                      name concat
-                      call
-                        name string_of_int
-                        temp t1                        
-                      call end
-                      
+                      name string_of_int
+                      temp t1                      
                     call end
-                    
-                seq end
+                    name L_str_0                    
+                  call end
+                  
                 name L_str_1                
                 
-                jump name L4
-                label L3
+                jump name L3
+                label L2
                 move
-                temp L1
+                temp t2
                 call
                   name string_of_float
-                  constF 1.5                  
+                  float                  constF 1.5                  
                 call end
                 
-                label L4
+                label L3
               seq end
-              temp L1
+              temp t2
             
           call end
         const 0    

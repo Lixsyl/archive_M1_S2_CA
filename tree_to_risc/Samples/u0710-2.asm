@@ -38,7 +38,7 @@ mv t1, t18
 j L3
 L3:
 mv t0, t1
-mv a0, t0
+mv t0, a0
 jal ra, print
 mv t19, a0
 li t20, 0

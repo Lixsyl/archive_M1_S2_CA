@@ -196,7 +196,7 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
 
   @Override
   public ITASTexpression visit(IASTloop iast, Void context) throws TypingException {
-	  return new TASTloop(iast.getBody().accept(this, context), iast.getCondition().accept(this, context), Type.BOOL);
+	  return new TASTloop(iast.getCondition().accept(this, context), iast.getBody().accept(this, context), Type.BOOL);
   }
 
   @Override

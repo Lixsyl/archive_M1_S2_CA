@@ -10,7 +10,7 @@ j L3
 L1:
 la t6, L_str_0
 mv t0, t6
-mv a0, t0
+mv t0, a0
 jal ra, print
 mv t7, a0
 li t8, 0

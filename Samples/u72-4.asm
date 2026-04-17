@@ -1,6 +1,6 @@
 // Routine L1
-mv a0, i0
-mv a1, i1
+mv i0, a0
+mv i1, a1
 add t4, i0, i1
 mv rv, t4
 end:
@@ -23,7 +23,7 @@ li t10, 8
 mv t2, t10
 mul t11, t2, t2
 mv t0, t11
-mv a0, t3
-mv a1, t0
+mv t3, a0
+mv t0, a1
 jal ra, L1
 mv t12, a0

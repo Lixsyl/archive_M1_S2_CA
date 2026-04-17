@@ -1,1 +1,5 @@
-print(string_of_int((4 ILP_LessThan_INT 5)))
+print(
+    (if (4 ILP_LessThan_INT 5)
+        then "true"
+        else "false"
+    ))

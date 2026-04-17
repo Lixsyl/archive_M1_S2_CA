@@ -1,6 +1,5 @@
 print(
-    (if (1.0; 1; false
-            )
+    (if (1.0 ILP_NotEqual_FLOAT float_of_int(1))
         then "true"
         else "false"
     ))

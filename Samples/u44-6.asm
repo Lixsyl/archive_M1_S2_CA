@@ -1,22 +1,37 @@
 // Routine main
-la t1, L_float_0
-flw f2, 0(t1)
-li t3, 1
-li t4, 0
-li t5, 0
-bne t6, t4, t5
-beq t6, x0, L2
-L3:
-la t7, L_str_1
-mv L1, t7
-j L4
-L2:
-la t8, L_str_0
-mv L1, t8
-j L4
+li t4, 1
+mv t3, t4
+mv t3, a0
+jal ra, float_of_int
+fmv.d f5, fa0
+fmv.d f1, f5
+la t6, L_float_0
+flw f7, 0(t6)
+feq.s t8, f7, f1
+beq t8, x0, L4
+L5:
+li t9, 0
+mv t2, t9
+j L6
 L4:
-mv t0, L1
-mv a0, t0
+li t10, 1
+mv t2, t10
+j L6
+L6:
+li t11, 0
+bne t12, t2, t11
+beq t12, x0, L1
+L2:
+la t13, L_str_1
+mv t1, t13
+j L3
+L1:
+la t14, L_str_0
+mv t1, t14
+j L3
+L3:
+mv t0, t1
+mv t0, a0
 jal ra, print
-mv t9, a0
-li t10, 0
+mv t15, a0
+li t16, 0

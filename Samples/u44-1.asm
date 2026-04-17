@@ -1,21 +1,31 @@
 // Routine main
-li t1, 4
-li t2, 5
-li t3, 0
-li t4, 0
-bne t5, t3, t4
-beq t5, x0, L2
-L3:
-la t6, L_str_1
-mv L1, t6
-j L4
-L2:
-la t7, L_str_0
-mv L1, t7
-j L4
+li t3, 4
+li t4, 5
+beq t5, t3, t4
+bne t5, x0, L4
+L5:
+li t6, 0
+mv t2, t6
+j L6
 L4:
-mv t0, L1
-mv a0, t0
+li t7, 1
+mv t2, t7
+j L6
+L6:
+li t8, 0
+bne t9, t2, t8
+beq t9, x0, L1
+L2:
+la t10, L_str_1
+mv t1, t10
+j L3
+L1:
+la t11, L_str_0
+mv t1, t11
+j L3
+L3:
+mv t0, t1
+mv t0, a0
 jal ra, print
-mv t8, a0
-li t9, 0
+mv t12, a0
+li t13, 0

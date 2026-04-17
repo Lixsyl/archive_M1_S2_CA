@@ -9,10 +9,8 @@ label L_str_0 "FLOAT"
 label main
 sxp
   eseq
-    seq
-      sxp
-        constF 5.0        
-    seq end
+    sxp
+      constF 5.0      
     name L_str_0    
   
 label end

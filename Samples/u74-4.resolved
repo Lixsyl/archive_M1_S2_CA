@@ -1,8 +1,7 @@
 function fr3(x)
 f3(f1(f3(x)));
 function f1(x)
-(if ((x ILP_LessThan_INT 74); true
-        )
+(if (x ILP_LessThan_INT 74)
     then (2 ILP_Times_INT x)
     else x
 );

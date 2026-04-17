@@ -215,13 +215,42 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 
   private void emitStringCompare(ITASTbinaryOperation iast, Void context, String relop)
     throws CompilationException {
-	  emit("strcmp\n");
-	  indent();
-	  emit(relop + "\n");
-	  iast.getLeftOperand().accept(this, context);
-	  emit("\n");
-	  iast.getRightOperand().accept(this, context);
-	  emit("\n");
+    	String r      = newTemp();
+	String lTrue  = newLabel();
+	String lFalse = newLabel();
+	String lEnd   = newLabel();
+    
+    	emit("eseq\n");
+	indent();
+	enterSeq();
+	indent();
+	emit("cjump\n");
+	indent();
+	emit(relop + "\n");
+	  
+	emit("call\n");
+	indent();
+	emit("name strcmp\n");
+	iast.getLeftOperand().accept(this, context);
+	emit("\n");
+	iast.getRightOperand().accept(this, context);
+	emit("\n");
+	dedent();
+	emit("call end\n");
+	
+	emit("const 0\n");
+	emit("name " + lTrue + "\n");
+    	emit("name " + lFalse + "\n");
+	dedent();
+	emit("label " + lTrue + "\n");
+	emitMoveConst(r, 1);
+	emit("jump name " + lEnd + "\n");
+	emit("label " + lFalse + "\n");
+	emitMoveConst(r, 0);
+	emit("label " + lEnd + "\n");
+	exitSeq();
+	emit("temp " + r + "\n");
+	dedent();
   }
 
   private void emitBoolOp(ITASTbinaryOperation iast, Void context)
@@ -402,19 +431,31 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
     throws CompilationException {
 	  ITASTexpression[] expr = iast.getExpressions();
 	  if (expr.length > 1) {
-		  emit ("eseq\n");
-	      indent();
-		  enterSeq();
-		  for (int i = 0 ; i < expr.length -1 ; i++) {
-			  emit ("sxp\n");
-		      indent();
-			  expr[i].accept(this, context);
-			  emit ("\n");
-		      dedent();
-		  }
-		  exitSeq();
+	  	emit ("eseq\n");
+	  	indent();
+	  	
+	  	if (expr.length > 2) {
+	  		enterSeq();
+	  		for (int i = 0 ; i < expr.length -1 ; i++) {
+	  			emit ("sxp\n");
+	  			indent();
+	  			expr[i].accept(this, context);
+	  			emit ("\n");
+	  			dedent();
+	  		}
+	  		exitSeq();
+	  		expr[expr.length -1].accept(this, context);
+	  	} else {
+	  		emit ("sxp\n");
+	  		indent();
+	  		expr[0].accept(this, context);
+	  		emit ("\n");
+	  		dedent();
+	  		expr[1].accept(this, context);
+	  	}
+	  } else {
+	  	expr[0].accept(this, context);
 	  }
-	  expr[expr.length -1].accept(this, context);
       emit ("\n");
       return null;
   }
@@ -423,14 +464,11 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   public Void visit(ITASTalternative iast, Void context)
     throws CompilationException {
 	  String r;
-	  if (iast.getType() == Type.INT || iast.getType() == Type.BOOL) {
+	  if (iast.getType() == Type.INT || iast.getType() == Type.BOOL || iast.getType() == Type.STRING) {
 		  r = newTemp();
 	  }
 	  else if (iast.getType() == Type.FLOAT) {
 		  r = newFloatTemp();
-	  }
-	  else if (iast.getType() == Type.STRING) {
-		  r = newLabel();
 	  }
 	  else {
 		  throw new CompilationException("compiler alternative");
@@ -506,13 +544,12 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 	      emit("call\n");
 	      indent();
 	      emit("name " + name + "\n");
-	      //for (int i = 0; i < args.length; i++) {
-	    	//  args[i].accept(this,null);
-	      //}
-	      //No temporary named "t2"               
-	      //Compiling: Samples/u49-3.ilpml ==> ./jamel.sh: ligne 213: stage_labels[rc-1] : variable sans liaison
-	      //make: *** [Makefile:15: test] Error 1
-	      args[0].accept(this,null);
+	      if (name == "string_of_float") {
+	      	emit("float");
+	      }
+	      for (int i = 0; i < args.length; i++) {
+	    	  args[i].accept(this,null);
+	      }
 	      emit("\n");
 	      dedent();
 	      emit("call end\n");
@@ -521,7 +558,6 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 		  emit("callF\n");
 	      indent();
 	      emit("name " + name + "\n");
-	      emit("float");
 	      args[0].accept(this,null);
 	      emit("\n");
 	      dedent();

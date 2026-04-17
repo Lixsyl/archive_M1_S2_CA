@@ -1,7 +1,7 @@
 /* == High Level Intermediate representation. == */
 /* String Litterals */
 label L_str_1 "0"
-label L_str_0 "PARAM"
+label L_str_0 "FUNCTION"
 
 /* Function Definitions */
 /* function : test */
@@ -12,7 +12,11 @@ label L1
   temp rv
   call
     name concat
-    temp i0    
+    temp i0    call
+      name string_of_int
+      const 1      
+    call end
+    
   call end
   
   label end
@@ -29,18 +33,13 @@ label L1
           call
             name concat
             call
-              name string_of_float
-              binop
-              addF              
+              name concat
               eseq
-                seq
-                  sxp
-                    temp L1                    
-                seq end
+                sxp
+                  temp L1                  
                 name L_str_0                
-                
-                callF
-                  name float_of_int
+                call
+                  name string_of_int
                   call
                     name L1
                     const 2                    
@@ -48,6 +47,10 @@ label L1
                   
                 call end
                 
+              call end
+              call
+                name L1
+                name L_str_1                
               call end
               
             call end

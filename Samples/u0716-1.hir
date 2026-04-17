@@ -19,10 +19,8 @@ const 0
       cjump
         ne
         eseq
-          seq
-            sxp
-              const 3              
-          seq end
+          sxp
+            const 3            
           const 1          
           
 const 0
@@ -42,10 +40,8 @@ const 0
         move
         temp t1
         eseq
-          seq
-            sxp
-              const 3              
-          seq end
+          sxp
+            const 3            
           const 1          
           
           label L3

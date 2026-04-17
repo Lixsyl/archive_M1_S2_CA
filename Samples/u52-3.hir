@@ -20,26 +20,12 @@ sxp
             const 5            
           seq end
           eseq
-            seq
-              sxp
-                eseq
-                  seq
-                    label L1
-                    cjump
-                      ne
-                      eseq
-                      move
-                      temp t1
-                      binop
-                      add                      
-                      temp t1                      
-                      const 1                      
-                      temp t1                      
-                      
-                      const 0
-                      name L2
-                      name L3
-                    label L2
+            sxp
+              eseq
+                seq
+                  label L1
+                  cjump
+                    ne
                     eseq
                       seq
                         cjump
@@ -50,21 +36,36 @@ sxp
                           name L5
                         label L4
                         move
-                        temp t3
+                        temp t2
                         const 1
                         jump name L6
                         label L5
                         move
-                        temp t3
+                        temp t2
                         const 0
                         label L6
                       seq end
-                      temp t3
-                    jump name L1
-                    label L3
-                  seq end
-                
-            seq end
+                      temp t2
+                    
+const 0
+                    name L2
+                    name L3
+                  label L2
+                  sxp
+                    eseq
+                    move
+                    temp t1
+                    binop
+                    add                    
+                    temp t1                    
+                    const 1                    
+                    temp t1                    
+                    
+                  jump name L1
+                  label L3
+                seq end
+                const 0
+              
             temp t1            
             
           call end

@@ -13,10 +13,8 @@ sxp
       call
         name print
         eseq
-          seq
-            sxp
-              const 0              
-          seq end
+          sxp
+            const 0            
           name L_str_0          
           
         call end

@@ -3,8 +3,8 @@ la t6, L_str_0
 mv t5, t6
 la t7, L_str_1
 mv t4, t7
-mv a0, t5
-mv a1, t4
+mv t5, a0
+mv t4, a1
 jal ra, strcmp
 mv t8, a0
 mv t3, t8
@@ -33,7 +33,7 @@ mv t1, t16
 j L3
 L3:
 mv t0, t1
-mv a0, t0
+mv t0, a0
 jal ra, print
 mv t17, a0
 li t18, 0

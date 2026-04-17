@@ -1,1 +1,5 @@
-concat(string_of_int((1 ILP_GreaterThanOrEqual_INT 0)), "*")
+concat(
+    (if (1 ILP_GreaterThanOrEqual_INT 0)
+        then "true"
+        else "false"
+    ), "*")

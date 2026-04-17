@@ -1,10 +1,14 @@
 label main
 seq
-  sxp
-    const 1
-  sxp
-    const 1
-  cjump ne const 0 const 0 name L4 name L5 
+  cjump eq const 1 const 1 name L7 name L8 
+  label L8
+  move temp t3 const 0 
+  jump name L9 
+  label L7
+  move temp t3 const 1 
+  jump name L9 
+  label L9
+  cjump ne temp t3 const 0 name L4 name L5 
   label L5
   move temp t2 const 0 
   jump name L6 

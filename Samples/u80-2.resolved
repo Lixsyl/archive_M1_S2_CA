@@ -1,4 +1,4 @@
 function test(x)
 concat(x, string_of_int(1));
-print(concat(string_of_float(((test; "PARAM"
-                ) ILP_Plus_FLOAT float_of_int(test(2)))), test("0")))
+print(concat(concat((test; "FUNCTION"
+            ), string_of_int(test(2))), test("0")))

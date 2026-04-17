@@ -1,6 +1,5 @@
 print(
-    (if (true; false; false
-            )
+    (if (true ILP_NotEqual_BOOL false)
         then "true"
         else "false"
     ))

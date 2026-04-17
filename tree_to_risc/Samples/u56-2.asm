@@ -1,5 +1,5 @@
 // Routine L1
-mv a0, i0
+mv i0, a0
 li t12, 0
 beq t13, i0, t12
 bne t13, x0, L6
@@ -39,7 +39,7 @@ L10:
 li t25, 1
 sub t26, i0, t25
 mv t0, t26
-mv a0, t0
+mv t0, a0
 jal ra, L2
 mv t27, a0
 li t28, 1

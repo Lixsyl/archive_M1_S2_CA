@@ -1,7 +1,7 @@
 // Routine main
 li t4, 1
 mv t3, t4
-mv a0, t3
+mv t3, a0
 jal ra, float_of_int
 fmv.d f5, fa0
 fmv.d f1, f5
@@ -31,7 +31,7 @@ mv t1, t14
 j L3
 L3:
 mv t0, t1
-mv a0, t0
+mv t0, a0
 jal ra, print
 mv t15, a0
 li t16, 0

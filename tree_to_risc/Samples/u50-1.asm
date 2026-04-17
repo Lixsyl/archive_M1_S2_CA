@@ -3,11 +3,11 @@ la t3, L_str_0
 mv t2, t3
 li t4, 2
 mv t1, t4
-mv a0, t1
+mv t1, a0
 jal ra, string_of_int
 mv t5, a0
 mv t0, t5
-mv a0, t2
-mv a1, t0
+mv t2, a0
+mv t0, a1
 jal ra, concat
 mv t6, a0

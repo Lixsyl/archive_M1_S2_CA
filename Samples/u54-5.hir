@@ -21,20 +21,18 @@ label L1
   label main
   sxp
     eseq
-      seq
-        sxp
-          eseq
-            sxp
+      sxp
+        eseq
+          sxp
+            call
+              name print
               call
-                name print
-                call
-                  name L1
-                  name L_str_0                  
-                call end
-                
+                name L1
+                name L_str_0                
               call end
-            const 0          
-      seq end
+              
+            call end
+          const 0        
       eseq
         sxp
           call

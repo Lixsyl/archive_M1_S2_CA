@@ -23,7 +23,7 @@ sxp
   addF  
   callF
     name float_of_int
-    float    temp t1    
+    temp t1    
   call end
   
   temp f2

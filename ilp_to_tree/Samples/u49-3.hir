@@ -12,16 +12,16 @@ sxp
     name concat
     call
       name string_of_float
-      binop
+      float      binop
       divF      
       constF 5.0      
       callF
         name float_of_int
-        float        const 2        
+        const 2        
       call end
       
     call end
-    
+    name L_str_0    
   call end
 
 label end

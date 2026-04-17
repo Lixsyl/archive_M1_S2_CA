@@ -15,10 +15,8 @@ sxp
     const 33    
   seq end
   eseq
-    seq
-      sxp
-        name L_str_0        
-    seq end
+    sxp
+      name L_str_0      
     binop
     add    
     temp t1    

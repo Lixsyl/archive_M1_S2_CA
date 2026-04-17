@@ -10,10 +10,8 @@ label L_str_1 "STRING"
 label main
 sxp
   eseq
-    seq
-      sxp
-        name L_str_0        
-    seq end
+    sxp
+      name L_str_0      
     name L_str_1    
   
 label end

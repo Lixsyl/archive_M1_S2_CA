@@ -1,44 +1,44 @@
 // Routine main
-li t3, 0
 li t4, 0
-bne t5, t3, t4
-beq t5, x0, L5
-L6:
-li t6, 710
-li t7, 1
-li t8, 0
-bne t9, t7, t8
-beq t9, x0, L8
-L9:
-li t10, 2
-li t11, 1
-mv t2, t11
-j L10
+li t5, 0
+bne t6, t4, t5
+beq t6, x0, L4
 L5:
-li t12, 1
-mv t1, t12
-j L7
+li t7, 710
+li t8, 1
+li t9, 0
+bne t10, t8, t9
+beq t10, x0, L7
 L8:
+li t11, 2
+li t12, 1
+mv t3, t12
+j L9
+L4:
 li t13, 1
 mv t2, t13
-j L10
-L10:
-mv t1, t2
+j L6
 L7:
-li t14, 0
-bne t15, t1, t14
-beq t15, x0, L2
-L3:
-la t16, L_str_1
-mv L1, t16
-j L4
+li t14, 1
+mv t3, t14
+j L9
+L9:
+mv t2, t3
+L6:
+li t15, 0
+bne t16, t2, t15
+beq t16, x0, L1
 L2:
-la t17, L_str_0
-mv L1, t17
-j L4
-L4:
-mv t0, L1
-mv a0, t0
+la t17, L_str_1
+mv t1, t17
+j L3
+L1:
+la t18, L_str_0
+mv t1, t18
+j L3
+L3:
+mv t0, t1
+mv t0, a0
 jal ra, print
-mv t18, a0
-li t19, 0
+mv t19, a0
+li t20, 0

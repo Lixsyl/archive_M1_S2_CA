@@ -29,7 +29,7 @@ label L1
           name print
           call
             name string_of_float
-            callF
+            float            callF
               name L1
               constF 1.25              
             call end

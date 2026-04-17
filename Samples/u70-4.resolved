@@ -1,6 +1,5 @@
 (if 
-        (if (1; 1; false
-                )
+        (if (1 ILP_Equal_INT 1)
             then true
             else false
         )

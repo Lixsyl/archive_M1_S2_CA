@@ -1,22 +1,18 @@
 function even(n)
-(if (n; 0; false
-        )
+(if (n ILP_Equal_INT 0)
     then true
     else 
-        (if (n; 1; false
-                )
+        (if (n ILP_Equal_INT 1)
             then false
             else (odd((n ILP_Minus_INT 1)); true
                 )
         )
 );
 function odd(n)
-(if (n; 0; false
-        )
+(if (n ILP_Equal_INT 0)
     then false
     else 
-        (if (n; 1; false
-                )
+        (if (n ILP_Equal_INT 1)
             then true
             else even((n ILP_Minus_INT 1))
         )
