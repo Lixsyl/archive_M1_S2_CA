@@ -18,7 +18,7 @@ sxp
           constF 2.5          
           callF
             name float_of_int
-            const 1            
+            float            const 1            
           call end
           
         call end

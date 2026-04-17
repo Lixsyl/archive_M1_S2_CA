@@ -14,8 +14,8 @@ main:
 ILPmain:
 li s1, 2
 mv s1, s1
-li s1, 3
-mv s1, s1
-mul s1, s3, s2
+li s2, 3
+mv s1, s2
+mul s1, s1, s1
 end:
 # -------- End of function main --------

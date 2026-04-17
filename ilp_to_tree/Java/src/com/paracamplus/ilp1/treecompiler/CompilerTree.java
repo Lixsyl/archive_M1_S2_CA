@@ -521,6 +521,7 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
 		  emit("callF\n");
 	      indent();
 	      emit("name " + name + "\n");
+	      emit("float");
 	      args[0].accept(this,null);
 	      emit("\n");
 	      dedent();

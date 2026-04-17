@@ -3,7 +3,8 @@ li t1, 4
 li t2, 5
 li t3, 0
 li t4, 0
-bne t3, t4, L2
+bne t5, t3, t4
+beq t5, x0, L2
 L3:
 la t6, L_str_1
 mv L1, t6
@@ -13,8 +14,8 @@ la t7, L_str_0
 mv L1, t7
 j L4
 L4:
-mv t0, t8
-mv t10, a0
-jal print
-mv t9, a0
-li t11, 0
+mv t0, L1
+mv a0, t0
+jal ra, print
+mv t8, a0
+li t9, 0

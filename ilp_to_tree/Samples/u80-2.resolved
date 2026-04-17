@@ -1,4 +1,4 @@
 function test(x)
-(x ILP_Plus_INT 1);
-print(concat(concat((test; "PARAM"
+concat(x, string_of_int(1));
+print(concat(concat((test; "FUNCTION"
             ), string_of_int(test(2))), test("0")))

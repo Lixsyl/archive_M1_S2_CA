@@ -1,7 +1,7 @@
 /* == High Level Intermediate representation. == */
 /* String Litterals */
 label L_str_1 "0"
-label L_str_0 "PARAM"
+label L_str_0 "FUNCTION"
 
 /* Function Definitions */
 /* function : test */
@@ -10,10 +10,11 @@ label L1
   # Body
   move
   temp rv
-  binop
-  add  
-  temp i0  
-  const 1  
+  call
+    name concat
+    temp i0    
+  call end
+  
   label end
   
   
@@ -32,22 +33,10 @@ label L1
               eseq
                 seq
                   sxp
-                    temp null                    
+                    temp L1                    
                 seq end
                 name L_str_0                
-                call
-                  name string_of_int
-                  call
-                    name L1
-                    const 2                    
-                  call end
-                  
-                call end
                 
-              call end
-              call
-                name L1
-                name L_str_1                
               call end
               
             call end

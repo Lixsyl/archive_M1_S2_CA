@@ -1,19 +1,19 @@
 // Routine main
 la t3, L_str_0
 mv t1, t3
-mv t5, a0
-jal print
+mv a0, t1
+jal ra, print
 mv t4, a0
-li t6, 0
-la t7, L_str_1
-mv t2, t7
-mv t9, a0
-jal print
-mv t8, a0
-li t10, 0
-la t11, L_str_2
-mv t0, t11
-mv t13, a0
-jal print
-mv t12, a0
-li t14, 0
+li t5, 0
+la t6, L_str_1
+mv t2, t6
+mv a0, t2
+jal ra, print
+mv t7, a0
+li t8, 0
+la t9, L_str_2
+mv t0, t9
+mv a0, t0
+jal ra, print
+mv t10, a0
+li t11, 0

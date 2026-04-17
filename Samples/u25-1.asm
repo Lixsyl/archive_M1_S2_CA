@@ -1,7 +1,8 @@
 // Routine main
 li t0, 1
 li t1, 0
-bne t0, t1, L1
+bne t2, t0, t1
+beq t2, x0, L1
 L2:
 la t3, L_float_0
 flw f4, 0(t3)

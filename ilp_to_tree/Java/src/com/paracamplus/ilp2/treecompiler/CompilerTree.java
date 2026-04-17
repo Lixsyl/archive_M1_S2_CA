@@ -213,4 +213,19 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
     }
   return null;
   }
+  
+  @Override
+	public Void visit(ITASTvariable iast, Void context)
+    throws CompilationException {
+    	String var = lookupVariable(iast.getMangledName());
+    	String fun = funNames.get(iast.getMangledName());
+	  if (var != null) {
+	  	emit("temp " + var);
+	  } else if (fun != null) {
+	  	emit("temp " + fun);
+	  } else {
+	  	emit("const 0");
+	  }
+	  return null;
+  }
 }

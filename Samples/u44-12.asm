@@ -1,10 +1,10 @@
 // Routine main
 la t1, L_str_0
 mv t0, t1
-mv t3, a0
-jal print
+mv a0, t0
+jal ra, print
 mv t2, a0
-li t4, 0
-la t5, L_str_1
-li t6, 1
-li t7, 0
+li t3, 0
+la t4, L_str_1
+li t5, 1
+li t6, 0

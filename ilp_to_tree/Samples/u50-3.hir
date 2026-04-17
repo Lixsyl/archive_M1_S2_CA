@@ -53,7 +53,7 @@ sxp
         label L4
       seq end
       temp L1
-    name L_str_2    
+    
   call end
 
 label end

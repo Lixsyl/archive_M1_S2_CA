@@ -92,7 +92,7 @@ public class Typer implements IASTvisitor<ITASTexpression, Void, TypingException
 		  return new TASTvariable(varn, var.getType());
 	  }
 	  if (functionTypes.containsKey(varn)) {
-		  return new TASTvariable(varn, functionTypes.get(varn));
+		  return new TASTvariable(varn, Type.FUNCTION);
 	  }
 	  throw new TypingException("Type variable");
   }

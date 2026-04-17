@@ -15,8 +15,8 @@ main:
 
 # -------- Function main --------
 ILPmain:
-li s2, 33
-mv s1, s2
+li s1, 33
+mv s1, s1
 la s1, L_str_0
 li s2, 22
 add s1, s1, s2

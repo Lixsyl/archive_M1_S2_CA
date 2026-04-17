@@ -14,20 +14,22 @@ main:
 ILPmain:
 li s1, 1
 li s1, 1
-li s3, 0
+li s2, 0
 li s1, 0
-bne s3, s1, L4
+bne s1, s2, s1
+beq s1, x0, L4
 L5:
 li s1, 0
-mv s1, s1
+mv s2, s1
 j L6
 L4:
 li s1, 1
-mv s1, s1
+mv s2, s1
 j L6
 L6:
 li s1, 0
-bne s2, s1, L1
+bne s1, s2, s1
+beq s1, x0, L1
 L2:
 li s1, 4
 mv s1, s1

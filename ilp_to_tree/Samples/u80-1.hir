@@ -1,6 +1,6 @@
 /* == High Level Intermediate representation. == */
 /* String Litterals */
-label L_str_0 "PARAM"
+label L_str_0 "FUNCTION"
 
 /* Function Definitions */
 
@@ -15,7 +15,7 @@ sxp
         eseq
           seq
             sxp
-              temp null              
+              const 0              
           seq end
           name L_str_0          
           

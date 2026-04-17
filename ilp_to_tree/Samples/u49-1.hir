@@ -14,7 +14,7 @@ sxp
       name string_of_int
       const 12      
     call end
-    name L_str_0    
+    
   call end
 
 label end

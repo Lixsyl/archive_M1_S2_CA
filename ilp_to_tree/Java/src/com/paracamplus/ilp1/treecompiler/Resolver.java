@@ -148,7 +148,7 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
 		   ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
 		   return new TASTbinaryOperation(new ASToperator("ILP_Plus_FLOAT"), nl, nr, Type.FLOAT);
 	   }
-	   throw new ResolutionException("Resolver resolvePlus ");
+	   throw new ResolutionException("Resolver resolvePlus " + l.getType().toString() + r.getType().toString());
   }
 
   // Numeric arithmetic (+ - * / except plus special-cased)
@@ -316,12 +316,11 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
   private ITASTexpression resolveToString(ITASTexpression arg)
     throws ResolutionException {
 	  return castIfNeeded(arg, Type.STRING);
-	  //return castIfNeeded(arg.accept(this, null), Type.STRING);
   }
 
   private ITASTexpression resolveTypeOf(ITASTexpression iast) throws ResolutionException {
 	  ITASTexpression[] exprs = new ITASTexpression[2];
-	  exprs[0] = iast; //.accept(this, null);
+	  exprs[0] = iast;
 	  exprs[1] = new TASTstring(iast.getType().toString(), Type.STRING);
 	  return new TASTsequence(exprs, Type.STRING);
   }

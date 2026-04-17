@@ -1,2 +1,6 @@
-print(concat((print("GEORGE "); "BOOL"
+print(concat(
+        (if (print("GEORGE "); "BOOL"
+                )
+            then "true"
+            else "false"
         ), "E"))

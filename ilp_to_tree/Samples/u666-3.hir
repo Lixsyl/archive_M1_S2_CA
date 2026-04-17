@@ -39,7 +39,7 @@ label L1
           mulF          
           callF
             name float_of_int
-            temp i0            
+            float            temp i0            
           call end
           
           call

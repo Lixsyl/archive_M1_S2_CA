@@ -28,7 +28,7 @@ sxp
                   const 0                
             seq end
             name L_str_1            
-            name L_str_2            
+            
           call end
           
         call end

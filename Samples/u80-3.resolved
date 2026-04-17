@@ -1,2 +1,6 @@
-print((print; "BOOL"
+print(
+    (if (print; "BOOL"
+            )
+        then "true"
+        else "false"
     ))

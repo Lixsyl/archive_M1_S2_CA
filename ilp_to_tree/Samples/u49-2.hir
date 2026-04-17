@@ -34,7 +34,7 @@ sxp
         temp t1
       
     call end
-    name L_str_0    
+    
   call end
 
 label end

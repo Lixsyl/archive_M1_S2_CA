@@ -1,12 +1,14 @@
 // Routine main
 li t0, 0
 li t3, 0
-bne t0, t3, L1
+bne t4, t0, t3
+beq t4, x0, L1
 L2:
 li t5, 710
 li t6, 1
 li t7, 0
-bne t6, t7, L4
+bne t8, t6, t7
+beq t8, x0, L4
 L5:
 li t9, 2
 li t10, 1
@@ -21,5 +23,5 @@ li t12, 1
 mv t2, t12
 j L6
 L6:
-mv t1, t13
+mv t1, t2
 L3:
