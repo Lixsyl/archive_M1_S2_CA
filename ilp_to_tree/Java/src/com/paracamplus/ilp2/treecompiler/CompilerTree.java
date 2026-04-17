@@ -122,11 +122,11 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
   }
 
   @Override
-public Void visit(ITASTloop iast, Void context) throws CompilationException {
+  public Void visit(ITASTloop iast, Void context) throws CompilationException {
 
     String lStart = newLabel();
     String lTrue  = newLabel();
-    String lFalse   = newLabel();
+    String lFalse = newLabel();
 
     emit("eseq\n");
     indent();
@@ -155,72 +155,72 @@ public Void visit(ITASTloop iast, Void context) throws CompilationException {
     emit("const 0\n");
     dedent();
     return null;
-}
-
-  @Override
-  public Void visit(ITASTassignment iast, Void context) throws CompilationException {
-	  emit("eseq\n");
-	  String v;
-	  if (lookupVariable(iast.getVariable().getMangledName()) == null) {
-		  if (iast.getType() == Type.FLOAT) {
-			  v = newFloatTemp();
-			  envStack.peek().put(iast.getVariable().getMangledName(), v);
-		  } else {
-			  v = bindVariable(iast.getVariable().getMangledName());
-		  }
-	  } else {
-		  v = lookupVariable(iast.getVariable().getMangledName());
-	  }
-	  emitMoveToTemp(v, iast.getExpression());
-	  emit("temp " + v);
-	  return null;
   }
 
   @Override
-	public Void visit(ITASTinvocation iast, Void context)
+  public Void visit(ITASTassignment iast, Void context) throws CompilationException {
+    emit("eseq\n");
+    String v;
+    if (lookupVariable(iast.getVariable().getMangledName()) == null) {
+      if (iast.getType() == Type.FLOAT) {
+        v = newFloatTemp();
+        envStack.peek().put(iast.getVariable().getMangledName(), v);
+      } else {
+        v = bindVariable(iast.getVariable().getMangledName());
+      }
+    } else {
+      v = lookupVariable(iast.getVariable().getMangledName());
+    }
+    emitMoveToTemp(v, iast.getExpression());
+    emit("temp " + v);
+    return null;
+  }
+
+  @Override
+  public Void visit(ITASTinvocation iast, Void context)
     throws CompilationException {
-    ITASTexpression function =  iast.getFunction();
+    ITASTexpression function = iast.getFunction();
     ITASTvariable v = (ITASTvariable) function;
     // primitive, call super method
     if(!funNames.containsKey(v.getName())) return super.visit(iast,context);
     if (iast.getType() == Type.FLOAT) {
-		  emit("callF\n");
-	      indent();
-	      emit("name " + funNames.get(v.getMangledName()) + "\n");
-	      for (ITASTexpression e : iast.getArguments()) {
-	      	emit("float");
-		      e.accept(this,context);
-	      }
-	      emit("\n");
-	      dedent();
-	      emit("call end\n");
+      emit("callF\n");
+        indent();
+        emit("name " + funNames.get(v.getMangledName()) + "\n");
+        for (ITASTexpression e : iast.getArguments()) {
+          emit("float");
+          e.accept(this,context);
+        }
+        emit("\n");
+        dedent();
+        emit("call end\n");
     } else {
-    	emit("call\n");
-	      indent();
-	      emit("name " + funNames.get(v.getMangledName()) + "\n");
-	      for (ITASTexpression e : iast.getArguments()) {
-		      e.accept(this,context);
-	      }
-	      emit("\n");
-	      dedent();
-	      emit("call end\n");
+      emit("call\n");
+      indent();
+      emit("name " + funNames.get(v.getMangledName()) + "\n");
+      for (ITASTexpression e : iast.getArguments()) {
+        e.accept(this,context);
+      }
+      emit("\n");
+      dedent();
+      emit("call end\n");
     }
-  return null;
+    return null;
   }
   
   // car 80-1 ne passe pas 
   @Override
-	public Void visit(ITASTvariable iast, Void context)
+  public Void visit(ITASTvariable iast, Void context)
     throws CompilationException {
-    	String var = lookupVariable(iast.getMangledName());
-    	String fun = funNames.get(iast.getMangledName());
-	  if (var != null) {
-	  	emit("temp " + var);
-	  } else if (fun != null) {
-	  	emit("temp " + fun);
-	  } else {
-	  	emit("const 0");
-	  }
-	  return null;
+    String var = lookupVariable(iast.getMangledName());
+    String fun = funNames.get(iast.getMangledName());
+    if (var != null) {
+      emit("temp " + var);
+    } else if (fun != null) {
+      emit("temp " + fun);
+    } else {
+      emit("const 0");
+    }
+    return null;
   }
 }

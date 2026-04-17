@@ -39,7 +39,7 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
     final String name;
     final List<Type> argTypes;
 
-    FunctionKey(String name,  List<Type> argTypes){
+    FunctionKey(String name, List<Type> argTypes){
       this.name = name;
       this.argTypes=argTypes;
     }
@@ -148,69 +148,69 @@ public class Typer extends com.paracamplus.ilp1.treecompiler.Typer
    */
   private void typeFunctionBody(IASTfunctionDefinition fdef, FunctionKey key)
     throws TypingException {
-	  if (specializations.containsKey(key)) return;
-	  specializedReturnTypes.put(key, Type.PARAM);
-	  enterScope();
-	  IASTvariable[] vars = fdef.getVariables();
-	  ITASTvariable[] newvars = new TASTvariable[vars.length];
-	  List<Type> args = key.argTypes;
-	  for ( int i=0 ; i<vars.length ; i++ ) {
-		  ITASTvariable newvar = new TASTvariable(vars[i].getMangledName(), args.get(i));
-		  bindVariableAs(newvar.getMangledName(), newvar);
-		  newvars[i] = newvar;
-	  }
-	  Type[] typesArray = key.argTypes.toArray(new Type[0]);
-	String mangledName = mangle(fdef.getName(), typesArray);
-	ITASTvariable v = new TASTvariable(mangledName, null);
-	  TASTfunctionDefinition ftmp = new TASTfunctionDefinition(v, newvars, null, null);
-	  specializations.put(key, ftmp);
-	  ITASTexpression e = fdef.getBody().accept(this, null);
-	  TASTfunctionDefinition newf = new TASTfunctionDefinition(v, newvars, e, e.getType());
-	  specializations.put(key, newf);
-	  specializedReturnTypes.put(key, newf.getType());
-      leaveScope();
+    if (specializations.containsKey(key)) return;
+    specializedReturnTypes.put(key, Type.PARAM);
+    enterScope();
+    IASTvariable[] vars = fdef.getVariables();
+    ITASTvariable[] newvars = new TASTvariable[vars.length];
+    List<Type> args = key.argTypes;
+    for ( int i=0 ; i<vars.length ; i++ ) {
+      ITASTvariable newvar = new TASTvariable(vars[i].getMangledName(), args.get(i));
+      bindVariableAs(newvar.getMangledName(), newvar);
+      newvars[i] = newvar;
+    }
+    Type[] typesArray = key.argTypes.toArray(new Type[0]);
+    String mangledName = mangle(fdef.getName(), typesArray);
+    ITASTvariable v = new TASTvariable(mangledName, null);
+    TASTfunctionDefinition ftmp = new TASTfunctionDefinition(v, newvars, null, null);
+    specializations.put(key, ftmp);
+    ITASTexpression e = fdef.getBody().accept(this, null);
+    TASTfunctionDefinition newf = new TASTfunctionDefinition(v, newvars, e, e.getType());
+    specializations.put(key, newf);
+    specializedReturnTypes.put(key, newf.getType());
+    leaveScope();
   }
 
   @Override
   public ITASTexpression visit(IASTinvocation iast, Void context)
     throws TypingException {
-	// function must be a variable
-	IASTexpression f = iast.getFunction();
-	if (!(f instanceof IASTvariable))
-	  typeError("Only named functions can be invoked");
-	String fname = ((IASTvariable) f).getName();
-	IASTfunctionDefinition fdef = functions.get(fname);
-	// primitive
-	if (fdef == null) return super.visit(iast,context);
-	
-	IASTexpression[] args = iast.getArguments();
-	ITASTexpression[] newargs = new ITASTexpression[args.length];
-	List<Type> l = new ArrayList<Type>();
-	for ( int i=0 ; i<args.length ; i++ ) {
-		ITASTexpression e = args[i].accept(this, context);
-		newargs[i] = e;
-		l.add(e.getType());
-	}
-	FunctionKey k = new FunctionKey(fname, l);
-	typeFunctionBody(fdef, k);
-	
-	Type[] typesArray = l.toArray(new Type[0]);
-	String mangledName = mangle(fname, typesArray);
-	ITASTvariable funVar = new TASTvariable(mangledName, specializedReturnTypes.get(k));
-	
-	return new TASTinvocation(funVar, newargs, specializedReturnTypes.get(k));
+    // function must be a variable
+    IASTexpression f = iast.getFunction();
+    if (!(f instanceof IASTvariable))
+      typeError("Only named functions can be invoked");
+    String fname = ((IASTvariable) f).getName();
+    IASTfunctionDefinition fdef = functions.get(fname);
+    // primitive
+    if (fdef == null) return super.visit(iast,context);
+
+    IASTexpression[] args = iast.getArguments();
+    ITASTexpression[] newargs = new ITASTexpression[args.length];
+    List<Type> l = new ArrayList<Type>();
+    for ( int i=0 ; i<args.length ; i++ ) {
+      ITASTexpression e = args[i].accept(this, context);
+      newargs[i] = e;
+      l.add(e.getType());
+    }
+    FunctionKey k = new FunctionKey(fname, l);
+    typeFunctionBody(fdef, k);
+
+    Type[] typesArray = l.toArray(new Type[0]);
+    String mangledName = mangle(fname, typesArray);
+    ITASTvariable funVar = new TASTvariable(mangledName, specializedReturnTypes.get(k));
+
+    return new TASTinvocation(funVar, newargs, specializedReturnTypes.get(k));
   }
 
   @Override
   public ITASTexpression visit(IASTloop iast, Void context) throws TypingException {
-	  return new TASTloop(iast.getCondition().accept(this, context), iast.getBody().accept(this, context), Type.BOOL);
+    return new TASTloop(iast.getCondition().accept(this, context), iast.getBody().accept(this, context), Type.BOOL);
   }
 
   @Override
   public ITASTexpression visit(IASTassignment iast, Void context) throws TypingException {
-	  ITASTexpression e = iast.getExpression().accept(this, context);
-	  ITASTvariable v = new TASTvariable(iast.getVariable().getMangledName(), e.getType());
-      bindVariableAs(v.getMangledName(), v);
-      return new TASTassignment(v, e, e.getType());
+    ITASTexpression e = iast.getExpression().accept(this, context);
+    ITASTvariable v = new TASTvariable(iast.getVariable().getMangledName(), e.getType());
+    bindVariableAs(v.getMangledName(), v);
+    return new TASTassignment(v, e, e.getType());
   }
 }

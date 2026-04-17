@@ -133,81 +133,81 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
 
   public ITASTexpression resolvePlus(ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
-	   if (l.getType() == Type.STRING || r.getType() == Type.STRING) {
-		   ITASTexpression nl = castIfNeeded(l, Type.STRING);
-		   ITASTexpression nr = castIfNeeded(r, Type.STRING);
-		   ITASTvariable var = new TASTvariable("concat", Type.FUNCTION);
-		   return new TASTinvocation(var, new ITASTexpression[]{nl,nr}, Type.STRING);
-		   //return new TASTbinaryOperation(new TASTinvocation("concat"), nl, nr, Type.STRING);
-	   }
-	   if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
-		   if (l.getType() == Type.INT && r.getType() == Type.INT) {
-			   return new TASTbinaryOperation(new ASToperator("ILP_Plus_INT"), l, r, Type.INT);
-		   }
-		   ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
-		   ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
-		   return new TASTbinaryOperation(new ASToperator("ILP_Plus_FLOAT"), nl, nr, Type.FLOAT);
-	   }
-	   throw new ResolutionException("Resolver resolvePlus " + l.getType().toString() + r.getType().toString());
+    if (l.getType() == Type.STRING || r.getType() == Type.STRING) {
+      ITASTexpression nl = castIfNeeded(l, Type.STRING);
+      ITASTexpression nr = castIfNeeded(r, Type.STRING);
+      ITASTvariable var = new TASTvariable("concat", Type.FUNCTION);
+      return new TASTinvocation(var, new ITASTexpression[]{nl,nr}, Type.STRING);
+      //return new TASTbinaryOperation(new TASTinvocation("concat"), nl, nr, Type.STRING);
+    }
+    if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
+      if (l.getType() == Type.INT && r.getType() == Type.INT) {
+        return new TASTbinaryOperation(new ASToperator("ILP_Plus_INT"), l, r, Type.INT);
+      }
+      ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
+      ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
+      return new TASTbinaryOperation(new ASToperator("ILP_Plus_FLOAT"), nl, nr, Type.FLOAT);
+    }
+    throw new ResolutionException("Resolver resolvePlus " + l.getType().toString() + r.getType().toString());
   }
 
   // Numeric arithmetic (+ - * / except plus special-cased)
-  private ITASTexpression resolveNumeric(String op, ITASTexpression l, ITASTexpression r)throws ResolutionException {
-	  if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
-		   if (l.getType() == Type.FLOAT || r.getType() == Type.FLOAT) {
-			   ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
-			   ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
-			   return new TASTbinaryOperation(new ASToperator(op + "_FLOAT"), nl, nr, Type.FLOAT);
-		} return new TASTbinaryOperation(new ASToperator(op + "_INT"), l, r, Type.INT);
-		  }
-	  throw new ResolutionException("Resolver resolveNumeric ");
+  private ITASTexpression resolveNumeric(String op, ITASTexpression l, ITASTexpression r) throws ResolutionException {
+    if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
+      if (l.getType() == Type.FLOAT || r.getType() == Type.FLOAT) {
+        ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
+        ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
+        return new TASTbinaryOperation(new ASToperator(op + "_FLOAT"), nl, nr, Type.FLOAT);
+      } return new TASTbinaryOperation(new ASToperator(op + "_INT"), l, r, Type.INT);
+    }
+    throw new ResolutionException("Resolver resolveNumeric ");
   }
 
   private ITASTexpression resolveEquality(String op, ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
-	if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
-		if (l.getType() == Type.INT && r.getType() == Type.INT) {
-			return new TASTbinaryOperation(new ASToperator(op + "_INT"), l, r, Type.BOOL);
-		}
+    if (Type.isNumeric(l.getType()) && Type.isNumeric(r.getType())) {
+      if (l.getType() == Type.INT && r.getType() == Type.INT) {
+        return new TASTbinaryOperation(new ASToperator(op + "_INT"), l, r, Type.BOOL);
+      }
 
-		ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
-		ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
-		return new TASTbinaryOperation(new ASToperator(op + "_FLOAT"), nl, nr, Type.BOOL);
-	}
-	
-	if (l.getType() == r.getType()) {
-		return new TASTbinaryOperation(new ASToperator(op + "_" + l.getType()), l, r, Type.BOOL);
-	}
-	
-	  ITASTexpression[] exprs = new ITASTexpression[3];
-	  exprs[0] = l.accept(this, null);
-	  exprs[1] = r.accept(this, null);
-	  
-	if (op == "ILP_Equal") {
-		exprs[2] = new TASTboolean("false", Type.BOOL);
-	} else {
-		exprs[2] = new TASTboolean("true", Type.BOOL);
-	}
-	return new TASTsequence(exprs, Type.BOOL);
+      ITASTexpression nl = castIfNeeded(l, Type.FLOAT);
+      ITASTexpression nr = castIfNeeded(r, Type.FLOAT);
+      return new TASTbinaryOperation(new ASToperator(op + "_FLOAT"), nl, nr, Type.BOOL);
+    }
+
+    if (l.getType() == r.getType()) {
+      return new TASTbinaryOperation(new ASToperator(op + "_" + l.getType()), l, r, Type.BOOL);
+    }
+
+    ITASTexpression[] exprs = new ITASTexpression[3];
+    exprs[0] = l.accept(this, null);
+    exprs[1] = r.accept(this, null);
+      
+    if (op == "ILP_Equal") {
+      exprs[2] = new TASTboolean("false", Type.BOOL);
+    } else {
+      exprs[2] = new TASTboolean("true", Type.BOOL);
+    }
+    return new TASTsequence(exprs, Type.BOOL);
   }
 
   // Comparisons (< <= > >=)
   private ITASTexpression resolveComparison(String op, ITASTexpression l, ITASTexpression r)
     throws ResolutionException {
-	  if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType()))) {
-		  if (l.getType() == Type.INT && r.getType() == Type.INT) {
-			  return binaryCast(op + "_INT", l, l.getType(), r, r.getType(), Type.BOOL);
-		  }
-		  return binaryCast(op + "_FLOAT", l, Type.FLOAT, r, Type.FLOAT, Type.BOOL);
-	  } else if ((l.getType() == Type.STRING) && (r.getType() == Type.STRING)) {
-	  	return new TASTbinaryOperation(new ASToperator(op + "_STRING"), l, r, Type.BOOL);
-	  } else {
-		  ITASTexpression[] exprs = new ITASTexpression[3];
-		  exprs[0] = l.accept(this, null);
-		  exprs[1] = r.accept(this, null);
-		  exprs[2] = new TASTboolean("false", Type.BOOL);
-		  return new TASTsequence(exprs, Type.BOOL);
-	  }
+    if ((Type.isNumeric(l.getType())) && (Type.isNumeric(r.getType()))) {
+      if (l.getType() == Type.INT && r.getType() == Type.INT) {
+        return binaryCast(op + "_INT", l, l.getType(), r, r.getType(), Type.BOOL);
+      }
+      return binaryCast(op + "_FLOAT", l, Type.FLOAT, r, Type.FLOAT, Type.BOOL);
+    } else if ((l.getType() == Type.STRING) && (r.getType() == Type.STRING)) {
+      return new TASTbinaryOperation(new ASToperator(op + "_STRING"), l, r, Type.BOOL);
+    } else {
+      ITASTexpression[] exprs = new ITASTexpression[3];
+      exprs[0] = l.accept(this, null);
+      exprs[1] = r.accept(this, null);
+      exprs[2] = new TASTboolean("false", Type.BOOL);
+      return new TASTsequence(exprs, Type.BOOL);
+    }
   }
 
   // Logical operators: and / or / xor
@@ -281,61 +281,61 @@ public class Resolver implements ITASTvisitor<ITASTexpression, Void, ResolutionE
 
   @Override
   public ITASTexpression visit(ITASTalternative iast, Void data) throws ResolutionException {
-	  ITASTexpression cond = iast.getCondition().accept(this, data);
-	  ITASTexpression cons = iast.getConsequence().accept(this, data);
-	  Type t = iast.getType();
-	  if (iast.getAlternant() == null) {
-		  if (t == Type.INT) {
-			  return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTinteger("0", t), t);
-		  }
-		  if (t == Type.FLOAT) {
-			  return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTfloat("0.0", t), t);
-		  }
-		  if (t == Type.BOOL) {
-			  return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTboolean("false", t), t);
-		  }
-		  if (t == Type.STRING) {
-			  return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTstring("", t), t);
-		  }
-	  } else {
-		  ITASTexpression alt = iast.getAlternant().accept(this, data);
-		  return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), castIfNeeded(alt,t), t);
-	  }
-	  throw new ResolutionException("Resolver alternative ");
+    ITASTexpression cond = iast.getCondition().accept(this, data);
+    ITASTexpression cons = iast.getConsequence().accept(this, data);
+    Type t = iast.getType();
+    if (iast.getAlternant() == null) {
+      if (t == Type.INT) {
+        return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTinteger("0", t), t);
+      }
+      if (t == Type.FLOAT) {
+        return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTfloat("0.0", t), t);
+      }
+      if (t == Type.BOOL) {
+        return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTboolean("false", t), t);
+      }
+      if (t == Type.STRING) {
+        return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), new TASTstring("", t), t);
+      }
+    } else {
+      ITASTexpression alt = iast.getAlternant().accept(this, data);
+      return new TASTalternative(castIfNeeded(cond, Type.BOOL), castIfNeeded(cons,t), castIfNeeded(alt,t), t);
+    }
+    throw new ResolutionException("Resolver alternative ");
   }
 
   @Override
   public ITASTexpression visit(ITASTblock iast, Void data) throws ResolutionException {
-	  ITASTbinding[] bindings = iast.getBindings();
-      ITASTblock.ITASTbinding[] newbindings = new ITASTblock.ITASTbinding[bindings.length];
-      for ( int i=0 ; i<bindings.length ; i++ ) {
-    	  ITASTbinding binding = bindings[i];
-          ITASTexpression expr = binding.getInitialisation();
-          ITASTexpression newexpr = expr.accept(this, null);
-          ITASTvariable variable = binding.getVariable();
-          ITASTvariable newvariable = (ITASTvariable)variable.accept(this, null);
-          newbindings[i] = new TASTblock.TASTbinding(newvariable, newexpr);
-      }
-      ITASTexpression newbody = iast.getBody().accept(this, null);
-      return new TASTblock(newbindings, newbody, newbody.getType());
+    ITASTbinding[] bindings = iast.getBindings();
+    ITASTblock.ITASTbinding[] newbindings = new ITASTblock.ITASTbinding[bindings.length];
+    for ( int i=0 ; i<bindings.length ; i++ ) {
+      ITASTbinding binding = bindings[i];
+      ITASTexpression expr = binding.getInitialisation();
+      ITASTexpression newexpr = expr.accept(this, null);
+      ITASTvariable variable = binding.getVariable();
+      ITASTvariable newvariable = (ITASTvariable)variable.accept(this, null);
+      newbindings[i] = new TASTblock.TASTbinding(newvariable, newexpr);
+    }
+    ITASTexpression newbody = iast.getBody().accept(this, null);
+    return new TASTblock(newbindings, newbody, newbody.getType());
   }
 
   private ITASTexpression resolveToString(ITASTexpression arg)
     throws ResolutionException {
-	  return castIfNeeded(arg, Type.STRING);
+    return castIfNeeded(arg, Type.STRING);
   }
 
   private ITASTexpression resolveTypeOf(ITASTexpression iast) throws ResolutionException {
-	  ITASTexpression[] exprs = new ITASTexpression[2];
-	  exprs[0] = iast;
-	  exprs[1] = new TASTstring(iast.getType().toString(), Type.STRING);
-	  return new TASTsequence(exprs, Type.STRING);
+    ITASTexpression[] exprs = new ITASTexpression[2];
+    exprs[0] = iast;
+    exprs[1] = new TASTstring(iast.getType().toString(), Type.STRING);
+    return new TASTsequence(exprs, Type.STRING);
   }
 
   private ITASTexpression resolvePrint(ITASTinvocation iast) throws ResolutionException {
-	  ITASTexpression[] args = new ITASTexpression[1];
-	  args[0] = castIfNeeded(iast.getArguments()[0].accept(this, null), Type.STRING);
-	  return new TASTinvocation (iast.getFunction().accept(this, null), args, iast.getType());
+    ITASTexpression[] args = new ITASTexpression[1];
+    args[0] = castIfNeeded(iast.getArguments()[0].accept(this, null), Type.STRING);
+    return new TASTinvocation (iast.getFunction().accept(this, null), args, iast.getType());
   }
 
   private ITASTexpression[] resolveArguments(ITASTinvocation iast, Void data)

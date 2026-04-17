@@ -153,22 +153,22 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   }
 
   @Override
-	public Void visit(ITASTboolean iast, Void context)
+  public Void visit(ITASTboolean iast, Void context)
     throws CompilationException { 
-	  if (iast.getValue() == true) emit("const 1");
-	  else emit ("const 0");
-	  return null;
+    if (iast.getValue() == true) emit("const 1");
+    else emit ("const 0");
+    return null;
   }
 
   @Override
-	public Void visit(ITASTinteger iast, Void context)
+  public Void visit(ITASTinteger iast, Void context)
     throws CompilationException {
     emit("const " + iast.getValue().toString());
     return null;
   }
 
   @Override
-	public Void visit(ITASTfloat iast, Void context)
+  public Void visit(ITASTfloat iast, Void context)
     throws CompilationException {
     emit("constF "+iast.getDescription().toString());
     return null;
@@ -177,80 +177,78 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
   public Void visit(ITASTstring iast, Void context)
     throws CompilationException {
-	  emit("name " + strCollect.getStringTable().get(iast.getDescription()));
-	  return null;
+    emit("name " + strCollect.getStringTable().get(iast.getDescription()));
+    return null;
   }
 
   @Override
-	public Void visit(ITASTvariable iast, Void context)
+  public Void visit(ITASTvariable iast, Void context)
     throws CompilationException {
-	  //throw new CompilationException("test");
-	  emit("temp " + lookupVariable(iast.getMangledName()));
-	  return null;
+    emit("temp " + lookupVariable(iast.getMangledName()));
+    return null;
   }
 
   @Override
-	public Void visit(ITASTunaryOperation iast, Void context)
+  public Void visit(ITASTunaryOperation iast, Void context)
     throws CompilationException {
-	  
-	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_INT")) {
-		  emit("const -" + ((ITASTinteger)iast.getOperand()).getValue().toString());
-		  return null;
-	  }
-	  if (iast.getOperator().getMangledName().equals("ILP_Opposite_FLOAT")) {
-		  emit("constF -"+ ((ITASTfloat)iast.getOperand()).getDescription().toString());
-		  return null;
-	  }
-	  if (iast.getOperator().getMangledName().equals("ILP_Not")) {
-		  if (iast.getOperand() instanceof ITASTboolean) {
-			  if (((ITASTboolean)iast.getOperand()).getValue() == true) emit("const 0");
-			  else emit ("const 1");
-		  } else {
-			  iast.getOperand().accept(this, context); // temporaire ca marche pas : Samples/u56-2.ilpml 
-		  }
-		  return null;
-	  }
-	  throw new CompilationException("compiler unary op");
+    if (iast.getOperator().getMangledName().equals("ILP_Opposite_INT")) {
+      emit("const -" + ((ITASTinteger)iast.getOperand()).getValue().toString());
+      return null;
+    }
+    if (iast.getOperator().getMangledName().equals("ILP_Opposite_FLOAT")) {
+      emit("constF -"+ ((ITASTfloat)iast.getOperand()).getDescription().toString());
+      return null;
+    }
+    if (iast.getOperator().getMangledName().equals("ILP_Not")) {
+      if (iast.getOperand() instanceof ITASTboolean) {
+        if (((ITASTboolean)iast.getOperand()).getValue() == true) emit("const 0");
+        else emit ("const 1");
+      } else {
+        iast.getOperand().accept(this, context); // temporaire ca marche pas : Samples/u56-2.ilpml 
+      }
+      return null;
+    }
+    throw new CompilationException("compiler unary op");
   }
 
   private void emitStringCompare(ITASTbinaryOperation iast, Void context, String relop)
     throws CompilationException {
-    	String r      = newTemp();
-	String lTrue  = newLabel();
-	String lFalse = newLabel();
-	String lEnd   = newLabel();
+    String r      = newTemp();
+    String lTrue  = newLabel();
+    String lFalse = newLabel();
+    String lEnd   = newLabel();
     
-    	emit("eseq\n");
-	indent();
-	enterSeq();
-	indent();
-	emit("cjump\n");
-	indent();
-	emit(relop + "\n");
-	  
-	emit("call\n");
-	indent();
-	emit("name strcmp\n");
-	iast.getLeftOperand().accept(this, context);
-	emit("\n");
-	iast.getRightOperand().accept(this, context);
-	emit("\n");
-	dedent();
-	emit("call end\n");
+    emit("eseq\n");
+    indent();
+    enterSeq();
+    indent();
+    emit("cjump\n");
+    indent();
+    emit(relop + "\n");
+
+    emit("call\n");
+    indent();
+    emit("name strcmp\n");
+    iast.getLeftOperand().accept(this, context);
+    emit("\n");
+    iast.getRightOperand().accept(this, context);
+    emit("\n");
+    dedent();
+    emit("call end\n");
 	
-	emit("const 0\n");
-	emit("name " + lTrue + "\n");
-    	emit("name " + lFalse + "\n");
-	dedent();
-	emit("label " + lTrue + "\n");
-	emitMoveConst(r, 1);
-	emit("jump name " + lEnd + "\n");
-	emit("label " + lFalse + "\n");
-	emitMoveConst(r, 0);
-	emit("label " + lEnd + "\n");
-	exitSeq();
-	emit("temp " + r + "\n");
-	dedent();
+    emit("const 0\n");
+    emit("name " + lTrue + "\n");
+    emit("name " + lFalse + "\n");
+    dedent();
+    emit("label " + lTrue + "\n");
+    emitMoveConst(r, 1);
+    emit("jump name " + lEnd + "\n");
+    emit("label " + lFalse + "\n");
+    emitMoveConst(r, 0);
+    emit("label " + lEnd + "\n");
+    exitSeq();
+    emit("temp " + r + "\n");
+    dedent();
   }
 
   private void emitBoolOp(ITASTbinaryOperation iast, Void context)
@@ -427,79 +425,77 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   }
 
   @Override
-	public Void visit(ITASTsequence iast, Void context)
+  public Void visit(ITASTsequence iast, Void context)
     throws CompilationException {
-	  ITASTexpression[] expr = iast.getExpressions();
-	  if (expr.length > 1) {
-	  	emit ("eseq\n");
-	  	indent();
-	  	
-	  	if (expr.length > 2) {
-	  		enterSeq();
-	  		for (int i = 0 ; i < expr.length -1 ; i++) {
-	  			emit ("sxp\n");
-	  			indent();
-	  			expr[i].accept(this, context);
-	  			emit ("\n");
-	  			dedent();
-	  		}
-	  		exitSeq();
-	  		expr[expr.length -1].accept(this, context);
-	  	} else {
-	  		emit ("sxp\n");
-	  		indent();
-	  		expr[0].accept(this, context);
-	  		emit ("\n");
-	  		dedent();
-	  		expr[1].accept(this, context);
-	  	}
-	  } else {
-	  	expr[0].accept(this, context);
-	  }
-      emit ("\n");
-      return null;
+    ITASTexpression[] expr = iast.getExpressions();
+    if (expr.length > 1) {
+      emit ("eseq\n");
+      indent();
+      if (expr.length > 2) {
+        enterSeq();
+        for (int i = 0 ; i < expr.length -1 ; i++) {
+          emit ("sxp\n");
+          indent();
+          expr[i].accept(this, context);
+          emit ("\n");
+          dedent();
+        }
+        exitSeq();
+        expr[expr.length -1].accept(this, context);
+      } else {
+        emit ("sxp\n");
+        indent();
+        expr[0].accept(this, context);
+        emit ("\n");
+        dedent();
+        expr[1].accept(this, context);
+      }
+    } else {
+      expr[0].accept(this, context);
+    }
+    emit ("\n");
+    return null;
   }
 
   @Override
   public Void visit(ITASTalternative iast, Void context)
     throws CompilationException {
-	  String r;
-	  if (iast.getType() == Type.INT || iast.getType() == Type.BOOL || iast.getType() == Type.STRING) {
-		  r = newTemp();
-	  }
-	  else if (iast.getType() == Type.FLOAT) {
-		  r = newFloatTemp();
-	  }
-	  else {
-		  throw new CompilationException("compiler alternative");
-	  }
-	  
-	  String lTrue  = newLabel();
-	  String lFalse = newLabel();
-	  String lEnd   = newLabel();
-	  
-	  emit ("eseq\n");
-      indent();
-	  enterSeq();
-	  emit ("cjump\n");
-      indent();
-	  emit ("ne\n");
-	  iast.getCondition().accept(this, context);
-	  emit ("\n");
-	  emit ("const 0\n");
-	  emit("name " + lTrue + "\n");
-	  emit("name " + lFalse + "\n");
-	  dedent();
-	  emit("label " + lTrue + "\n");
-	  emitMoveToTemp(r, iast.getConsequence());
-	  emit("jump name " + lEnd + "\n");
-	  emit("label " + lFalse + "\n");
-	  emitMoveToTemp(r, iast.getAlternant());
-	  emit("label " + lEnd + "\n");
-	  exitSeq();
-	  emit("temp " + r + "\n");
-	  dedent();
-	  return null;
+    String r;
+    if (iast.getType() == Type.INT || iast.getType() == Type.BOOL || iast.getType() == Type.STRING) {
+      r = newTemp();
+    }
+    else if (iast.getType() == Type.FLOAT) {
+      r = newFloatTemp();
+    }
+    else {
+      throw new CompilationException("compiler alternative");
+    }
+    String lTrue  = newLabel();
+    String lFalse = newLabel();
+    String lEnd   = newLabel();
+
+    emit ("eseq\n");
+    indent();
+    enterSeq();
+    emit ("cjump\n");
+    indent();
+    emit ("ne\n");
+    iast.getCondition().accept(this, context);
+    emit ("\n");
+    emit ("const 0\n");
+    emit("name " + lTrue + "\n");
+    emit("name " + lFalse + "\n");
+    dedent();
+    emit("label " + lTrue + "\n");
+    emitMoveToTemp(r, iast.getConsequence());
+    emit("jump name " + lEnd + "\n");
+    emit("label " + lFalse + "\n");
+    emitMoveToTemp(r, iast.getAlternant());
+    emit("label " + lEnd + "\n");
+    exitSeq();
+    emit("temp " + r + "\n");
+    dedent();
+    return null;
   }
 
   /**
@@ -516,62 +512,62 @@ public class CompilerTree implements ITASTvisitor<Void, Void, CompilationExcepti
   @Override
   public Void visit(ITASTblock iast, Void context)
     throws CompilationException {
-	  enterScope();
-	  ITASTblock.ITASTbinding[] bs = iast.getBindings();
-	  emit ("eseq\n");
-	  enterSeq();
-	  for (ITASTblock.ITASTbinding b : bs) {
-		  String v;
-		  if (b.getInitialisation().getType() == Type.FLOAT) {
-			  v = newFloatTemp();
-		  } else {
-			  v = newTemp();
-		  }
-		  emitMoveToTemp(v, b.getInitialisation());
-		  envStack.peek().put(b.getVariable().getMangledName(), v);
-	  }
-	  exitSeq();
-	  iast.getBody().accept(this, context);
-	  leaveScope();
-      return null;
+    enterScope();
+    ITASTblock.ITASTbinding[] bs = iast.getBindings();
+    emit ("eseq\n");
+    enterSeq();
+    for (ITASTblock.ITASTbinding b : bs) {
+      String v;
+      if (b.getInitialisation().getType() == Type.FLOAT) {
+        v = newFloatTemp();
+      } else {
+        v = newTemp();
+      }
+      emitMoveToTemp(v, b.getInitialisation());
+      envStack.peek().put(b.getVariable().getMangledName(), v);
+    }
+    exitSeq();
+    iast.getBody().accept(this, context);
+    leaveScope();
+    return null;
   }
 
   // handling of function returning bool, int, float and string.
   // functions that return void (e.g print) cant be handled here
   protected void emitCall(String name, Type returnType, ITASTexpression[] args)
     throws CompilationException {
-	  if (returnType == Type.INT || returnType == Type.BOOL || returnType == Type.STRING) {
-	      emit("call\n");
-	      indent();
-	      emit("name " + name + "\n");
-	      if (name == "string_of_float") {
-	      	emit("float");
-	      }
-	      for (int i = 0; i < args.length; i++) {
-	    	  args[i].accept(this,null);
-	      }
-	      emit("\n");
-	      dedent();
-	      emit("call end\n");
-	  } 
-	  else if (returnType == Type.FLOAT) {
-		  emit("callF\n");
-	      indent();
-	      emit("name " + name + "\n");
-	      args[0].accept(this,null);
-	      emit("\n");
-	      dedent();
-	      emit("call end\n");
-	  }
-	  else {
-		  throw new CompilationException("compiler emitCall");
-	  }
+    if (returnType == Type.INT || returnType == Type.BOOL || returnType == Type.STRING) {
+      emit("call\n");
+      indent();
+      emit("name " + name + "\n");
+      if (name == "string_of_float") {
+        emit("float");
+      }
+      for (int i = 0; i < args.length; i++) {
+        args[i].accept(this,null);
+      }
+      emit("\n");
+      dedent();
+      emit("call end\n");
+    } 
+    else if (returnType == Type.FLOAT) {
+      emit("callF\n");
+      indent();
+      emit("name " + name + "\n");
+      args[0].accept(this,null);
+      emit("\n");
+      dedent();
+      emit("call end\n");
+    }
+    else {
+      throw new CompilationException("compiler emitCall");
+    }
   }
 
   @Override
-	public Void visit(ITASTinvocation iast, Void context)
+  public Void visit(ITASTinvocation iast, Void context)
     throws CompilationException {
-    ITASTexpression function =  iast.getFunction();
+    ITASTexpression function = iast.getFunction();
     ITASTvariable v = (ITASTvariable) function;
     String fname = v.getName();
     ITASTexpression[] args = iast.getArguments();
