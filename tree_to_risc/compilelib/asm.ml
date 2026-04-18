@@ -147,8 +147,8 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
         | EqF -> "feq.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
         | NeqF -> "feq.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* integer equality and nonequality (signed or unsigned) *)
-        | Eq -> "beq `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | Neq -> "bne `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | Eq -> "beq `s0, `s1, " ^ lab
+        | Neq -> "bne `s0, `s1, " ^ lab
         (* signed integer inequalities *)
         | LT -> "blt `s0, `s1, " ^ lab
         | GT -> "blt `s1, `s0, " ^ lab
