@@ -14,8 +14,7 @@ mv t2, t6
 j L6
 L6:
 li t7, 0
-bne t8, t2, t7
-beq t8, x0, L2
+bne t2, t7, L2
 L3:
 li t9, 0
 j Lend

@@ -1,8 +1,7 @@
 // Routine L1
 mv i0, a0
 li t12, 0
-beq t13, i0, t12
-bne t13, x0, L6
+beq i0, t12, L6
 L7:
 li t14, 0
 mv t2, t14
@@ -13,12 +12,10 @@ mv t2, t15
 j L8
 L8:
 li t16, 0
-bne t17, t2, t16
-beq t17, x0, L3
+bne t2, t16, L3
 L4:
 li t18, 1
-beq t19, i0, t18
-bne t19, x0, L12
+beq i0, t18, L12
 L13:
 li t20, 0
 mv t4, t20
@@ -33,8 +30,7 @@ mv t4, t22
 j L14
 L14:
 li t23, 0
-bne t24, t4, t23
-beq t24, x0, L9
+bne t4, t23, L9
 L10:
 li t25, 1
 sub t26, i0, t25
@@ -57,8 +53,7 @@ end:
 // Routine L2
 mv i0, a0
 li t30, 0
-beq t31, i0, t30
-bne t31, x0, L18
+beq i0, t30, L18
 L19:
 li t32, 0
 mv t6, t32
@@ -69,12 +64,10 @@ mv t6, t33
 j L20
 L20:
 li t34, 0
-bne t35, t6, t34
-beq t35, x0, L15
+bne t6, t34, L15
 L16:
 li t36, 1
-beq t37, i0, t36
-bne t37, x0, L24
+beq i0, t36, L24
 L25:
 li t38, 0
 mv t8, t38
@@ -89,8 +82,7 @@ mv t8, t40
 j L26
 L26:
 li t41, 0
-bne t42, t8, t41
-beq t42, x0, L21
+bne t8, t41, L21
 L22:
 li t43, 1
 sub t44, i0, t43

@@ -20,8 +20,7 @@ mv t2, t30
 j L6
 L6:
 li t31, 0
-bne t32, t2, t31
-beq t32, x0, L1
+bne t2, t31, L1
 L2:
 la t33, L_str_3
 mv t1, t33
@@ -57,8 +56,7 @@ mv t4, t43
 j L12
 L12:
 li t44, 0
-bne t45, t4, t44
-beq t45, x0, L7
+bne t4, t44, L7
 L8:
 la t46, L_str_3
 mv t3, t46
@@ -94,8 +92,7 @@ mv t6, t56
 j L18
 L18:
 li t57, 0
-bne t58, t6, t57
-beq t58, x0, L13
+bne t6, t57, L13
 L14:
 la t59, L_str_3
 mv t5, t59
@@ -131,8 +128,7 @@ mv t8, t69
 j L24
 L24:
 li t70, 0
-bne t71, t8, t70
-beq t71, x0, L19
+bne t8, t70, L19
 L20:
 la t72, L_str_3
 mv t7, t72

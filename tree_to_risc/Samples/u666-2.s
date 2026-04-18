@@ -14,8 +14,7 @@ main:
 L1:
 mv s2, a0
 li s1, 0
-beq s1, s2, s1
-bne s1, x0, L5
+beq s2, s1, L5
 L6:
 li s1, 0
 mv s2, s1
@@ -26,8 +25,7 @@ mv s2, s1
 j L7
 L7:
 li s1, 0
-bne s1, s2, s1
-beq s1, x0, L2
+bne s2, s1, L2
 L3:
 li s1, 1
 sub s1, s2, s1

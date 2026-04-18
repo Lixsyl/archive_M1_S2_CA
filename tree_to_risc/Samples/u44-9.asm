@@ -12,8 +12,7 @@ mv t2, t15
 j L6
 L6:
 li t16, 0
-bne t17, t2, t16
-beq t17, x0, L1
+bne t2, t16, L1
 L2:
 la t18, L_str_1
 mv t1, t18
@@ -48,8 +47,7 @@ mv t4, t28
 j L12
 L12:
 li t29, 0
-bne t30, t4, t29
-beq t30, x0, L7
+bne t4, t29, L7
 L8:
 la t31, L_str_1
 mv t3, t31
@@ -84,8 +82,7 @@ mv t6, t41
 j L18
 L18:
 li t42, 0
-bne t43, t6, t42
-beq t43, x0, L13
+bne t6, t42, L13
 L14:
 la t44, L_str_1
 mv t5, t44

@@ -3,8 +3,7 @@ li t5, 1
 mv t1, t5
 li t6, 1
 li t7, 0
-bne t8, t6, t7
-beq t8, x0, L1
+bne t6, t7, L1
 L2:
 la t9, L_float_0
 flw f10, 0(t9)

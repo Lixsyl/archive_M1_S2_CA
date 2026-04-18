@@ -35,8 +35,7 @@ mv s2, s1
 j L6
 L6:
 li s1, 0
-bne s1, s2, s1
-beq s1, x0, L1
+bne s2, s1, L1
 L2:
 la s1, L_str_1
 mv s1, s1
@@ -71,8 +70,7 @@ mv s2, s1
 j L12
 L12:
 li s1, 0
-bne s1, s2, s1
-beq s1, x0, L7
+bne s2, s1, L7
 L8:
 la s1, L_str_1
 mv s1, s1
@@ -107,8 +105,7 @@ mv s2, s1
 j L18
 L18:
 li s1, 0
-bne s1, s2, s1
-beq s1, x0, L13
+bne s2, s1, L13
 L14:
 la s1, L_str_1
 mv s1, s1

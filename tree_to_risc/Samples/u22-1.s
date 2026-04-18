@@ -18,8 +18,7 @@ ILPmain:
 li s1, 22
 li s1, 1
 li s2, 0
-bne s1, s1, s2
-beq s1, x0, L1
+bne s1, s2, L1
 L2:
 la s1, L_float_0
 flw fs0, 0(s1)

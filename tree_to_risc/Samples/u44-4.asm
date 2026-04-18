@@ -9,8 +9,7 @@ jal ra, strcmp
 mv t8, a0
 mv t3, t8
 li t9, 0
-beq t10, t3, t9
-bne t10, x0, L4
+beq t3, t9, L4
 L5:
 li t11, 0
 mv t2, t11
@@ -21,8 +20,7 @@ mv t2, t12
 j L6
 L6:
 li t13, 0
-bne t14, t2, t13
-beq t14, x0, L1
+bne t2, t13, L1
 L2:
 la t15, L_str_3
 mv t1, t15

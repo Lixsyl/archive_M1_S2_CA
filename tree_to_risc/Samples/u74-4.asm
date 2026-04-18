@@ -27,8 +27,7 @@ mv t2, t14
 j L10
 L10:
 li t15, 0
-bne t16, t2, t15
-beq t16, x0, L5
+bne t2, t15, L5
 L6:
 mv t1, i0
 j L7

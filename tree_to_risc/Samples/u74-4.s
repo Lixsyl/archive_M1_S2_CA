@@ -43,8 +43,7 @@ mv s1, s1
 j L10
 L10:
 li s3, 0
-bne s1, s1, s3
-beq s1, x0, L5
+bne s1, s3, L5
 L6:
 mv s1, s2
 j L7

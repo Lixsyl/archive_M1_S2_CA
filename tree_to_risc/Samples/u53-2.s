@@ -27,8 +27,7 @@ mv s1, s1
 j L6
 L6:
 li s2, 0
-bne s1, s1, s2
-beq s1, x0, L2
+bne s1, s2, L2
 L3:
 li s1, 0
 j Lend
@@ -57,8 +56,7 @@ mv s1, s1
 j L12
 L12:
 li s2, 0
-bne s1, s1, s2
-beq s1, x0, L8
+bne s1, s2, L8
 L9:
 li s1, 0
 j L1

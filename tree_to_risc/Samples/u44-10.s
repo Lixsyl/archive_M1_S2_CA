@@ -42,8 +42,7 @@ mv s2, s1
 j L6
 L6:
 li s1, 0
-bne s1, s2, s1
-beq s1, x0, L1
+bne s2, s1, L1
 L2:
 la s1, L_str_3
 mv s1, s1

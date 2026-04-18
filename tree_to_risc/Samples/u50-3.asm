@@ -12,8 +12,7 @@ mv t2, t8
 j L6
 L6:
 li t9, 0
-bne t10, t2, t9
-beq t10, x0, L1
+bne t2, t9, L1
 L2:
 la t11, L_str_1
 mv t1, t11

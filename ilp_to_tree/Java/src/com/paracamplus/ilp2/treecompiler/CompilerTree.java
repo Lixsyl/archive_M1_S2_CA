@@ -208,7 +208,7 @@ public class CompilerTree extends com.paracamplus.ilp1.treecompiler.CompilerTree
     return null;
   }
   
-  // car 80-1 ne passe pas 
+  // --- car 80-1 ne passe pas 
   @Override
   public Void visit(ITASTvariable iast, Void context)
     throws CompilationException {

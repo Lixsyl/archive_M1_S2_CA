@@ -23,8 +23,7 @@ end:
 ILPmain:
 li s1, 1
 li s2, 0
-bne s1, s1, s2
-beq s1, x0, L2
+bne s1, s2, L2
 L3:
 li s1, 1
 mv s1, s1

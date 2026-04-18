@@ -7,8 +7,7 @@ end:
 // Routine main
 li t5, 1
 li t6, 0
-bne t7, t5, t6
-beq t7, x0, L2
+bne t5, t6, L2
 L3:
 li t8, 1
 mv t1, t8

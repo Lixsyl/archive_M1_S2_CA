@@ -113,9 +113,11 @@ let linearize (temp_gen : typ -> string) (p : program) : program =
   and stmt_lin { payload; loc } = { payload = stmt_lin2 payload; loc }
   in List.map stmt_lin p 
 
-let rec extract_block label liste =
+let rec extract_block label liste label_gen =
   let rec take_block acc = function
-    | [] -> let jump = (loc (Jump (loc (Name "Lend"), []))) in (List.rev (jump :: acc), [loc (Label "Lend")])
+    | [] -> let lab = label_gen () in 
+            let jump = (loc (Jump (loc (Name lab), []))) in 
+            (List.rev (jump :: acc), [loc (Label lab)])
     | ({ payload = Label l; _ } as x) :: rest when acc <> [] -> 
           (match acc with
           | [] -> assert false
@@ -126,7 +128,7 @@ let rec extract_block label liste =
             then  let (block, remaining) = take_block [y] rest in
                   ((List.rev (x :: acc)) @ block, remaining)
             else 
-                  let (block, remaining) = extract_block l2 (y :: rest) in
+                  let (block, remaining) = extract_block l2 (y :: rest) label_gen in
                   ((List.rev (x :: acc)) @ block, remaining)
     | x :: rest -> take_block (x :: acc) rest
   in let rec find = function
@@ -149,7 +151,7 @@ let rec normalize_cjump (label_gen : unit -> string) (p : program) : program =
         | Cjump (relop, e1, e2, l1, l2) ->  if l2 = (match y.payload with Label l -> l | _ -> "") 
                                             then x :: aux rest
                                             else 
-                                                  let (block, rest2) = extract_block l2 rest
+                                                  let (block, rest2) = extract_block l2 rest label_gen
                                                   in x :: block @ aux rest2
         | Seq (stmts) -> let s = aux stmts in loc (Seq (s)) :: aux rest
         | _ -> x :: aux rest)

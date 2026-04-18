@@ -2,8 +2,7 @@
 li t1, 22
 li t2, 1
 li t3, 0
-bne t4, t2, t3
-beq t4, x0, L1
+bne t2, t3, L1
 L2:
 la t5, L_float_0
 flw f6, 0(t5)
