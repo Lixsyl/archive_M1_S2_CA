@@ -53,3 +53,68 @@ L11:
 mv t1, t3
 L5:
 mv rv, t1
+end:
+// Routine L2
+mv i0, a0
+li t30, 0
+beq t31, i0, t30
+bne t31, x0, L18
+L19:
+li t32, 0
+mv t6, t32
+j L20
+L18:
+li t33, 1
+mv t6, t33
+j L20
+L20:
+li t34, 0
+bne t35, t6, t34
+beq t35, x0, L15
+L16:
+li t36, 1
+beq t37, i0, t36
+bne t37, x0, L24
+L25:
+li t38, 0
+mv t8, t38
+j L26
+L15:
+li t39, 0
+mv t5, t39
+j L17
+L24:
+li t40, 1
+mv t8, t40
+j L26
+L26:
+li t41, 0
+bne t42, t8, t41
+beq t42, x0, L21
+L22:
+li t43, 1
+sub t44, i0, t43
+mv t9, t44
+mv t9, a0
+jal ra, L1
+mv t45, a0
+mv t7, t45
+j L23
+L21:
+li t46, 1
+mv t7, t46
+j L23
+L23:
+mv t5, t7
+L17:
+mv rv, t5
+end:
+// Routine main
+li t47, 56
+mv t11, t47
+mv t11, a0
+jal ra, L2
+mv t48, a0
+mv t10, t48
+li t49, 1
+xor t50, t10, t49

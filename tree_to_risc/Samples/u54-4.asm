@@ -8,3 +8,20 @@ fmv.d f1, fa0
 fmv.d f0, f1
 fmul.d f2, f0, fi0
 fmv.d fv, f2
+end:
+// Routine main
+la t3, L_float_0
+flw f5, 0(t3)
+fmv.d f4, f5
+fmv.d f4, fa0
+jal ra, L1
+fmv.d f6, fa0
+fmv.d f3, f6
+fmv.d f3, fa0
+jal ra, string_of_float
+mv t7, a0
+mv t2, t7
+mv t2, a0
+jal ra, print
+mv t8, a0
+li t9, 0

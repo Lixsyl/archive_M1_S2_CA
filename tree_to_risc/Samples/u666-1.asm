@@ -30,3 +30,10 @@ mv t1, t13
 j L4
 L4:
 mv rv, t1
+end:
+// Routine main
+li t14, 5
+mv t3, t14
+mv t3, a0
+jal ra, L1
+mv t15, a0

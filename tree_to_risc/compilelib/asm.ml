@@ -176,7 +176,7 @@ let call ~lab =
       assem = "jal ra, " ^ lab;
       dst = [ ];
       src = [ ];
-      jump = Some [ lab ];
+      jump = None;
       is_call = true;
     }
 
