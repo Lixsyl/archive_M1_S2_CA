@@ -2,13 +2,11 @@ label L1
 move temp rv binop mul const 2 temp i0 
 label end
 label main
-seq
-  move temp t2 const 27 
-  move temp t1 call name L1 temp t2 call end 
-  move temp t0 call name string_of_int temp t1 call end 
-  sxp
-    call name print temp t0 call end
-  sxp
-    const 0
-seq end
+move temp t2 const 27 
+move temp t1 call name L1 temp t2 call end 
+move temp t0 call name string_of_int temp t1 call end 
+sxp
+  call name print temp t0 call end
+sxp
+  const 0
 label end

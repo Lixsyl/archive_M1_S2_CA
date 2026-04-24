@@ -10,25 +10,27 @@ mv t26, a0
 mv t13, t26
 li t27, 0
 blt t13, t27, L4
-L5:
-li t29, 0
+L25:
+j L5
+L4:
+li t29, 1
 mv t2, t29
 j L6
-L4:
-li t30, 1
+L5:
+li t30, 0
 mv t2, t30
-j L6
 L6:
 li t31, 0
 bne t2, t31, L1
-L2:
-la t33, L_str_3
+L26:
+j L2
+L1:
+la t33, L_str_2
 mv t1, t33
 j L3
-L1:
-la t34, L_str_2
+L2:
+la t34, L_str_3
 mv t1, t34
-j L3
 L3:
 mv t12, t1
 mv t12, a0
@@ -46,25 +48,27 @@ mv t39, a0
 mv t17, t39
 li t40, 0
 bge t40, t17, L10
-L11:
-li t42, 0
+L27:
+j L11
+L10:
+li t42, 1
 mv t4, t42
 j L12
-L10:
-li t43, 1
+L11:
+li t43, 0
 mv t4, t43
-j L12
 L12:
 li t44, 0
 bne t4, t44, L7
-L8:
-la t46, L_str_3
+L28:
+j L8
+L7:
+la t46, L_str_2
 mv t3, t46
 j L9
-L7:
-la t47, L_str_2
+L8:
+la t47, L_str_3
 mv t3, t47
-j L9
 L9:
 mv t16, t3
 mv t16, a0
@@ -82,25 +86,27 @@ mv t52, a0
 mv t21, t52
 li t53, 0
 blt t53, t21, L16
-L17:
-li t55, 0
+L29:
+j L17
+L16:
+li t55, 1
 mv t6, t55
 j L18
-L16:
-li t56, 1
+L17:
+li t56, 0
 mv t6, t56
-j L18
 L18:
 li t57, 0
 bne t6, t57, L13
-L14:
-la t59, L_str_3
+L30:
+j L14
+L13:
+la t59, L_str_2
 mv t5, t59
 j L15
-L13:
-la t60, L_str_2
+L14:
+la t60, L_str_3
 mv t5, t60
-j L15
 L15:
 mv t20, t5
 mv t20, a0
@@ -118,25 +124,27 @@ mv t65, a0
 mv t9, t65
 li t66, 0
 bge t9, t66, L22
-L23:
-li t68, 0
+L31:
+j L23
+L22:
+li t68, 1
 mv t8, t68
 j L24
-L22:
-li t69, 1
+L23:
+li t69, 0
 mv t8, t69
-j L24
 L24:
 li t70, 0
 bne t8, t70, L19
-L20:
-la t72, L_str_3
+L32:
+j L20
+L19:
+la t72, L_str_2
 mv t7, t72
 j L21
-L19:
-la t73, L_str_2
+L20:
+la t73, L_str_3
 mv t7, t73
-j L21
 L21:
 mv t0, t7
 mv t0, a0

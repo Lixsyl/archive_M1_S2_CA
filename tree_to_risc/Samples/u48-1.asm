@@ -2,18 +2,19 @@
 li t2, 1
 li t3, 0
 bne t2, t3, L1
-L2:
-li t5, 0
-mv t1, t5
-j L3
+L4:
+j L2
 L1:
-la t6, L_str_0
-mv t0, t6
+la t5, L_str_0
+mv t0, t5
 mv t0, a0
 jal ra, print
-mv t7, a0
+mv t6, a0
+li t7, 0
+mv t1, t7
+j L3
+L2:
 li t8, 0
 mv t1, t8
-j L3
 L3:
 li t9, 48

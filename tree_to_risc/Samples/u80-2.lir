@@ -6,25 +6,21 @@ label L1
 move temp rv binop add temp i0 const 1 
 label end
 label L2
-seq
-  move temp t1 const 1 
-  move temp t0 call name string_of_int temp t1 call end 
-  move temp rv call name concat temp i0 temp t0 call end 
-seq end
+move temp t1 const 1 
+move temp t0 call name string_of_int temp t1 call end 
+move temp rv call name concat temp i0 temp t0 call end 
 label end
 label main
-seq
-  move temp t9 name L_str_0 
-  move temp t8 const 2 
-  move temp t7 call name L1 temp t8 call end 
-  move temp t6 call name string_of_int temp t7 call end 
-  move temp t5 call name concat temp t9 temp t6 call end 
-  move temp t4 name L_str_1 
-  move temp t3 call name L2 temp t4 call end 
-  move temp t2 call name concat temp t5 temp t3 call end 
-  sxp
-    call name print temp t2 call end
-  sxp
-    const 0
-seq end
+move temp t9 name L_str_0 
+move temp t8 const 2 
+move temp t7 call name L1 temp t8 call end 
+move temp t6 call name string_of_int temp t7 call end 
+move temp t5 call name concat temp t9 temp t6 call end 
+move temp t4 name L_str_1 
+move temp t3 call name L2 temp t4 call end 
+move temp t2 call name concat temp t5 temp t3 call end 
+sxp
+  call name print temp t2 call end
+sxp
+  const 0
 label end

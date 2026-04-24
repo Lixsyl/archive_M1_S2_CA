@@ -3,17 +3,18 @@ li t1, 22
 li t2, 1
 li t3, 0
 bne t2, t3, L1
-L2:
-la t5, L_float_0
-flw f6, 0(t5)
-fmv.d f1, f6
-j L3
+L4:
+j L2
 L1:
-li t7, 1
-mv t0, t7
+li t5, 1
+mv t0, t5
 mv t0, a0
 jal ra, float_of_int
-fmv.d f8, fa0
-fmv.d f1, f8
+fmv.d f6, fa0
+fmv.d f1, f6
 j L3
+L2:
+la t7, L_float_0
+flw f8, 0(t7)
+fmv.d f1, f8
 L3:

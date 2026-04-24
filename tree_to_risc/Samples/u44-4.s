@@ -32,25 +32,27 @@ mv s1, a0
 mv s2, s1
 li s1, 0
 beq s2, s1, L4
-L5:
-li s1, 0
-mv s2, s1
-j L6
+L7:
+j L5
 L4:
 li s1, 1
 mv s2, s1
 j L6
+L5:
+li s1, 0
+mv s2, s1
 L6:
 li s1, 0
 bne s2, s1, L1
-L2:
-la s1, L_str_3
-mv s1, s1
-j L3
+L8:
+j L2
 L1:
 la s1, L_str_2
 mv s1, s1
 j L3
+L2:
+la s1, L_str_3
+mv s1, s1
 L3:
 mv s1, s1
 mv s1, a0

@@ -15,17 +15,24 @@ L1:
 mv s1, a0
 li s2, 0
 beq s1, s2, L5
-L6:
-li s1, 0
-mv s2, s1
-j L7
+L8:
+j L6
 L5:
 li s1, 1
 mv s2, s1
 j L7
+L6:
+li s1, 0
+mv s2, s1
 L7:
 li s1, 0
 bne s2, s1, L2
+L9:
+j L3
+L2:
+li s1, 1
+mv s1, s1
+j L4
 L3:
 li s2, 1
 sub s1, s1, s2
@@ -34,11 +41,6 @@ mv s1, a0
 jal ra, L1
 mv s1, a0
 mv s1, s1
-j L4
-L2:
-li s1, 1
-mv s1, s1
-j L4
 L4:
 mv a0, s1
 end:

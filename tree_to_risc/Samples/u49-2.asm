@@ -2,14 +2,15 @@
 li t4, 1
 li t5, 0
 bge t4, t5, L1
-L2:
-li t7, 0
+L4:
+j L2
+L1:
+li t7, 1
 mv t1, t7
 j L3
-L1:
-li t8, 1
+L2:
+li t8, 0
 mv t1, t8
-j L3
 L3:
 mv t3, t1
 mv t3, a0

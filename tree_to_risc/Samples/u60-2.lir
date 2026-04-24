@@ -1,10 +1,8 @@
 label L_str_0
  "FLOAT"
 label main
-seq
-  sxp
-    constF 5.0
-  sxp
-    name L_str_0
-seq end
+sxp
+  constF 5.0
+sxp
+  name L_str_0
 label end

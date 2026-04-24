@@ -24,14 +24,15 @@ ILPmain:
 li s1, 1
 li s2, 0
 bne s1, s2, L2
-L3:
-li s1, 1
-mv s1, s1
-j L4
+L5:
+j L3
 L2:
 li s1, 8
 mv s1, s1
 j L4
+L3:
+li s1, 1
+mv s1, s1
 L4:
 mv s1, s1
 li s1, 8

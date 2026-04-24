@@ -5,12 +5,10 @@ label L2
 move temp rv temp i1 
 label end
 label main
-seq
-  move temp t1 const 12 
-  move temp t1 call name L1 temp t1 call end 
-  move temp t2 temp t1 
-  move temp t0 call name L2 temp t2 temp t1 call end 
-  sxp
-    call name L1 temp t0 call end
-seq end
+move temp t1 const 12 
+move temp t1 call name L1 temp t1 call end 
+move temp t2 temp t1 
+move temp t0 call name L2 temp t2 temp t1 call end 
+sxp
+  call name L1 temp t0 call end
 label end

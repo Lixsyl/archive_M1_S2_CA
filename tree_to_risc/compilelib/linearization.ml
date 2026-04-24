@@ -110,36 +110,11 @@ let linearize (temp_gen : typ -> string) (p : program) : program =
                               | _ -> [stmt]) 
                       in Seq (List.concat_map f stmts) 
     | _ -> s
-  and stmt_lin { payload; loc } = { payload = stmt_lin2 payload; loc }
-  in List.map stmt_lin p 
-
-let rec extract_block label liste label_gen =
-  let rec take_block acc = function
-    | [] -> let lab = label_gen () in 
-            let jump = (loc (Jump (loc (Name lab), []))) in 
-            (List.rev (jump :: acc), [loc (Label lab)])
-    | ({ payload = Label l; _ } as x) :: rest when acc <> [] -> 
-          (match acc with
-          | [] -> assert false
-          | (y :: _) -> let jump = (loc (Jump (loc (Name l), []))) in (List.rev (jump :: acc), x :: rest))
-    | ({ payload = Jump (_, _); _ } as x) :: rest when acc <> [] -> (List.rev (x :: acc), rest)
-    | ({ payload = Cjump (relop, e1, e2, l1, l2); _ } as x) :: (y :: rest) when acc <> [] -> 
-        if l2 = (match y.payload with Label l -> l | _ -> "") 
-            then  let (block, remaining) = take_block [y] rest in
-                  ((List.rev (x :: acc)) @ block, remaining)
-            else 
-                  let (block, remaining) = extract_block l2 (y :: rest) label_gen in
-                  ((List.rev (x :: acc)) @ block, remaining)
-    | x :: rest -> take_block (x :: acc) rest
-  in let rec find = function
-    | [] -> raise (LinearizationException "normalize_call label block not found")
-    | ({ payload = Label l; _ } as x) :: rest when l = label ->
-        let (block, remaining) = take_block [x] rest in
-        (block, remaining)
-    | x :: rest ->
-        let (block, remaining) = find rest in
-        (block, x :: remaining)
-  in find liste
+  and stmt_lin { payload; loc } = { payload = stmt_lin2 payload; loc } in 
+  let lin = List.map stmt_lin p in
+  List.concat_map (fun s -> match s.payload with 
+                      | Seq (stmts) -> stmts
+                      | _ -> [s]) lin
 
 (* CJUMP normalization: ensures that every CJUMP is immediately followed by its
    false label. *)
@@ -151,8 +126,11 @@ let rec normalize_cjump (label_gen : unit -> string) (p : program) : program =
         | Cjump (relop, e1, e2, l1, l2) ->  if l2 = (match y.payload with Label l -> l | _ -> "") 
                                             then x :: aux rest
                                             else 
-                                                  let (block, rest2) = extract_block l2 rest label_gen
-                                                  in x :: block @ aux rest2
+                                              let lab = label_gen () in
+                                              let label = loc (Label lab) in 
+                                              let jump = loc (Jump (loc (Name l2), [])) in
+                                              let cjump = { x with payload = (Cjump (relop, e1, e2, l1, lab)) }
+                                              in cjump :: label :: jump :: aux rest
         | Seq (stmts) -> let s = aux stmts in loc (Seq (s)) :: aux rest
         | _ -> x :: aux rest)
     | [x] -> [x]
@@ -171,7 +149,7 @@ let linearize (p : program) (filename : string) : program =
   let label_gen = fresh_label p in
   let normalized_calls = normalize_call temp_gen p in
   let linearized = linearize temp_gen normalized_calls in
-  let reordered = Blocks.reordering linearized in
+  let reordered = Blocks.reordering label_gen linearized in
   let normalized_cjump = normalize_cjump label_gen reordered in
   let oc = open_out filename in
   let fmt = Format.formatter_of_out_channel oc in

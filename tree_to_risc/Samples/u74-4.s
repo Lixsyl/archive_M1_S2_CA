@@ -33,25 +33,27 @@ L2:
 mv s2, a0
 li s1, 74
 blt s2, s1, L8
-L9:
-li s1, 0
-mv s1, s1
-j L10
+L11:
+j L9
 L8:
 li s1, 1
 mv s1, s1
 j L10
+L9:
+li s1, 0
+mv s1, s1
 L10:
 li s3, 0
 bne s1, s3, L5
-L6:
-mv s1, s2
-j L7
+L12:
+j L6
 L5:
 li s1, 2
 mul s1, s1, s2
 mv s1, s1
 j L7
+L6:
+mv s1, s2
 L7:
 mv a0, s1
 end:

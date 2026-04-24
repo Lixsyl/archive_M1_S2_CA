@@ -2,22 +2,16 @@ label L1
 move temp rv binop mul const 2 temp i0 
 label end
 label L2
-seq
-  move temp t0 call name L1 temp i0 call end 
-  move temp rv call name L1 temp t0 call end 
-seq end
+move temp t0 call name L1 temp i0 call end 
+move temp rv call name L1 temp t0 call end 
 label end
 label L3
-seq
-  move temp t2 call name L1 temp i0 call end 
-  move temp t1 call name L2 temp i0 temp i0 call end 
-  move temp rv call name L2 temp t2 temp t1 call end 
-seq end
+move temp t2 call name L1 temp i0 call end 
+move temp t1 call name L2 temp i0 temp i0 call end 
+move temp rv call name L2 temp t2 temp t1 call end 
 label end
 label main
-seq
-  move temp t3 const 73 
-  sxp
-    call name L3 temp t3 call end
-seq end
+move temp t3 const 73 
+sxp
+  call name L3 temp t3 call end
 label end

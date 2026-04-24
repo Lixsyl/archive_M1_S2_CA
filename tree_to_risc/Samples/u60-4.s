@@ -18,14 +18,15 @@ ILPmain:
 li s2, 1
 li s1, 2
 beq s2, s1, L1
-L2:
-li s1, 0
-mv s1, s1
-j L3
+L4:
+j L2
 L1:
 li s1, 1
 mv s1, s1
 j L3
+L2:
+li s1, 0
+mv s1, s1
 L3:
 la s1, L_str_0
 end:

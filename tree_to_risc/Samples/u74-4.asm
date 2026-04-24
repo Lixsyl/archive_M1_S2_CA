@@ -17,25 +17,27 @@ end:
 mv i0, a0
 li t11, 74
 blt i0, t11, L8
-L9:
-li t13, 0
+L11:
+j L9
+L8:
+li t13, 1
 mv t2, t13
 j L10
-L8:
-li t14, 1
+L9:
+li t14, 0
 mv t2, t14
-j L10
 L10:
 li t15, 0
 bne t2, t15, L5
-L6:
-mv t1, i0
-j L7
+L12:
+j L6
 L5:
 li t17, 2
 mul t18, t17, i0
 mv t1, t18
 j L7
+L6:
+mv t1, i0
 L7:
 mv rv, t1
 end:
