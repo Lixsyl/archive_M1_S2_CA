@@ -18,8 +18,10 @@ ILPmain:
 li s1, 0
 li s2, 0
 bne s1, s2, L1
-L4:
-j L2
+L2:
+li s1, 0
+mv s1, s1
+j L3
 L1:
 la s1, L_str_0
 mv s1, s1
@@ -29,9 +31,6 @@ mv s1, a0
 li s1, 0
 mv s1, s1
 j L3
-L2:
-li s1, 0
-mv s1, s1
 L3:
 li s1, 47
 end:

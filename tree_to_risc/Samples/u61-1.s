@@ -25,8 +25,15 @@ mv s1, s1
 li s2, 1
 li s1, 0
 bne s2, s1, L1
-L4:
-j L2
+L2:
+la s1, L_float_0
+flw fs0, 0(s1)
+fmv.d fs0, fs0
+fmv.d fs0, fa0
+jal ra, string_of_float
+mv s1, a0
+mv s1, s1
+j L3
 L1:
 mv s1, a0
 jal ra, string_of_int
@@ -41,14 +48,6 @@ mv s1, a0
 la s1, L_str_1
 mv s1, s1
 j L3
-L2:
-la s1, L_float_0
-flw fs0, 0(s1)
-fmv.d fs0, fs0
-fmv.d fs0, fa0
-jal ra, string_of_float
-mv s1, a0
-mv s1, s1
 L3:
 mv s1, s1
 mv s1, a0

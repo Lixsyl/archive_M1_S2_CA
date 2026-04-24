@@ -2,34 +2,32 @@
 mv i0, a0
 li t7, 0
 beq i0, t7, L5
-L8:
-j L6
-L5:
-li t9, 1
+L6:
+li t9, 0
 mv t2, t9
 j L7
-L6:
-li t10, 0
-mv t2, t10
 L7:
-li t11, 0
-bne t2, t11, L2
-L9:
-j L3
-L2:
-li t13, 1
-mv t1, t13
-j L4
+li t10, 0
+bne t2, t10, L2
 L3:
-li t14, 1
-sub t15, i0, t14
-mv t3, t15
+li t12, 1
+sub t13, i0, t12
+mv t3, t13
 mv t3, a0
 jal ra, L1
-mv t16, a0
-mv t0, t16
-mul t17, i0, t0
+mv t14, a0
+mv t0, t14
+mul t15, i0, t0
+mv t1, t15
+j L4
+L5:
+li t16, 1
+mv t2, t16
+j L7
+L2:
+li t17, 1
 mv t1, t17
+j L4
 L4:
 mv rv, t1
 end:

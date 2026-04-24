@@ -4,15 +4,14 @@ li t3, 1
 li t4, 1
 li t5, 0
 bne t4, t5, L1
-L4:
-j L2
-L1:
-la t7, L_str_0
+L2:
+la t7, L_str_1
 mv t1, t7
 j L3
-L2:
-la t8, L_str_1
+L1:
+la t8, L_str_0
 mv t1, t8
+j L3
 L3:
 mv t0, t1
 mv t0, a0

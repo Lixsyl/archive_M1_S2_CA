@@ -9,27 +9,25 @@ la t6, L_float_0
 flw f7, 0(t6)
 feq.s t8, f7, f1
 beq t8, x0, L4
-L7:
-j L5
-L4:
-li t9, 1
+L5:
+li t9, 0
 mv t2, t9
 j L6
-L5:
-li t10, 0
-mv t2, t10
 L6:
-li t11, 0
-bne t2, t11, L1
-L8:
-j L2
-L1:
-la t13, L_str_0
-mv t1, t13
-j L3
+li t10, 0
+bne t2, t10, L1
 L2:
-la t14, L_str_1
+la t12, L_str_1
+mv t1, t12
+j L3
+L4:
+li t13, 1
+mv t2, t13
+j L6
+L1:
+la t14, L_str_0
 mv t1, t14
+j L3
 L3:
 mv t0, t1
 mv t0, a0

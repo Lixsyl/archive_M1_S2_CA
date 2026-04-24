@@ -16,25 +16,22 @@ li s1, 717
 li s1, 1
 li s2, 0
 bne s1, s2, L1
-L6:
-j L2
-L1:
-li s1, 0
-li s2, 0
-bne s1, s2, L4
-L7:
-j L5
-L4:
+L2:
 li s1, 0
 mv s1, s1
 j L3
+L1:
+li s2, 0
+li s1, 0
+bne s2, s1, L4
 L5:
 li s1, 1
 mv s1, s1
 j L3
-L2:
+L4:
 li s1, 0
 mv s1, s1
+j L3
 L3:
 end:
 # -------- End of function main --------

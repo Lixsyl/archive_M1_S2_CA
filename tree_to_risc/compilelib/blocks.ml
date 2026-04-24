@@ -78,6 +78,26 @@ let isLastBlk (blk : program) : bool =
   | { payload = Label "end"; _ } :: _ -> true
   | _ -> false
 
+let inv_relop = function
+  | EqF -> NeqF
+  | NeqF -> EqF
+  | Eq -> Neq
+  | Neq -> Eq
+  | LT -> GE
+  | GT -> LE
+  | LE -> GT
+  | GE -> LT
+  | LTF -> GEF
+  | GTF -> LEF
+  | LEF -> GTF
+  | GEF -> LTF
+  | ULT -> UGE
+  | ULE -> UGT
+  | UGT -> ULE
+  | UGE -> ULT
+
+(* Liveness analysis *)
+
 let build_trace (label_gen : unit -> string) (routine : program) : program =
  (*print_prog Format.std_formatter routine;
   print_endline "\n";
@@ -114,7 +134,7 @@ let build_trace (label_gen : unit -> string) (routine : program) : program =
                                                         if isLastBlk b then false else true
                                                       | _ -> false) bs
                                   in  (match findT with
-                                      | b :: _ -> let cjump = { x with payload = (Cjump (relop, e1, e2, l2, l1)) } 
+                                      | b :: _ -> let cjump = { x with payload = (Cjump (inv_relop relop, e1, e2, l2, l1)) } 
                                                   in aux (List.rev (cjump :: xs) :: acc) (b :: rest)
                                       | [] -> let lab = label_gen () in
                                               let label = loc (Label lab) in 
@@ -124,11 +144,11 @@ let build_trace (label_gen : unit -> string) (routine : program) : program =
                 | _ -> failwith "Error build_trace aux"))
   in List.concat (aux [] blocks)
 
-let reordering label_gen p = p (*
+let reordering label_gen p = (*
   print_prog Format.std_formatter p;
   print_endline "\n";
   let (literals, routines) = split_literals_routines p in
   (List.iter (fun b -> (print_prog Format.std_formatter b;
-              print_endline "\n";)) (routines));
+              print_endline "\n";)) (routines));*)
   let (literals, routines) = split_literals_routines p in
-  literals @ List.concat (List.map (build_trace label_gen) routines)*)
+  literals @ List.concat (List.map (build_trace label_gen) routines)

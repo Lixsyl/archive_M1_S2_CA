@@ -22,15 +22,14 @@ li s1, 1
 li s2, 1
 li s1, 0
 bne s2, s1, L1
-L4:
-j L2
+L2:
+la s1, L_str_1
+mv s1, s1
+j L3
 L1:
 la s1, L_str_0
 mv s1, s1
 j L3
-L2:
-la s1, L_str_1
-mv s1, s1
 L3:
 mv s1, s1
 mv s1, a0

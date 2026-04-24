@@ -19,8 +19,11 @@ li s1, 22
 li s1, 1
 li s2, 0
 bne s1, s2, L1
-L4:
-j L2
+L2:
+la s1, L_float_0
+flw fs0, 0(s1)
+fmv.d fs0, fs0
+j L3
 L1:
 li s1, 1
 mv s1, s1
@@ -29,10 +32,6 @@ jal ra, float_of_int
 fmv.d fs0, fa0
 fmv.d fs0, fs0
 j L3
-L2:
-la s1, L_float_0
-flw fs0, 0(s1)
-fmv.d fs0, fs0
 L3:
 end:
 # -------- End of function main --------

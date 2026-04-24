@@ -15,15 +15,14 @@ ILPmain:
 li s2, 45
 li s1, 44
 bge s1, s2, L1
-L4:
-j L2
+L2:
+li s1, 0
+mv s1, s1
+j L3
 L1:
 li s1, 1
 mv s1, s1
 j L3
-L2:
-li s1, 0
-mv s1, s1
 L3:
 end:
 # -------- End of function main --------

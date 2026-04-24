@@ -8,15 +8,14 @@ end:
 li t5, 1
 li t6, 0
 bne t5, t6, L2
-L5:
-j L3
-L2:
-li t8, 8
+L3:
+li t8, 1
 mv t1, t8
 j L4
-L3:
-li t9, 1
+L2:
+li t9, 8
 mv t1, t9
+j L4
 L4:
 mv t3, t1
 li t10, 8

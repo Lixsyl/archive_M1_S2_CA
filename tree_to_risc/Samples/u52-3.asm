@@ -1,28 +1,26 @@
 // Routine main
 li t4, 5
 mv t1, t4
+j L1
 L1:
 li t5, 42
 blt t1, t5, L4
-L7:
-j L5
-L4:
-li t7, 1
+L5:
+li t7, 0
 mv t2, t7
 j L6
-L5:
-li t8, 0
-mv t2, t8
 L6:
-li t9, 0
-bne t2, t9, L2
-L8:
-j L3
+li t8, 0
+beq t2, t8, L3
 L2:
-li t11, 1
-add t12, t1, t11
-mv t1, t12
+li t10, 1
+add t11, t1, t10
+mv t1, t11
 j L1
+L4:
+li t12, 1
+mv t2, t12
+j L6
 L3:
 li t13, 0
 mv t3, t1
