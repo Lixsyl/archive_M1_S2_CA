@@ -38,30 +38,6 @@ let analyze (instrs : Asm.instr list) : info array =
   let len_instrs = List.length instrs in
   let res = Array.init len_instrs (fun _ -> { live_in = SSet.empty; live_out = SSet.empty }) in
   let succ = Asm.build_succ instrs in
-  (*let label_map =
-    let tbl = Hashtbl.create 16 in
-    List.iteri (fun i instr ->
-      match instr with
-      | Asm.Label { lab; _ } -> Hashtbl.add tbl lab i
-      | _ -> ()
-    ) instrs;
-    tbl in
-  let succ = 
-    let tbl = Array.init len_instrs (fun _ -> []) in
-    List.iteri
-      (fun i instr ->
-        if i < len_instrs - 1 then tbl.(i) <- [i+1] else ();
-        (match instr with
-        | Asm.Oper { jump = Some labels; _ } ->
-            List.iter 
-            (fun l ->
-              match Hashtbl.find_opt label_map l with
-              | Some lab_i -> tbl.(i) <- lab_i :: tbl.(i)
-              | None -> ()) 
-            labels
-        | _ -> ()))
-      instrs;
-    tbl in*)
   let rec aux ins n changed = 
     (match ins with 
     | [] -> changed
@@ -90,11 +66,9 @@ let build_interference (instrs : Asm.instr list) (live : info array) :
               (fun acc instr -> SSet.union acc (SSet.union (use instr) (def instr))) 
               SSet.empty instrs in
   let () =  SSet.iter (fun t ->
-              if Tree_helper.is_float_temp t then
-                Graph.add_node float_graph t
-              else
-                Graph.add_node int_graph t
-            ) tmps in 
+              if Tree_helper.is_float_temp t 
+              then Graph.add_node float_graph t
+              else Graph.add_node int_graph t) tmps in 
   let () = List.iteri
           (fun i instr ->
             let live_out = live.(i).live_out in
@@ -105,11 +79,11 @@ let build_interference (instrs : Asm.instr list) (live : info array) :
                   List.iter
                     (fun y -> let x_is_float = Tree_helper.is_float_temp x in
                               let y_is_float = Tree_helper.is_float_temp y in
-                              if x_is_float && y_is_float then
-                                Graph.add_edge float_graph x y
-                              else if not x_is_float && not y_is_float then
-                                Graph.add_edge int_graph x y
-                              else ())
+                              if x_is_float && y_is_float 
+                              then Graph.add_edge float_graph x y
+                              else if not x_is_float && not y_is_float 
+                                  then Graph.add_edge int_graph x y
+                                  else ())
                     xs;
                   aux xs
             in aux lst_live)

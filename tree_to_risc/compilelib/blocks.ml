@@ -104,10 +104,18 @@ let build_trace (label_gen : unit -> string) (routine : program) : program =
   print_endline "Routine before reordering:@\n";
   (List.iter (fun b -> (print_prog Format.std_formatter b;
               print_endline "\n";)) (split_blocks label_gen routine));*)
+  let find_block bs lab =
+      let (found, rest) = 
+          List.partition (fun b ->  match b with
+                                    | ({ payload = Label l; _ } :: _) when l = lab -> if isLastBlk b then false else true
+                                    | _ -> false) bs in
+      (match found with
+      | b :: _ -> Some (b, rest)
+      | [] -> None) in
   let blocks = split_blocks label_gen routine in
   let rec aux acc = function
       | [] -> List.rev acc
-      | xx :: [] -> List.rev (xx :: acc)
+      | [xx] -> List.rev (xx :: acc)
       | xx :: bs -> 
             (match List.rev xx with
             | [] -> failwith "Error build_trace aux xx"
@@ -115,32 +123,21 @@ let build_trace (label_gen : unit -> string) (routine : program) : program =
                 (match x.payload with
                 | Label "end" -> aux (xx :: acc) bs
                 | Jump (n, _) -> (match n.payload with 
-                                  | Name lab -> let (find, rest) = List.partition (fun b -> match b with
-                                                                    | ({ payload = Label l; _ } :: _) when l = lab -> 
-                                                                      if isLastBlk b then false else true
-                                                                    | _ -> false) bs
-                                                in  (match find with
-                                                    | b :: _ -> aux (xx :: acc) (b :: rest)
-                                                    | [] -> aux (xx :: acc) bs)
+                                  | Name lab -> (match find_block bs lab with
+                                                 | Some (b, rest) -> aux (xx :: acc) (b :: rest)
+                                                 | None -> aux (xx :: acc) bs)
                                   | _ -> failwith "Error build_trace aux jump")
                 | Cjump (relop, e1, e2, l1, l2) ->
-                      let (findF, rest) = List.partition (fun b -> match b with
-                                          | ({ payload = Label l; _ } :: _) when l = l2 -> if isLastBlk b then false else true
-                                          | _ -> false) bs
-                      in  (match findF with
-                          | b :: _ -> aux (xx :: acc) (b :: rest)
-                          | [] -> let (findT, rest) = List.partition (fun b -> match b with
-                                                      | ({ payload = Label l; _ } :: _) when l = l1 -> 
-                                                        if isLastBlk b then false else true
-                                                      | _ -> false) bs
-                                  in  (match findT with
-                                      | b :: _ -> let cjump = { x with payload = (Cjump (inv_relop relop, e1, e2, l2, l1)) } 
-                                                  in aux (List.rev (cjump :: xs) :: acc) (b :: rest)
-                                      | [] -> let lab = label_gen () in
-                                              let label = loc (Label lab) in 
-                                              let jump = loc (Jump (loc (Name l2), [])) in
-                                              let cjump = { x with payload = (Cjump (relop, e1, e2, l1, lab)) } in
-                                              aux (List.rev (cjump :: xs) :: acc) ((label :: [jump]) :: bs)))
+                    (match find_block bs l2 with
+                    | Some (b, rest) -> aux (xx :: acc) (b :: rest)
+                    | None -> (match find_block bs l1 with
+                                | Some (b, rest) -> let cjump = { x with payload = (Cjump (inv_relop relop, e1, e2, l2, l1)) }
+                                                    in aux (List.rev (cjump :: xs) :: acc) (b :: rest)
+                                | None -> let lab = label_gen () in
+                                          let label = loc (Label lab) in 
+                                          let jump = loc (Jump (loc (Name l2), [])) in
+                                          let cjump = { x with payload = (Cjump (relop, e1, e2, l1, lab)) } in
+                                          aux (List.rev (cjump :: xs) :: acc) ((label :: [jump]) :: bs)))
                 | _ -> failwith "Error build_trace aux"))
   in List.concat (aux [] blocks)
 
