@@ -15,6 +15,8 @@ main:
 
 # -------- Function L1 --------
 L1:
+addi sp, sp, -16
+sd ra, 8(sp)
 fmv.d fs1, fa0
 li s1, 2
 mv s1, s1
@@ -25,10 +27,15 @@ fmv.d fs0, fs0
 fmul.d fs0, fs0, fs1
 fmv.d fa0, fs0
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function L1 --------
 
 # -------- Function main --------
 ILPmain:
+addi sp, sp, -16
+sd ra, 8(sp)
 la s1, L_float_0
 flw fs0, 0(s1)
 fmv.d fs0, fs0
@@ -45,4 +52,7 @@ jal ra, print
 mv s1, a0
 li s1, 0
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function main --------

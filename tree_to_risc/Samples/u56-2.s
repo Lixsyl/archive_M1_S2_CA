@@ -12,6 +12,8 @@ main:
 
 # -------- Function L1 --------
 L1:
+addi sp, sp, -16
+sd ra, 8(sp)
 mv s1, a0
 li s2, 0
 beq s1, s2, L6
@@ -64,10 +66,15 @@ j L11
 L5:
 mv a0, s1
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function L1 --------
 
 # -------- Function L2 --------
 L2:
+addi sp, sp, -16
+sd ra, 8(sp)
 mv s1, a0
 li s2, 0
 beq s1, s2, L18
@@ -119,10 +126,15 @@ j L23
 L17:
 mv a0, s1
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function L2 --------
 
 # -------- Function main --------
 ILPmain:
+addi sp, sp, -16
+sd ra, 8(sp)
 li s1, 56
 mv s1, s1
 mv s1, a0
@@ -132,4 +144,7 @@ mv s2, s1
 li s1, 1
 xor s1, s2, s1
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function main --------

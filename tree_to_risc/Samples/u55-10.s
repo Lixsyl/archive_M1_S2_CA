@@ -17,6 +17,8 @@ main:
 
 # -------- Function main --------
 ILPmain:
+addi sp, sp, -16
+sd ra, 8(sp)
 li s1, 1
 li s2, 0
 bne s1, s2, L4
@@ -46,4 +48,7 @@ jal ra, print
 mv s1, a0
 li s1, 0
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function main --------

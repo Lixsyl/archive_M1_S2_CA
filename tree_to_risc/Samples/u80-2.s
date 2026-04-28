@@ -17,15 +17,22 @@ main:
 
 # -------- Function L1 --------
 L1:
+addi sp, sp, -16
+sd ra, 8(sp)
 mv s1, a0
 li s2, 1
 add s1, s1, s2
 mv a0, s1
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function L1 --------
 
 # -------- Function L2 --------
 L2:
+addi sp, sp, -16
+sd ra, 8(sp)
 mv s1, a0
 li s1, 1
 mv s1, s1
@@ -39,10 +46,15 @@ jal ra, concat
 mv s1, a0
 mv a0, s1
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function L2 --------
 
 # -------- Function main --------
 ILPmain:
+addi sp, sp, -16
+sd ra, 8(sp)
 la s1, L_str_0
 mv s1, s1
 li s1, 2
@@ -76,4 +88,7 @@ jal ra, print
 mv s1, a0
 li s1, 0
 end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function main --------

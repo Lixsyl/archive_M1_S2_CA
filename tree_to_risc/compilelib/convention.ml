@@ -32,6 +32,89 @@ open! Utils
      - The function epilogue.
 *)
 
+let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * Asm.t =
+  let size = ((8 * (1 + List.length callee_int + List.length callee_float) + 15) / 16) * 16 in
+  let prologue =
+    let stack_alloc = 
+        Asm.Oper
+        {
+          assem = "addi sp, sp, -" ^ string_of_int size;
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        } in 
+    let reg_alloc =
+        List.mapi (fun i reg ->
+          let offset = i * 8 in
+          Asm.Oper
+          {
+            assem = "sd " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+            dst = [];
+            src = [];
+            jump = None;
+            is_call = false;
+          }
+        ) (callee_int @ callee_float) in
+    let ra_alloc = 
+        Asm.Oper
+        {
+          assem = "sd ra, " ^ string_of_int (size - 8) ^ "(sp)";
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        } in
+    (stack_alloc :: reg_alloc @ [ra_alloc]) in
+  let epilogue =
+    let reg_dealloc =
+        List.mapi (fun i reg ->
+          let offset = i * 8 in
+          Asm.Oper
+          {
+            assem = "ld " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+            dst = [];
+            src = [];
+            jump = None;
+            is_call = false;
+          }
+        ) (callee_int @ callee_float) in
+    let ra_stack_dealloc_ret = [
+        Asm.Oper
+        {
+          assem = "ld ra, " ^ string_of_int (size - 8) ^ "(sp)";
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        };
+        Asm.Oper
+        {
+          assem = "addi sp, sp, " ^ string_of_int size;
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        };
+        Asm.Oper
+        {
+          assem = "ret";
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        }] in
+    (reg_dealloc @ ra_stack_dealloc_ret)
+  in (prologue, epilogue)
+
 let generate (colors : string SMap.t) (fcolors : string SMap.t)
     (callee_saved : string list) (caller_saved : string list) (instrs : Asm.t) =
-  (instrs, [], [])
+  let callee_int = List.filter (fun r -> SMap.mem r colors) callee_saved in
+  let callee_float = List.filter (fun r -> SMap.mem r fcolors) callee_saved in
+  let (prologue, epilogue) = pro_epi callee_int callee_float in
+
+    (*let aux = 
+      (match instrs with
+      | Oper { is_call = true; _ } ->
+      | _ ->*)
+  (instrs, prologue, epilogue)
