@@ -15,9 +15,13 @@ main:
 
 # -------- Function main --------
 ILPmain:
+addi sp, sp, -16
+sd ra, 8(sp)
 li s2, 2
 li s1, 2
 add s1, s2, s1
 la s1, L_str_0
-end:
+ld ra, 8(sp)
+addi sp, sp, 16
+ret
 # -------- End of function main --------

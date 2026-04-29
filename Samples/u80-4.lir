@@ -5,18 +5,16 @@ label L_str_1
 label L_str_0
  "GEORGE "
 label main
-seq
-  move temp t3 name L_str_0 
-  sxp
-    call name print temp t3 call end
-  sxp
-    const 0
-  move temp t2 name L_str_1 
-  move temp t1 name L_str_2 
-  move temp t0 call name concat temp t2 temp t1 call end 
-  sxp
-    call name print temp t0 call end
-  sxp
-    const 0
-seq end
+move temp t3 name L_str_0 
+sxp
+  call name print temp t3 call end
+sxp
+  const 0
+move temp t2 name L_str_1 
+move temp t1 name L_str_2 
+move temp t0 call name concat temp t2 temp t1 call end 
+sxp
+  call name print temp t0 call end
+sxp
+  const 0
 label end

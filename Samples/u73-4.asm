@@ -3,14 +3,34 @@ mv i0, a0
 li t4, 2
 mul t5, t4, i0
 mv rv, t5
-end:
 // Routine L2
 mv i0, a0
-mv i0, a0
+mv a0, i0
 jal ra, L1
 mv t6, a0
 mv t0, t6
-mv t0, a0
+mv a0, t0
 jal ra, L1
 mv t7, a0
 mv rv, t7
+// Routine L3
+mv i0, a0
+mv a0, i0
+jal ra, L1
+mv t8, a0
+mv t2, t8
+mv a0, i0
+mv a1, i0
+jal ra, L2
+mv t9, a0
+mv t1, t9
+mv a0, t2
+mv a1, t1
+jal ra, L2
+mv t10, a0
+mv rv, t10
+// Routine main
+li t11, 73
+mv t3, t11
+mv a0, t3
+jal ra, L3

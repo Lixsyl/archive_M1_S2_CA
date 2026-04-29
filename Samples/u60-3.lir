@@ -3,10 +3,8 @@ label L_str_0
 label L_str_1
  "STRING"
 label main
-seq
-  sxp
-    name L_str_0
-  sxp
-    name L_str_1
-seq end
+sxp
+  name L_str_0
+sxp
+  name L_str_1
 label end

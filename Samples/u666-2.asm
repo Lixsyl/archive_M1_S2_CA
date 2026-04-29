@@ -1,34 +1,37 @@
 // Routine L1
 mv i0, a0
 li t5, 0
-beq t6, i0, t5
-bne t6, x0, L5
+beq i0, t5, L5
 L6:
 li t7, 0
 mv t2, t7
 j L7
-L5:
-li t8, 1
-mv t2, t8
-j L7
 L7:
-li t9, 0
-bne t10, t2, t9
-beq t10, x0, L2
+li t8, 0
+bne t2, t8, L2
 L3:
-li t11, 1
-sub t12, i0, t11
-mv t3, t12
-mv t3, a0
+li t10, 1
+sub t11, i0, t10
+mv t3, t11
+mv a0, t3
 jal ra, L1
-mv t13, a0
-mv t0, t13
-mul t14, i0, t0
-mv t1, t14
+mv t12, a0
+mv t0, t12
+mul t13, i0, t0
+mv t1, t13
 j L4
+L5:
+li t14, 1
+mv t2, t14
+j L7
 L2:
 li t15, 1
 mv t1, t15
 j L4
 L4:
 mv rv, t1
+// Routine main
+li t16, 5
+mv t4, t16
+mv a0, t4
+jal ra, L1

@@ -1,6 +1,7 @@
 // Routine main
 li t4, 5
 mv t1, t4
+j L1
 L1:
 li t5, 42
 blt t1, t5, L4
@@ -8,29 +9,25 @@ L5:
 li t7, 0
 mv t2, t7
 j L6
-L4:
-li t8, 1
-mv t2, t8
-j L6
 L6:
-li t9, 0
-bne t10, t2, t9
-beq t10, x0, L2
-L3:
-li t11, 0
-mv t3, t1
-mv t3, a0
-jal ra, string_of_int
-mv t12, a0
-mv t0, t12
-mv t0, a0
-jal ra, print
-mv t13, a0
-li t14, 0
-j Lend
+li t8, 0
+beq t2, t8, L3
 L2:
-li t15, 1
-add t16, t1, t15
-mv t1, t16
+li t10, 1
+add t11, t1, t10
+mv t1, t11
 j L1
-Lend:
+L4:
+li t12, 1
+mv t2, t12
+j L6
+L3:
+li t13, 0
+mv t3, t1
+mv a0, t3
+jal ra, string_of_int
+mv t14, a0
+mv t0, t14
+mv a0, t0
+jal ra, print
+mv t15, a0

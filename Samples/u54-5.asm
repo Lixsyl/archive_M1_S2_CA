@@ -2,11 +2,34 @@
 mv i0, a0
 add t5, i0, i0
 mv rv, t5
-end:
 // Routine L2
 mv i0, a0
-mv i0, a0
-mv i0, a1
+mv a0, i0
+mv a1, i0
 jal ra, concat
 mv t6, a0
 mv rv, t6
+// Routine main
+la t7, L_str_0
+mv t4, t7
+mv a0, t4
+jal ra, L2
+mv t8, a0
+mv t3, t8
+mv a0, t3
+jal ra, print
+mv t9, a0
+li t10, 0
+li t11, 2
+mv t2, t11
+mv a0, t2
+jal ra, L1
+mv t12, a0
+mv t1, t12
+mv a0, t1
+jal ra, string_of_int
+mv t13, a0
+mv t0, t13
+mv a0, t0
+jal ra, print
+mv t14, a0

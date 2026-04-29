@@ -1,9 +1,7 @@
 label main
-seq
-  move temp t1 const 22 
-  move temp f2 constF 3.3 
-  move temp f0 callF name float_of_int temp t1 call end 
-  sxp
-    binop addF temp f0 temp f2
-seq end
+move temp t1 const 22 
+move temp f2 constF 3.3 
+move temp f0 callF name float_of_int temp t1 call end 
+sxp
+  binop addF temp f0 temp f2
 label end

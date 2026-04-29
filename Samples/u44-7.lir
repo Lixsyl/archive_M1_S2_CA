@@ -7,30 +7,28 @@ label L_str_3
 label L_str_2
  "true"
 label main
-seq
-  move temp t5 name L_str_0 
-  move temp t4 name L_str_1 
-  move temp t3 call name strcmp temp t5 temp t4 call end 
-  cjump ne temp t3 const 0 name L4 name L5 
-  label L5
-  move temp t2 const 0 
-  jump name L6 
-  label L4
-  move temp t2 const 1 
-  jump name L6 
-  label L6
-  cjump ne temp t2 const 0 name L1 name L2 
-  label L2
-  move temp t1 name L_str_3 
-  jump name L3 
-  label L1
-  move temp t1 name L_str_2 
-  jump name L3 
-  label L3
-  move temp t0 temp t1 
-  sxp
-    call name print temp t0 call end
-  sxp
-    const 0
-seq end
+move temp t5 name L_str_0 
+move temp t4 name L_str_1 
+move temp t3 call name strcmp temp t5 temp t4 call end 
+cjump ne temp t3 const 0 name L4 name L5 
+label L5
+move temp t2 const 0 
+jump name L6 
+label L6
+cjump ne temp t2 const 0 name L1 name L2 
+label L2
+move temp t1 name L_str_3 
+jump name L3 
+label L4
+move temp t2 const 1 
+jump name L6 
+label L1
+move temp t1 name L_str_2 
+jump name L3 
+label L3
+move temp t0 temp t1 
+sxp
+  call name print temp t0 call end
+sxp
+  const 0
 label end
