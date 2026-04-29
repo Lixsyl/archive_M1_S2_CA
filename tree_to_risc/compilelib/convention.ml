@@ -108,7 +108,7 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
   in (prologue, epilogue)
 
 let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * Asm.t =
-  let size = ((8 * (1 + List.length caller_int + List.length caller_float) + 15) / 16) * 16 in
+  let size = ((8 * (List.length caller_int + List.length caller_float) + 15) / 16) * 16 in
   let pre = 
     let stack_alloc = 
         Asm.Oper
@@ -154,7 +154,7 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
                   is_call = false;
                 }
               ) (caller_int @ caller_float) in
-    stack_dealloc :: reg_dealloc
+    reg_dealloc @ [stack_dealloc]
   in (pre, post)
 
 let generate (colors : string SMap.t) (fcolors : string SMap.t)

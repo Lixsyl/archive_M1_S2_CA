@@ -28,12 +28,12 @@ sd t2, 16(sp)
 sd t3, 24(sp)
 sd t4, 32(sp)
 jal ra, print
-addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
 ld t3, 24(sp)
 ld t4, 32(sp)
+addi sp, sp, 48
 mv s1, a0
 li s1, 0
 ld ra, 8(sp)

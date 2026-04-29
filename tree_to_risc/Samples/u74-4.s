@@ -16,33 +16,33 @@ addi sp, sp, -16
 sd ra, 8(sp)
 mv s1, a0
 mv a0, s1
-addi sp, sp, -32
+addi sp, sp, -16
 sd t0, 0(sp)
 sd t3, 8(sp)
 jal ra, L4
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t3, 8(sp)
+addi sp, sp, 16
 mv s1, a0
 mv s1, s1
 mv a0, s1
-addi sp, sp, -32
+addi sp, sp, -16
 sd t0, 0(sp)
 sd t3, 8(sp)
 jal ra, L2
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t3, 8(sp)
+addi sp, sp, 16
 mv s1, a0
 mv s1, s1
 mv a0, s1
-addi sp, sp, -32
+addi sp, sp, -16
 sd t0, 0(sp)
 sd t3, 8(sp)
 jal ra, L4
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t3, 8(sp)
+addi sp, sp, 16
 mv s1, a0
 mv a0, s1
 ld ra, 8(sp)
@@ -92,16 +92,16 @@ mv a0, s1
 addi sp, sp, -16
 sd t4, 0(sp)
 jal ra, L2
-addi sp, sp, 16
 ld t4, 0(sp)
+addi sp, sp, 16
 mv s1, a0
 mv s1, s1
 mv a0, s1
 addi sp, sp, -16
 sd t4, 0(sp)
 jal ra, L2
-addi sp, sp, 16
 ld t4, 0(sp)
+addi sp, sp, 16
 mv s1, a0
 mv a0, s1
 ld ra, 8(sp)
@@ -115,35 +115,35 @@ addi sp, sp, -16
 sd ra, 8(sp)
 mv s1, a0
 mv a0, s1
-addi sp, sp, -32
+addi sp, sp, -16
 sd t5, 0(sp)
 sd t6, 8(sp)
 jal ra, L2
-addi sp, sp, 32
 ld t5, 0(sp)
 ld t6, 8(sp)
+addi sp, sp, 16
 mv s2, a0
 mv s2, s2
 mv a0, s1
 mv a1, s1
-addi sp, sp, -32
+addi sp, sp, -16
 sd t5, 0(sp)
 sd t6, 8(sp)
 jal ra, L3
-addi sp, sp, 32
 ld t5, 0(sp)
 ld t6, 8(sp)
+addi sp, sp, 16
 mv s1, a0
 mv s1, s1
 mv a0, s2
 mv a1, s1
-addi sp, sp, -32
+addi sp, sp, -16
 sd t5, 0(sp)
 sd t6, 8(sp)
 jal ra, L3
-addi sp, sp, 32
 ld t5, 0(sp)
 ld t6, 8(sp)
+addi sp, sp, 16
 mv s1, a0
 mv a0, s1
 ld ra, 8(sp)
@@ -158,9 +158,9 @@ sd ra, 8(sp)
 li s1, 74
 mv s1, s1
 mv a0, s1
-addi sp, sp, -16
+addi sp, sp, -0
 jal ra, L1
-addi sp, sp, 16
+addi sp, sp, 0
 mv s1, a0
 ld ra, 8(sp)
 addi sp, sp, 16

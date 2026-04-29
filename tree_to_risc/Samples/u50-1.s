@@ -31,7 +31,6 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, string_of_int
-addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -39,6 +38,7 @@ ld t3, 24(sp)
 ld t4, 32(sp)
 ld t5, 40(sp)
 ld t6, 48(sp)
+addi sp, sp, 64
 mv s2, a0
 mv s2, s2
 mv a0, s1
@@ -52,7 +52,6 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, concat
-addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -60,6 +59,7 @@ ld t3, 24(sp)
 ld t4, 32(sp)
 ld t5, 40(sp)
 ld t6, 48(sp)
+addi sp, sp, 64
 mv s1, a0
 ld ra, 8(sp)
 addi sp, sp, 16

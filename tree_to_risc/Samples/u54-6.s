@@ -38,10 +38,10 @@ sd t0, 0(sp)
 sd t2, 8(sp)
 sd t3, 16(sp)
 jal ra, L1
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t2, 8(sp)
 ld t3, 16(sp)
+addi sp, sp, 32
 mv s1, a0
 mv s1, s1
 mv a0, s1
@@ -50,10 +50,10 @@ sd t0, 0(sp)
 sd t2, 8(sp)
 sd t3, 16(sp)
 jal ra, string_of_int
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t2, 8(sp)
 ld t3, 16(sp)
+addi sp, sp, 32
 mv s1, a0
 mv s1, s1
 mv a0, s1
@@ -62,10 +62,10 @@ sd t0, 0(sp)
 sd t2, 8(sp)
 sd t3, 16(sp)
 jal ra, print
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t2, 8(sp)
 ld t3, 16(sp)
+addi sp, sp, 32
 mv s1, a0
 li s1, 0
 ld ra, 8(sp)

@@ -28,10 +28,10 @@ sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 jal ra, float_of_int
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
+addi sp, sp, 32
 fmv.d fs0, fa0
 fmv.d fs0, fs0
 fadd.d fs0, fs1, fs0

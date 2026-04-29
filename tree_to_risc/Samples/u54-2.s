@@ -35,10 +35,10 @@ sd t0, 0(sp)
 sd t3, 8(sp)
 sd t4, 16(sp)
 jal ra, L1
-addi sp, sp, 32
 ld t0, 0(sp)
 ld t3, 8(sp)
 ld t4, 16(sp)
+addi sp, sp, 32
 mv s1, a0
 ld ra, 8(sp)
 addi sp, sp, 16

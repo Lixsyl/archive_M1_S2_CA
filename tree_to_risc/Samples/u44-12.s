@@ -31,7 +31,6 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, print
-addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -39,6 +38,7 @@ ld t3, 24(sp)
 ld t4, 32(sp)
 ld t5, 40(sp)
 ld t6, 48(sp)
+addi sp, sp, 64
 mv s1, a0
 li s1, 0
 la s1, L_str_1
