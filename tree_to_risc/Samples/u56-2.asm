@@ -23,7 +23,7 @@ L10:
 li t22, 1
 sub t23, i0, t22
 mv t0, t23
-mv t0, a0
+mv a0, t0
 jal ra, L2
 mv t24, a0
 li t25, 1
@@ -50,7 +50,6 @@ mv t3, t29
 j L11
 L5:
 mv rv, t1
-end:
 // Routine L2
 mv i0, a0
 li t30, 0
@@ -76,7 +75,7 @@ L22:
 li t40, 1
 sub t41, i0, t40
 mv t9, t41
-mv t9, a0
+mv a0, t9
 jal ra, L1
 mv t42, a0
 mv t7, t42
@@ -102,13 +101,11 @@ mv t7, t46
 j L23
 L17:
 mv rv, t5
-end:
 // Routine main
 li t47, 56
 mv t11, t47
-mv t11, a0
+mv a0, t11
 jal ra, L2
 mv t48, a0
 mv t10, t48
 li t49, 1
-xor t50, t10, t49

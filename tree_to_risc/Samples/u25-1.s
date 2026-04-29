@@ -33,7 +33,6 @@ flw fs0, 0(s1)
 fmv.d fs0, fs0
 j L3
 L3:
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

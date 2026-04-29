@@ -18,7 +18,6 @@ li s1, 50
 mv s1, s1
 li s1, 500
 mv s1, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

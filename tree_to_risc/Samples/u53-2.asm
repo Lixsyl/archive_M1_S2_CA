@@ -13,11 +13,11 @@ L6:
 li t9, 0
 beq t2, t9, L3
 L2:
-mv t1, a0
+mv a0, t1
 jal ra, string_of_int
 mv t11, a0
 mv t4, t11
-mv t4, a0
+mv a0, t4
 jal ra, print
 mv t12, a0
 li t13, 0
@@ -47,11 +47,11 @@ li t23, 1
 mv t3, t23
 j L12
 L8:
-mv t1, a0
+mv a0, t1
 jal ra, string_of_int
 mv t24, a0
 mv t0, t24
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t25, a0
 li t26, 0
@@ -60,4 +60,3 @@ sub t28, t1, t27
 mv t1, t28
 j L7
 L3:
-li t29, 0

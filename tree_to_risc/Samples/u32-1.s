@@ -26,7 +26,6 @@ la s1, L_float_1
 flw fs0, 0(s1)
 fmv.d fs0, fs0
 fadd.d fs0, fs1, fs0
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

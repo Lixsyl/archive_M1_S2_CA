@@ -19,7 +19,6 @@ addi sp, sp, -16
 sd ra, 8(sp)
 la s1, L_float_0
 flw fs0, 0(s1)
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

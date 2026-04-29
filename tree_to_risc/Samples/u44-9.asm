@@ -15,13 +15,13 @@ mv t1, t17
 j L3
 L3:
 mv t8, t1
-mv t8, a0
+mv a0, t8
 jal ra, print
 mv t18, a0
 li t19, 0
 li t20, 1
 mv t11, t20
-mv t11, a0
+mv a0, t11
 jal ra, float_of_int
 fmv.d f21, fa0
 fmv.d f10, f21
@@ -42,13 +42,13 @@ mv t3, t28
 j L9
 L9:
 mv t9, t3
-mv t9, a0
+mv a0, t9
 jal ra, print
 mv t29, a0
 li t30, 0
 li t31, 0
 mv t7, t31
-mv t7, a0
+mv a0, t7
 jal ra, float_of_int
 fmv.d f32, fa0
 fmv.d f1, f32
@@ -93,7 +93,6 @@ mv t5, t45
 j L15
 L15:
 mv t0, t5
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t46, a0
-li t47, 0

@@ -13,7 +13,7 @@ L3:
 li t9, 1
 sub t10, i0, t9
 mv t0, t10
-mv t0, a0
+mv a0, t0
 jal ra, L1
 mv t11, a0
 mv t1, t11
@@ -28,10 +28,8 @@ mv t1, t13
 j L4
 L4:
 mv rv, t1
-end:
 // Routine main
 li t14, 5
 mv t3, t14
-mv t3, a0
+mv a0, t3
 jal ra, L1
-mv t15, a0

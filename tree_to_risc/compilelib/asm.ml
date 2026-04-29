@@ -91,6 +91,18 @@ let move_param ~dst ~src =
       is_call = false;
     }
 
+let move_args ~dst ~src =
+  Oper
+    {
+      assem =
+        (if Tree_helper.is_float_temp dst then "fmv.d " ^ dst ^ ", `s0"
+         else "mv " ^ dst ^ ", `s0");
+      dst = [ ];
+      src = [ src ];
+      jump = None;
+      is_call = false;
+    }
+
 (** Move instruction: mv rd, rs *)
 let return_value ~dst =
   Oper

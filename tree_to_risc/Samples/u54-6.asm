@@ -6,19 +6,17 @@ mv t1, t5
 li t6, 2
 mul t7, t6, t1
 mv rv, t7
-end:
 // Routine main
 li t8, 3
 mv t3, t8
-mv t3, a0
+mv a0, t3
 jal ra, L1
 mv t9, a0
 mv t2, t9
-mv t2, a0
+mv a0, t2
 jal ra, string_of_int
 mv t10, a0
 mv t0, t10
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t11, a0
-li t12, 0

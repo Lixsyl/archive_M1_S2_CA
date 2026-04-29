@@ -12,13 +12,12 @@ mv t1, t8
 j L3
 L3:
 mv t3, t1
-mv t3, a0
+mv a0, t3
 jal ra, string_of_int
 mv t9, a0
 mv t2, t9
 la t10, L_str_0
 mv t0, t10
-mv t2, a0
-mv t0, a1
+mv a0, t2
+mv a1, t0
 jal ra, concat
-mv t11, a0

@@ -13,7 +13,7 @@ L3:
 li t12, 1
 sub t13, i0, t12
 mv t3, t13
-mv t3, a0
+mv a0, t3
 jal ra, L1
 mv t14, a0
 mv t0, t14
@@ -30,19 +30,17 @@ mv t1, t17
 j L4
 L4:
 mv rv, t1
-end:
 // Routine main
 li t18, 5
 mv t6, t18
-mv t6, a0
+mv a0, t6
 jal ra, L1
 mv t19, a0
 mv t5, t19
-mv t5, a0
+mv a0, t5
 jal ra, string_of_int
 mv t20, a0
 mv t4, t20
-mv t4, a0
+mv a0, t4
 jal ra, print
 mv t21, a0
-li t22, 0

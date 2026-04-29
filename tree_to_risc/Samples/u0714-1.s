@@ -38,7 +38,6 @@ li s1, 0
 mv s1, s1
 j L3
 L3:
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

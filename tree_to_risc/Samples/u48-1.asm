@@ -9,11 +9,10 @@ j L3
 L1:
 la t6, L_str_0
 mv t0, t6
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t7, a0
 li t8, 0
 mv t1, t8
 j L3
 L3:
-li t9, 48

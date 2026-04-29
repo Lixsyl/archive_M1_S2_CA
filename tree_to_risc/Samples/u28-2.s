@@ -21,7 +21,6 @@ mv s1, s2
 li s2, 3
 mv s2, s2
 add s1, s1, s2
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

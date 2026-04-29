@@ -23,7 +23,6 @@ mv t1, t11
 j L3
 L3:
 mv t0, t1
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t12, a0
-li t13, 0

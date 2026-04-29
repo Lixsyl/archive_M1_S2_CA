@@ -12,4 +12,3 @@ la t5, L_float_1
 flw f6, 0(t5)
 fmv.d f1, f6
 j L3
-L3:

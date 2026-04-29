@@ -24,11 +24,10 @@ j L6
 L3:
 li t13, 0
 mv t3, t1
-mv t3, a0
+mv a0, t3
 jal ra, string_of_int
 mv t14, a0
 mv t0, t14
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t15, a0
-li t16, 0

@@ -141,6 +141,7 @@ let munch_stm (r : rewritter) (expr_to_temp : expr -> temp) (s : stmt) =
   | Tree.Move ({ payload = Temp t; _ }, src) ->
       let ts = expr_to_temp src in
       [ Asm.move_instr ~dst:t ~src:ts ]
+  | Tree.Label "end" -> [ ]
   | Tree.Label l -> [ Asm.label l ]
   | Tree.Cjump (relop, e1, e2, label, _) ->
       let t1 = expr_to_temp e1 in
@@ -235,15 +236,24 @@ let tile_call r =
     matches_exp = (function { payload = Call (_,_,_); _ } -> true | _ -> false);
     emit_exp =
       (fun f e _ ->
+        let moves params =
+            List.mapi
+              (fun i temp ->
+                let reg =
+                  if Tree_helper.is_float_temp temp then "fa" ^ string_of_int i
+                  else "a" ^ string_of_int i
+                in
+                Asm.move_args ~dst:reg ~src:temp)
+              params in
         match e.payload with
         | Call (expr, args, typ) -> 
             (match expr.payload with
             | Name l -> let t = r.fresh_temp typ in
                         let arg_temps = List.map (fun (t, e) -> f e) args in
-                        let param_moves = param_moves arg_temps in
+                        let moves = moves arg_temps in
                         let call = Asm.call ~lab:l in
                         let return = Asm.return_value ~dst:t in
-                        (param_moves @ [ call; return ], t)
+                        (moves @ [ call; return ], t)
             | _ -> assert false)
         | _ -> assert false);
   }

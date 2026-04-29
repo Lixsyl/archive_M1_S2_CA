@@ -17,7 +17,6 @@ sd ra, 8(sp)
 li s2, 34
 li s1, 43
 add s1, s2, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

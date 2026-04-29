@@ -3,8 +3,8 @@ la t24, L_str_0
 mv t15, t24
 la t25, L_str_1
 mv t14, t25
-mv t15, a0
-mv t14, a1
+mv a0, t15
+mv a1, t14
 jal ra, strcmp
 mv t26, a0
 mv t13, t26
@@ -23,7 +23,7 @@ mv t1, t32
 j L3
 L3:
 mv t12, t1
-mv t12, a0
+mv a0, t12
 jal ra, print
 mv t33, a0
 li t34, 0
@@ -31,8 +31,8 @@ la t35, L_str_0
 mv t19, t35
 la t36, L_str_1
 mv t18, t36
-mv t19, a0
-mv t18, a1
+mv a0, t19
+mv a1, t18
 jal ra, strcmp
 mv t37, a0
 mv t17, t37
@@ -51,7 +51,7 @@ mv t3, t43
 j L9
 L9:
 mv t16, t3
-mv t16, a0
+mv a0, t16
 jal ra, print
 mv t44, a0
 li t45, 0
@@ -59,8 +59,8 @@ la t46, L_str_0
 mv t23, t46
 la t47, L_str_1
 mv t22, t47
-mv t23, a0
-mv t22, a1
+mv a0, t23
+mv a1, t22
 jal ra, strcmp
 mv t48, a0
 mv t21, t48
@@ -79,7 +79,7 @@ mv t5, t54
 j L15
 L15:
 mv t20, t5
-mv t20, a0
+mv a0, t20
 jal ra, print
 mv t55, a0
 li t56, 0
@@ -87,8 +87,8 @@ la t57, L_str_0
 mv t11, t57
 la t58, L_str_1
 mv t10, t58
-mv t11, a0
-mv t10, a1
+mv a0, t11
+mv a1, t10
 jal ra, strcmp
 mv t59, a0
 mv t9, t59
@@ -139,7 +139,6 @@ mv t7, t73
 j L21
 L21:
 mv t0, t7
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t74, a0
-li t75, 0

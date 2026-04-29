@@ -25,7 +25,6 @@ L3:
 mv t3, t1
 la t13, L_str_2
 mv t0, t13
-mv t3, a0
-mv t0, a1
+mv a0, t3
+mv a1, t0
 jal ra, concat
-mv t14, a0

@@ -18,7 +18,6 @@ mv s1, a0
 li s2, 2
 mul s1, s2, s1
 mv a0, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret
@@ -29,15 +28,22 @@ L2:
 addi sp, sp, -16
 sd ra, 8(sp)
 mv s1, a0
-mv s1, a0
+mv a0, s1
+sd t0, 0(sp)
+sd t6, 8(sp)
 jal ra, L1
+ld t0, 0(sp)
+ld t6, 8(sp)
 mv s1, a0
 mv s1, s1
-mv s1, a0
+mv a0, s1
+sd t0, 0(sp)
+sd t6, 8(sp)
 jal ra, L1
+ld t0, 0(sp)
+ld t6, 8(sp)
 mv s1, a0
 mv a0, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret
@@ -47,22 +53,33 @@ ret
 L3:
 addi sp, sp, -16
 sd ra, 8(sp)
-mv s1, a0
-mv s1, a0
+mv s3, a0
+mv a0, s3
+sd t1, 0(sp)
+sd t2, 8(sp)
 jal ra, L1
+ld t1, 0(sp)
+ld t2, 8(sp)
+mv s1, a0
+mv s2, s1
+mv a0, s3
+mv a1, s3
+sd t1, 0(sp)
+sd t2, 8(sp)
+jal ra, L2
+ld t1, 0(sp)
+ld t2, 8(sp)
 mv s1, a0
 mv s1, s1
-mv s1, a0
-mv s1, a1
+mv a0, s2
+mv a1, s1
+sd t1, 0(sp)
+sd t2, 8(sp)
 jal ra, L2
-mv s1, a0
-mv s1, s1
-mv s1, a0
-mv s1, a1
-jal ra, L2
+ld t1, 0(sp)
+ld t2, 8(sp)
 mv s1, a0
 mv a0, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret
@@ -74,10 +91,11 @@ addi sp, sp, -16
 sd ra, 8(sp)
 li s1, 73
 mv s1, s1
-mv s1, a0
+mv a0, s1
+sd t3, 0(sp)
 jal ra, L3
+ld t3, 0(sp)
 mv s1, a0
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

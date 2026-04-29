@@ -23,7 +23,6 @@ mv s3, s3
 mul s1, s2, s1
 mv s1, s1
 mul s1, s3, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

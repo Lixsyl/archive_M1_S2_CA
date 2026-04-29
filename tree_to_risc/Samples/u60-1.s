@@ -21,7 +21,6 @@ li s2, 2
 li s1, 2
 add s1, s2, s1
 la s1, L_str_0
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

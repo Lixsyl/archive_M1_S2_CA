@@ -19,7 +19,6 @@ mv s1, s1
 li s2, 3
 mv s1, s2
 mul s1, s1, s1
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

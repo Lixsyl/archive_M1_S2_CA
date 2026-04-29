@@ -1,7 +1,7 @@
 // Routine main
 la t4, L_str_0
 mv t3, t4
-mv t3, a0
+mv a0, t3
 jal ra, print
 mv t5, a0
 li t6, 0
@@ -9,12 +9,11 @@ la t7, L_str_1
 mv t2, t7
 la t8, L_str_2
 mv t1, t8
-mv t2, a0
-mv t1, a1
+mv a0, t2
+mv a1, t1
 jal ra, concat
 mv t9, a0
 mv t0, t9
-mv t0, a0
+mv a0, t0
 jal ra, print
 mv t10, a0
-li t11, 0

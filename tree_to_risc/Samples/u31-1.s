@@ -18,16 +18,21 @@ ILPmain:
 addi sp, sp, -16
 sd ra, 8(sp)
 li s1, 22
-mv s1, s1
+mv s2, s1
 la s1, L_float_0
 flw fs0, 0(s1)
 fmv.d fs1, fs0
-mv s1, a0
+mv a0, s2
+sd t0, 0(sp)
+sd t1, 8(sp)
+sd t2, 16(sp)
 jal ra, float_of_int
+ld t0, 0(sp)
+ld t1, 8(sp)
+ld t2, 16(sp)
 fmv.d fs0, fa0
 fmv.d fs0, fs0
 fadd.d fs0, fs1, fs0
-end:
 ld ra, 8(sp)
 addi sp, sp, 16
 ret

@@ -1,7 +1,7 @@
 // Routine main
 li t2, 2
 mv t4, t2
-mv t4, a0
+mv a0, t4
 jal ra, float_of_int
 fmv.d f4, fa0
 fmv.d f3, f4
@@ -9,13 +9,12 @@ la t5, L_float_0
 flw f6, 0(t5)
 fdiv.d f7, f6, f3
 fmv.d f2, f7
-fmv.d f2, fa0
+fmv.d fa0, f2
 jal ra, string_of_float
 mv t8, a0
 mv t1, t8
 la t9, L_str_0
 mv t0, t9
-mv t1, a0
-mv t0, a1
+mv a0, t1
+mv a1, t0
 jal ra, concat
-mv t10, a0

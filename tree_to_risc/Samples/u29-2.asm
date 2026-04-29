@@ -7,4 +7,3 @@ add t6, t1, t2
 mv t3, t6
 mul t7, t1, t2
 mv t4, t7
-mul t8, t3, t4

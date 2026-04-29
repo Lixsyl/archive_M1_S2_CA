@@ -107,14 +107,43 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
     (reg_dealloc @ ra_stack_dealloc_ret)
   in (prologue, epilogue)
 
+let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * Asm.t =
+  let pre = List.mapi (fun i reg ->
+              let offset = i * 8 in
+              Asm.Oper
+              {
+                assem = "sd " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+                dst = [];
+                src = [];
+                jump = None;
+                is_call = false;
+              }
+            ) (caller_int @ caller_float) in
+  let post =  List.mapi (fun i reg ->
+                let offset = i * 8 in
+                Asm.Oper
+                {
+                  assem = "ld " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+                  dst = [];
+                  src = [];
+                  jump = None;
+                  is_call = false;
+                }
+              ) (caller_int @ caller_float)
+  in (pre, post)
+
 let generate (colors : string SMap.t) (fcolors : string SMap.t)
     (callee_saved : string list) (caller_saved : string list) (instrs : Asm.t) =
   let callee_int = List.filter (fun r -> SMap.mem r colors) callee_saved in
   let callee_float = List.filter (fun r -> SMap.mem r fcolors) callee_saved in
   let (prologue, epilogue) = pro_epi callee_int callee_float in
-
-    (*let aux = 
-      (match instrs with
-      | Oper { is_call = true; _ } ->
-      | _ ->*)
-  (instrs, prologue, epilogue)
+  let caller_int = List.filter (fun r -> SMap.mem r colors) caller_saved in
+  let caller_float = List.filter (fun r -> SMap.mem r fcolors) caller_saved in
+  let rec aux ins = 
+      (match ins with
+      | [] -> []
+      | x :: xs -> (match x with
+                    | Asm.Oper { is_call = true; _ } -> 
+                        let (pre, post) = pre_post caller_int caller_float in pre @ [x] @ post @ aux xs
+                    | _ -> x :: aux xs)) in
+  (aux instrs, prologue, epilogue)

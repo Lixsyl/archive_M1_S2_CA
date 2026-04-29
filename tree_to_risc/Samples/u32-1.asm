@@ -5,4 +5,3 @@ fmv.d f1, f3
 la t4, L_float_1
 flw f5, 0(t4)
 fmv.d f2, f5
-fadd.d f6, f1, f2
