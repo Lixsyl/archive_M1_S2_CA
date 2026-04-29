@@ -41,6 +41,7 @@ j L3
 L3:
 mv s1, s1
 mv a0, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -49,6 +50,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, print
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -61,6 +63,7 @@ li s1, 0
 li s1, 1
 mv s1, s1
 mv a0, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -69,6 +72,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, float_of_int
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -79,7 +83,7 @@ ld t6, 48(sp)
 fmv.d fs0, fa0
 fmv.d fs1, fs0
 la s1, L_float_0
-flw fs0, 0(s1)
+fld fs0, 0(s1)
 flt.s s1, fs1, fs0
 beq s1, x0, L10
 L11:
@@ -96,6 +100,7 @@ j L9
 L9:
 mv s1, s1
 mv a0, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -104,6 +109,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, print
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -116,6 +122,7 @@ li s1, 0
 li s1, 0
 mv s1, s1
 mv a0, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -124,6 +131,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, float_of_int
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -134,7 +142,7 @@ ld t6, 48(sp)
 fmv.d fs0, fa0
 fmv.d fs1, fs0
 la s1, L_float_1
-flw fs0, 0(s1)
+fld fs0, 0(s1)
 flt.s s1, fs0, fs1
 beq s1, x0, L16
 L17:
@@ -175,6 +183,7 @@ j L15
 L15:
 mv s1, s1
 mv a0, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -183,6 +192,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, print
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

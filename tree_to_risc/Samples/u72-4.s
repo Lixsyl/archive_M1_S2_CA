@@ -46,6 +46,7 @@ mul s1, s1, s1
 mv s1, s1
 mv a0, s2
 mv a1, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -53,6 +54,7 @@ sd t3, 24(sp)
 sd t5, 32(sp)
 sd t6, 40(sp)
 jal ra, L1
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

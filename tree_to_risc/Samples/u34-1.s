@@ -25,12 +25,14 @@ la s2, L_str_1
 mv s2, s2
 mv a0, s1
 mv a1, s2
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t3, 24(sp)
 sd t4, 32(sp)
 jal ra, concat
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

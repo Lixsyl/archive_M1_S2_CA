@@ -23,12 +23,14 @@ sd ra, 8(sp)
 li s1, 2
 mv s1, s1
 mv a0, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t4, 24(sp)
 sd t5, 32(sp)
 jal ra, float_of_int
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -37,16 +39,18 @@ ld t5, 32(sp)
 fmv.d fs0, fa0
 fmv.d fs1, fs0
 la s1, L_float_0
-flw fs0, 0(s1)
+fld fs0, 0(s1)
 fdiv.d fs0, fs0, fs1
 fmv.d fs0, fs0
 fmv.d fa0, fs0
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t4, 24(sp)
 sd t5, 32(sp)
 jal ra, string_of_float
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -58,12 +62,14 @@ la s1, L_str_0
 mv s1, s1
 mv a0, s2
 mv a1, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t4, 24(sp)
 sd t5, 32(sp)
 jal ra, concat
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

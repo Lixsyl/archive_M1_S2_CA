@@ -29,11 +29,13 @@ li s1, 1
 sub s1, s2, s1
 mv s1, s1
 mv a0, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t3, 24(sp)
 jal ra, L1
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -65,30 +67,36 @@ sd ra, 8(sp)
 li s1, 5
 mv s1, s1
 mv a0, s1
+addi sp, sp, -32
 sd t4, 0(sp)
 sd t5, 8(sp)
 sd t6, 16(sp)
 jal ra, L1
+addi sp, sp, 32
 ld t4, 0(sp)
 ld t5, 8(sp)
 ld t6, 16(sp)
 mv s1, a0
 mv s1, s1
 mv a0, s1
+addi sp, sp, -32
 sd t4, 0(sp)
 sd t5, 8(sp)
 sd t6, 16(sp)
 jal ra, string_of_int
+addi sp, sp, 32
 ld t4, 0(sp)
 ld t5, 8(sp)
 ld t6, 16(sp)
 mv s1, a0
 mv s1, s1
 mv a0, s1
+addi sp, sp, -32
 sd t4, 0(sp)
 sd t5, 8(sp)
 sd t6, 16(sp)
 jal ra, print
+addi sp, sp, 32
 ld t4, 0(sp)
 ld t5, 8(sp)
 ld t6, 16(sp)

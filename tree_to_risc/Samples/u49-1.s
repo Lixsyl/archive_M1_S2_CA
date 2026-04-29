@@ -20,6 +20,7 @@ sd ra, 8(sp)
 li s1, 12
 mv s1, s1
 mv a0, s1
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -28,6 +29,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, string_of_int
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -41,6 +43,7 @@ la s2, L_str_0
 mv s2, s2
 mv a0, s1
 mv a1, s2
+addi sp, sp, -64
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
@@ -49,6 +52,7 @@ sd t4, 32(sp)
 sd t5, 40(sp)
 sd t6, 48(sp)
 jal ra, concat
+addi sp, sp, 64
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

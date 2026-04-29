@@ -22,7 +22,7 @@ addi sp, sp, -16
 sd ra, 8(sp)
 li s1, 1
 la s1, L_float_0
-flw fs0, 0(s1)
+fld fs0, 0(s1)
 li s1, 1
 la s1, L_str_0
 ld ra, 8(sp)

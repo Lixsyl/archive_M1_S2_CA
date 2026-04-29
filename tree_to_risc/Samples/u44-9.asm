@@ -26,7 +26,7 @@ jal ra, float_of_int
 fmv.d f21, fa0
 fmv.d f10, f21
 la t22, L_float_0
-flw f23, 0(t22)
+fld f23, 0(t22)
 flt.s t24, f10, f23
 beq t24, x0, L10
 L11:
@@ -53,7 +53,7 @@ jal ra, float_of_int
 fmv.d f32, fa0
 fmv.d f1, f32
 la t33, L_float_1
-flw f34, 0(t33)
+fld f34, 0(t33)
 flt.s t35, f34, f1
 beq t35, x0, L16
 L17:

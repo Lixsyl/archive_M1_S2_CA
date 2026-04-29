@@ -108,18 +108,42 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
   in (prologue, epilogue)
 
 let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * Asm.t =
-  let pre = List.mapi (fun i reg ->
-              let offset = i * 8 in
-              Asm.Oper
-              {
-                assem = "sd " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
-                dst = [];
-                src = [];
-                jump = None;
-                is_call = false;
-              }
-            ) (caller_int @ caller_float) in
-  let post =  List.mapi (fun i reg ->
+  let size = ((8 * (1 + List.length caller_int + List.length caller_float) + 15) / 16) * 16 in
+  let pre = 
+    let stack_alloc = 
+        Asm.Oper
+        {
+          assem = "addi sp, sp, -" ^ string_of_int size;
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        } in
+    let reg_alloc =
+        List.mapi (fun i reg ->
+            let offset = i * 8 in
+            Asm.Oper
+            {
+              assem = "sd " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+              dst = [];
+              src = [];
+              jump = None;
+              is_call = false;
+            }
+          ) (caller_int @ caller_float) in
+    stack_alloc :: reg_alloc in
+  let post =  
+    let stack_dealloc = 
+        Asm.Oper
+        {
+          assem = "addi sp, sp, " ^ string_of_int size;
+          dst = [ ];
+          src = [ ];
+          jump = None;
+          is_call = false;
+        } in
+    let reg_dealloc =
+        List.mapi (fun i reg ->
                 let offset = i * 8 in
                 Asm.Oper
                 {
@@ -129,7 +153,8 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
                   jump = None;
                   is_call = false;
                 }
-              ) (caller_int @ caller_float)
+              ) (caller_int @ caller_float) in
+    stack_dealloc :: reg_dealloc
   in (pre, post)
 
 let generate (colors : string SMap.t) (fcolors : string SMap.t)

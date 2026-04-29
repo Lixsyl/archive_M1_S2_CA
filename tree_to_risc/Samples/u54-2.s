@@ -30,10 +30,12 @@ sd ra, 8(sp)
 li s1, 27
 mv s1, s1
 mv a0, s1
+addi sp, sp, -32
 sd t0, 0(sp)
 sd t3, 8(sp)
 sd t4, 16(sp)
 jal ra, L1
+addi sp, sp, 32
 ld t0, 0(sp)
 ld t3, 8(sp)
 ld t4, 16(sp)

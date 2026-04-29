@@ -10,7 +10,7 @@ fmul.d f2, f0, fi0
 fmv.d fv, f2
 // Routine main
 la t3, L_float_0
-flw f5, 0(t3)
+fld f5, 0(t3)
 fmv.d f4, f5
 fmv.d fa0, f4
 jal ra, L1

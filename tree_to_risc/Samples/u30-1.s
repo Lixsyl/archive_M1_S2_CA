@@ -20,13 +20,15 @@ sd ra, 8(sp)
 li s1, 22
 mv s2, s1
 la s1, L_float_0
-flw fs0, 0(s1)
+fld fs0, 0(s1)
 fmv.d fs1, fs0
 mv a0, s2
+addi sp, sp, -32
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 jal ra, float_of_int
+addi sp, sp, 32
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

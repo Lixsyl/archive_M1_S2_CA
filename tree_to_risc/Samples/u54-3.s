@@ -30,12 +30,14 @@ sd ra, 8(sp)
 li s1, 27
 mv s1, s1
 mv a0, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t5, 24(sp)
 sd t6, 32(sp)
 jal ra, L1
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -44,12 +46,14 @@ ld t6, 32(sp)
 mv s1, a0
 mv s1, s1
 mv a0, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t5, 24(sp)
 sd t6, 32(sp)
 jal ra, string_of_int
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)
@@ -58,12 +62,14 @@ ld t6, 32(sp)
 mv s1, a0
 mv s1, s1
 mv a0, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t1, 8(sp)
 sd t2, 16(sp)
 sd t5, 24(sp)
 sd t6, 32(sp)
 jal ra, print
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t1, 8(sp)
 ld t2, 16(sp)

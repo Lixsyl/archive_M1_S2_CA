@@ -61,7 +61,7 @@ let load_address ~temp ~lab =
 let load_float ~dst ~src =
   Oper
     {
-      assem = "flw `d0, 0(`s0)";
+      assem = "fld `d0, 0(`s0)";
       dst = [ dst ];
       src = [ src ];
       jump = None;

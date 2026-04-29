@@ -32,12 +32,14 @@ li s2, 5491
 mul s1, s1, s2
 mv s1, s1
 mv a0, s1
+addi sp, sp, -48
 sd t0, 0(sp)
 sd t3, 8(sp)
 sd t4, 16(sp)
 sd t5, 24(sp)
 sd t6, 32(sp)
 jal ra, L1
+addi sp, sp, 48
 ld t0, 0(sp)
 ld t3, 8(sp)
 ld t4, 16(sp)

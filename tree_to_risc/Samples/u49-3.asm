@@ -6,7 +6,7 @@ jal ra, float_of_int
 fmv.d f4, fa0
 fmv.d f3, f4
 la t5, L_float_0
-flw f6, 0(t5)
+fld f6, 0(t5)
 fdiv.d f7, f6, f3
 fmv.d f2, f7
 fmv.d fa0, f2
