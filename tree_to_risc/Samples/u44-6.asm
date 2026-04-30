@@ -7,7 +7,7 @@ fmv.d f5, fa0
 fmv.d f1, f5
 la t6, L_float_0
 fld f7, 0(t6)
-feq.s t8, f7, f1
+feq.d t8, f7, f1
 beq t8, x0, L4
 L5:
 li t9, 0

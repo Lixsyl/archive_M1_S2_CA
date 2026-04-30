@@ -84,7 +84,7 @@ fmv.d fs0, fa0
 fmv.d fs1, fs0
 la s1, L_float_0
 fld fs0, 0(s1)
-flt.s s1, fs1, fs0
+flt.d s1, fs1, fs0
 beq s1, x0, L10
 L11:
 li s1, 0
@@ -143,7 +143,7 @@ fmv.d fs0, fa0
 fmv.d fs1, fs0
 la s1, L_float_1
 fld fs0, 0(s1)
-flt.s s1, fs0, fs1
+flt.d s1, fs0, fs1
 beq s1, x0, L16
 L17:
 li s1, 0
