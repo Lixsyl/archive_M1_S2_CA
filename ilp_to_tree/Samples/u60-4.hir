@@ -9,30 +9,28 @@ label L_str_0 "BOOL"
 label main
 sxp
   eseq
-    seq
-      sxp
-        eseq
-          seq
-            cjump
-              eq
-              const 1              
-              const 2              
-              name L1
-              name L2
-            label L1
-            move
-            temp t1
-            const 1
-            jump name L3
-            label L2
-            move
-            temp t1
-            const 0
-            label L3
-          seq end
+    sxp
+      eseq
+        seq
+          cjump
+            eq
+            const 1            
+            const 2            
+            name L1
+            name L2
+          label L1
+          move
           temp t1
-        
-    seq end
+          const 1
+          jump name L3
+          label L2
+          move
+          temp t1
+          const 0
+          label L3
+        seq end
+        temp t1
+      
     name L_str_0    
   
 label end

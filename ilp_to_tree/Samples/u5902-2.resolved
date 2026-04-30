@@ -1,7 +1,7 @@
-function pseudosequence(one, two)
-two;
-function foo(x)
+function foo__int(x)
 (2 ILP_Times_INT x);
+function pseudosequence__int__int(one, two)
+two;
 (
     let y = 12 in
-    foo(pseudosequence((y = foo(y)), y)))
+    foo__int(pseudosequence__int__int((y = foo__int(y)), y)))

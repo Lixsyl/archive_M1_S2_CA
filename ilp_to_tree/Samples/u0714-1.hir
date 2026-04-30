@@ -13,10 +13,8 @@ sxp
       cjump
       ne
       eseq
-        seq
-          sxp
-            name L_str_0            
-        seq end
+        sxp
+          name L_str_0          
         const 1        
         
 const 0

@@ -9,13 +9,11 @@ label L_str_0 "INT"
 label main
 sxp
   eseq
-    seq
-      sxp
-        binop
-        add        
-        const 2        
-        const 2        
-    seq end
+    sxp
+      binop
+      add      
+      const 2      
+      const 2      
     name L_str_0    
   
 label end

@@ -12,10 +12,8 @@ sxp
       cjump
         ne
         eseq
-          seq
-            sxp
-              const 22              
-          seq end
+          sxp
+            const 22            
           const 1          
           
           const 0

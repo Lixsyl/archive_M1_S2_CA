@@ -1,5 +1,5 @@
 print(string_of_int((
             let x = 5 in
-            ((while (x = (x ILP_Plus_INT 1)) do
-                    (x ILP_LessThan_INT 42)); x
+            ((while (x ILP_LessThan_INT 42) do
+                    (x = (x ILP_Plus_INT 1))); x
             ))))

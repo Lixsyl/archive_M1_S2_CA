@@ -44,7 +44,7 @@ fmv.d fs0, fa0
 fmv.d fs0, fs0
 la s1, L_float_0
 fld fs1, 0(s1)
-feq.s s1, fs1, fs0
+feq.d s1, fs1, fs0
 beq s1, x0, L4
 L5:
 li s1, 0

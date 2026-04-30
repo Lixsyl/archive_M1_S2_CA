@@ -1,6 +1,6 @@
-function one(n)
+function one__int(n)
 (if (n ILP_Equal_INT 0)
     then 1
-    else one((n ILP_Minus_INT 1))
+    else one__int((n ILP_Minus_INT 1))
 );
-one(5)
+one__int(5)

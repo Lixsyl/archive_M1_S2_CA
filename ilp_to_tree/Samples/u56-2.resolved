@@ -1,20 +1,20 @@
-function even(n)
+function even__int(n)
 (if (n ILP_Equal_INT 0)
     then true
     else 
         (if (n ILP_Equal_INT 1)
             then false
-            else (odd((n ILP_Minus_INT 1)); true
+            else (odd__int((n ILP_Minus_INT 1)); true
                 )
         )
 );
-function odd(n)
+function odd__int(n)
 (if (n ILP_Equal_INT 0)
     then false
     else 
         (if (n ILP_Equal_INT 1)
             then true
-            else even((n ILP_Minus_INT 1))
+            else even__int((n ILP_Minus_INT 1))
         )
 );
-(ILP_Notodd(56))
+(ILP_Notodd__int(56))

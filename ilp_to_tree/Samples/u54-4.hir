@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : deuxfois */
+/* function : deuxfois__float */
 # Routine: L1
 label L1
   # Body
@@ -31,7 +31,7 @@ label L1
             name string_of_float
             float            callF
               name L1
-              constF 1.25              
+              float              constF 1.25              
             call end
             
           call end

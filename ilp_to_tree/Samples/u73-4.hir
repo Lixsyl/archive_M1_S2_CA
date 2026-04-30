@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : f1 */
+/* function : f1__int */
 # Routine: L1
 label L1
   # Body
@@ -14,7 +14,7 @@ label L1
   temp i0  
   label end
   
-  /* function : f2 */
+  /* function : f2__int__int */
     # Routine: L2
   label L2
     # Body
@@ -30,7 +30,7 @@ label L1
     call end
     label end
     
-    /* function : f3 */
+    /* function : f3__int */
         # Routine: L3
     label L3
       # Body

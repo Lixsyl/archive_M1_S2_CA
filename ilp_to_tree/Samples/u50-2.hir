@@ -14,14 +14,12 @@ sxp
     const 50    
   seq end
   eseq
-    seq
-      sxp
-        eseq
-        move
-        temp t1
-        const 500        
-        temp t1        
-    seq end
+    sxp
+      eseq
+      move
+      temp t1
+      const 500      
+      temp t1      
     temp t1    
   
 label end

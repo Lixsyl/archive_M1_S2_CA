@@ -1,7 +1,7 @@
-function f1(x)
+function f1__int(x)
 (2 ILP_Times_INT x);
-function f2(x, y)
-f1(f1(x));
-function f3(x)
-f2(f1(x), f2(x, x));
-f3(73)
+function f2__int__int(x, y)
+f1__int(f1__int(x));
+function f3__int(x)
+f2__int__int(f1__int(x), f2__int__int(x, x));
+f3__int(73)

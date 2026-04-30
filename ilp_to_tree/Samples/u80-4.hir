@@ -17,16 +17,14 @@ sxp
         call
           name concat
           eseq
-            seq
-              sxp
-                eseq
-                  sxp
-                    call
-                      name print
-                      name L_str_0                      
-                    call end
-                  const 0                
-            seq end
+            sxp
+              eseq
+                sxp
+                  call
+                    name print
+                    name L_str_0                    
+                  call end
+                const 0              
             name L_str_1            
             name L_str_2            
           call end

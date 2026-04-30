@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : even */
+/* function : even__int */
 # Routine: L1
 label L1
   # Body
@@ -81,17 +81,15 @@ label L1
           move
           temp t3
           eseq
-            seq
-              sxp
-                call
-                  name L2
-                  binop
-                  sub                  
-                  temp i0                  
-                  const 1                  
-                call end
-                
-            seq end
+            sxp
+              call
+                name L2
+                binop
+                sub                
+                temp i0                
+                const 1                
+              call end
+              
             const 1            
             
             label L11
@@ -104,7 +102,7 @@ label L1
     
     label end
     
-    /* function : odd */
+    /* function : odd__int */
         # Routine: L2
     label L2
       # Body

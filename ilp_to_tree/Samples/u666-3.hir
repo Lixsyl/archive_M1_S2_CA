@@ -2,7 +2,7 @@
 /* String Litterals */
 
 /* Function Definitions */
-/* function : fact */
+/* function : fact__int */
 # Routine: L1
 label L1
   # Body
@@ -45,23 +45,15 @@ label L1
       label L3
       move
       temp t1
+      binop
+      mul      
+      temp i0      
       call
-        name int_of_float
+        name L1
         binop
-        mulF        
-        callF
-          name float_of_int
-          temp i0          
-        call end
-        
-        call
-          name L1
-          binop
-          sub          
-          temp i0          
-          const 1          
-        call end
-        
+        sub        
+        temp i0        
+        const 1        
       call end
       
       label L4
