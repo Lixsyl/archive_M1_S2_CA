@@ -154,7 +154,7 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
               jump = None;
               is_call = false;
             }
-          ) callee_int in
+          ) caller_int in
     let reg_alloc2 =
         List.mapi (fun i reg ->
           let offset = i * 8 in
@@ -166,7 +166,7 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
             jump = None;
             is_call = false;
           }
-        ) callee_float in
+        ) caller_float in
     stack_alloc :: reg_alloc @ reg_alloc2 in
   let post =  
     let stack_dealloc = 
@@ -189,7 +189,7 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
                   jump = None;
                   is_call = false;
                 }
-              ) callee_int in
+              ) caller_int in
     let reg_dealloc2 =
         List.mapi (fun i reg ->
           let offset = i * 8 in
@@ -201,7 +201,7 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
             jump = None;
             is_call = false;
           }
-        ) callee_float in
+        ) caller_float in
     reg_dealloc @ reg_dealloc2 @ [stack_dealloc]
   in (pre, post)
 
