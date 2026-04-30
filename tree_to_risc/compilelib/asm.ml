@@ -156,8 +156,8 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
       assem = 
         (match relop with 
         (* float equality and nonequality *)
-        | EqF -> "feq.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | NeqF -> "feq.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | EqF -> "feq.d `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | NeqF -> "feq.d `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* integer equality and nonequality (signed or unsigned) *)
         | Eq -> "beq `s0, `s1, " ^ lab
         | Neq -> "bne `s0, `s1, " ^ lab
@@ -167,10 +167,10 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
         | LE -> "bge `s1, `s0, " ^ lab
         | GE -> "bge `s0, `s1, " ^ lab
         (* float inequalities *)
-        | LTF -> "flt.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | GTF -> "flt.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
-        | LEF -> "fle.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | GEF -> "fle.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | LTF -> "flt.d `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | GTF -> "flt.d `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | LEF -> "fle.d `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | GEF -> "fle.d `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* unsigned integer inequalities *)
         | ULT -> "bltu `s0, `s1, " ^ lab
         | ULE -> "bgeu `s1, `s0, " ^ lab

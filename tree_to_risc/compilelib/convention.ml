@@ -55,7 +55,19 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
             jump = None;
             is_call = false;
           }
-        ) (callee_int @ callee_float) in
+        ) callee_int in
+    let reg_alloc2 =
+        List.mapi (fun i reg ->
+          let offset = i * 8 in
+          Asm.Oper
+          {
+            assem = "fsd " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+            dst = [];
+            src = [];
+            jump = None;
+            is_call = false;
+          }
+        ) callee_float in
     let ra_alloc = 
         Asm.Oper
         {
@@ -65,7 +77,7 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
           jump = None;
           is_call = false;
         } in
-    (stack_alloc :: reg_alloc @ [ra_alloc]) in
+    (stack_alloc :: reg_alloc @ reg_alloc2 @ [ra_alloc]) in
   let epilogue =
     let reg_dealloc =
         List.mapi (fun i reg ->
@@ -78,7 +90,19 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
             jump = None;
             is_call = false;
           }
-        ) (callee_int @ callee_float) in
+        ) callee_int in
+    let reg_dealloc2 =
+        List.mapi (fun i reg ->
+          let offset = i * 8 in
+          Asm.Oper
+          {
+            assem = "fld " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+            dst = [];
+            src = [];
+            jump = None;
+            is_call = false;
+          }
+        ) callee_float in
     let ra_stack_dealloc_ret = [
         Asm.Oper
         {
@@ -104,7 +128,7 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
           jump = None;
           is_call = false;
         }] in
-    (reg_dealloc @ ra_stack_dealloc_ret)
+    (reg_dealloc @ reg_dealloc2 @ ra_stack_dealloc_ret)
   in (prologue, epilogue)
 
 let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * Asm.t =
@@ -130,8 +154,20 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
               jump = None;
               is_call = false;
             }
-          ) (caller_int @ caller_float) in
-    stack_alloc :: reg_alloc in
+          ) callee_int in
+    let reg_alloc2 =
+        List.mapi (fun i reg ->
+          let offset = i * 8 in
+          Asm.Oper
+          {
+            assem = "fsd " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+            dst = [];
+            src = [];
+            jump = None;
+            is_call = false;
+          }
+        ) callee_float in
+    stack_alloc :: reg_alloc @ reg_alloc2 in
   let post =  
     let stack_dealloc = 
         Asm.Oper
@@ -153,8 +189,20 @@ let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * A
                   jump = None;
                   is_call = false;
                 }
-              ) (caller_int @ caller_float) in
-    reg_dealloc @ [stack_dealloc]
+              ) callee_int in
+    let reg_dealloc2 =
+        List.mapi (fun i reg ->
+          let offset = i * 8 in
+          Asm.Oper
+          {
+            assem = "fld " ^ reg ^ ", " ^ string_of_int offset ^ "(sp)";
+            dst = [];
+            src = [];
+            jump = None;
+            is_call = false;
+          }
+        ) callee_float in
+    reg_dealloc @ reg_dealloc2 @ [stack_dealloc]
   in (pre, post)
 
 let generate (colors : string SMap.t) (fcolors : string SMap.t)
