@@ -3,11 +3,11 @@ li t4, 1
 mv t3, t4
 mv a0, t3
 jal ra, float_of_int
-fmv.d f5, fa0
-fmv.d f1, f5
+fmv.s f5, fa0
+fmv.s f1, f5
 la t6, L_float_0
-fld f7, 0(t6)
-feq.d t8, f7, f1
+flw f7, 0(t6)
+feq.s t8, f7, f1
 beq t8, x0, L4
 L5:
 li t9, 0

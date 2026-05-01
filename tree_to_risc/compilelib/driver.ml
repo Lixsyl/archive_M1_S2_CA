@@ -26,6 +26,11 @@ module Emit (A : Backend.ARCH) = struct
     if col.spills <> [] || float_col.spills <> [] then
       failwith ("spilling not implemented in " ^ routinename);
     let asm, prologue, epilogue =
+      print_endline ("routinename::: " ^ routinename);
+      print_endline ("int:::");
+      (SMap.iter (fun k v -> print_endline ("temp " ^ k ^ " -> reg " ^ v)) col.physical_bindings);
+      print_endline ("float:::");
+      (SMap.iter (fun k v -> print_endline ("temp " ^ k ^ " -> reg " ^ v);) float_col.physical_bindings);
       Convention.generate col.physical_bindings float_col.physical_bindings
         A.callee_saved A.caller_saved selected
     in
@@ -57,7 +62,7 @@ module Emit (A : Backend.ARCH) = struct
       SMap.iter
         (fun lit lab ->
           output_string oc (lab ^ ":\n");
-          output_string oc ("\t.double " ^ lit ^ "\n"))
+          output_string oc ("\t.float " ^ lit ^ "\n"))
         float_literals)
 end
 

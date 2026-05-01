@@ -39,7 +39,7 @@ run_with_timeout() {
     local cmd=( "$@" )
 
     #timeout -> gtimeout 
-    timeout "${timeout_s}s" "${cmd[@]}" > output.txt
+    gtimeout "${timeout_s}s" "${cmd[@]}" > output.txt
     status=$?
 
     if [ $status -eq 124 ]; then

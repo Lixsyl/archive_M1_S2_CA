@@ -1,8 +1,8 @@
 .section .rodata
 L_float_0:
-	.double 0.
+	.float 0.
 L_float_1:
-	.double 1.5
+	.float 1.5
 .text
 .globl main
 main:
@@ -17,23 +17,29 @@ main:
 
 # -------- Function main --------
 ILPmain:
-addi sp, sp, -16
-sd ra, 8(sp)
+addi sp, sp, -32
+sd s1, 0(sp)
+sd s2, 8(sp)
+fsd fs0, 16(sp)
+sd ra, 24(sp)
 li s2, 1
 li s1, 0
 bne s2, s1, L1
 L2:
 la s1, L_float_0
-fld fs0, 0(s1)
-fmv.d fs0, fs0
+flw fs0, 0(s1)
+fmv.s fs0, fs0
 j L3
 L1:
 la s1, L_float_1
-fld fs0, 0(s1)
-fmv.d fs0, fs0
+flw fs0, 0(s1)
+fmv.s fs0, fs0
 j L3
 L3:
-ld ra, 8(sp)
-addi sp, sp, 16
+ld s1, 0(sp)
+ld s2, 8(sp)
+fld fs0, 16(sp)
+ld ra, 24(sp)
+addi sp, sp, 32
 ret
 # -------- End of function main --------

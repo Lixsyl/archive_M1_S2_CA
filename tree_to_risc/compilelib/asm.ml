@@ -61,7 +61,7 @@ let load_address ~temp ~lab =
 let load_float ~dst ~src =
   Oper
     {
-      assem = "fld `d0, 0(`s0)";
+      assem = "flw `d0, 0(`s0)";
       dst = [ dst ];
       src = [ src ];
       jump = None;
@@ -71,7 +71,7 @@ let load_float ~dst ~src =
 (** Move instruction: mv rd, rs *)
 let move_instr ~dst ~src =
   match (Tree_helper.is_float_temp dst, Tree_helper.is_float_temp src) with
-  | true, true -> Move { assem = "fmv.d `d0, `s0"; dst; src }
+  | true, true -> Move { assem = "fmv.s `d0, `s0"; dst; src }
   | false, false -> Move { assem = "mv `d0, `s0"; dst; src }
   | _ ->
       failwith
@@ -83,7 +83,7 @@ let move_param ~dst ~src =
   Oper
     {
       assem =
-        (if Tree_helper.is_float_temp dst then "fmv.d `d0, " ^ src
+        (if Tree_helper.is_float_temp dst then "fmv.s `d0, " ^ src
          else "mv `d0, " ^ src);
       dst = [ dst ];
       src = [];
@@ -95,7 +95,7 @@ let move_args ~dst ~src =
   Oper
     {
       assem =
-        (if Tree_helper.is_float_temp dst then "fmv.d " ^ dst ^ ", `s0"
+        (if Tree_helper.is_float_temp dst then "fmv.s " ^ dst ^ ", `s0"
          else "mv " ^ dst ^ ", `s0");
       dst = [ ];
       src = [ src ];
@@ -108,7 +108,7 @@ let return_value ~dst =
   Oper
     {
       assem =
-        (if Tree_helper.is_float_temp dst then "fmv.d `d0, fa0"
+        (if Tree_helper.is_float_temp dst then "fmv.s `d0, fa0"
          else "mv `d0, a0");
       dst = [ dst ];
       src = [];
@@ -156,8 +156,8 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
       assem = 
         (match relop with 
         (* float equality and nonequality *)
-        | EqF -> "feq.d `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | NeqF -> "feq.d `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | EqF -> "feq.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | NeqF -> "feq.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* integer equality and nonequality (signed or unsigned) *)
         | Eq -> "beq `s0, `s1, " ^ lab
         | Neq -> "bne `s0, `s1, " ^ lab
@@ -167,10 +167,10 @@ let cjump_instr ~relop ~src1 ~src2 ~lab ~temp =
         | LE -> "bge `s1, `s0, " ^ lab
         | GE -> "bge `s0, `s1, " ^ lab
         (* float inequalities *)
-        | LTF -> "flt.d `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | GTF -> "flt.d `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
-        | LEF -> "fle.d `d0, `s0, `s1\nbne `d0, x0, " ^ lab
-        | GEF -> "fle.d `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | LTF -> "flt.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | GTF -> "flt.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
+        | LEF -> "fle.s `d0, `s0, `s1\nbne `d0, x0, " ^ lab
+        | GEF -> "fle.s `d0, `s0, `s1\nbeq `d0, x0, " ^ lab
         (* unsigned integer inequalities *)
         | ULT -> "bltu `s0, `s1, " ^ lab
         | ULE -> "bgeu `s1, `s0, " ^ lab

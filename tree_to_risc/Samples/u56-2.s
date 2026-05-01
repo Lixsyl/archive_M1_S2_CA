@@ -12,8 +12,10 @@ main:
 
 # -------- Function L1 --------
 L1:
-addi sp, sp, -16
-sd ra, 8(sp)
+addi sp, sp, -32
+sd s1, 0(sp)
+sd s2, 8(sp)
+sd ra, 16(sp)
 mv s1, a0
 li s2, 0
 beq s1, s2, L6
@@ -39,19 +41,7 @@ li s2, 1
 sub s1, s1, s2
 mv s1, s1
 mv a0, s1
-addi sp, sp, -48
-sd t0, 0(sp)
-sd t1, 8(sp)
-sd t2, 16(sp)
-sd t3, 24(sp)
-sd t4, 32(sp)
 jal ra, L2
-ld t0, 0(sp)
-ld t1, 8(sp)
-ld t2, 16(sp)
-ld t3, 24(sp)
-ld t4, 32(sp)
-addi sp, sp, 48
 mv s1, a0
 li s1, 1
 mv s1, s1
@@ -77,15 +67,19 @@ mv s1, s1
 j L11
 L5:
 mv a0, s1
-ld ra, 8(sp)
-addi sp, sp, 16
+ld s1, 0(sp)
+ld s2, 8(sp)
+ld ra, 16(sp)
+addi sp, sp, 32
 ret
 # -------- End of function L1 --------
 
 # -------- Function L2 --------
 L2:
-addi sp, sp, -16
-sd ra, 8(sp)
+addi sp, sp, -32
+sd s1, 0(sp)
+sd s2, 8(sp)
+sd ra, 16(sp)
 mv s1, a0
 li s2, 0
 beq s1, s2, L18
@@ -111,13 +105,7 @@ li s2, 1
 sub s1, s1, s2
 mv s1, s1
 mv a0, s1
-addi sp, sp, -16
-sd t5, 0(sp)
-sd t6, 8(sp)
 jal ra, L1
-ld t5, 0(sp)
-ld t6, 8(sp)
-addi sp, sp, 16
 mv s1, a0
 mv s1, s1
 j L23
@@ -142,26 +130,30 @@ mv s1, s1
 j L23
 L17:
 mv a0, s1
-ld ra, 8(sp)
-addi sp, sp, 16
+ld s1, 0(sp)
+ld s2, 8(sp)
+ld ra, 16(sp)
+addi sp, sp, 32
 ret
 # -------- End of function L2 --------
 
 # -------- Function main --------
 ILPmain:
-addi sp, sp, -16
-sd ra, 8(sp)
+addi sp, sp, -32
+sd s1, 0(sp)
+sd s2, 8(sp)
+sd ra, 16(sp)
 li s1, 56
 mv s1, s1
 mv a0, s1
-addi sp, sp, -0
 jal ra, L2
-addi sp, sp, 0
 mv s1, a0
 mv s2, s1
 li s1, 1
 xor s1, s2, s1
-ld ra, 8(sp)
-addi sp, sp, 16
+ld s1, 0(sp)
+ld s2, 8(sp)
+ld ra, 16(sp)
+addi sp, sp, 32
 ret
 # -------- End of function main --------

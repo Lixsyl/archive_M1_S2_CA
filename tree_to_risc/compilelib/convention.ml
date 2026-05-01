@@ -48,18 +48,23 @@ let float_dealloc reg offset = oper ("fld " ^ reg ^ ", " ^ string_of_int offset 
 
 let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * Asm.t =
   let size = ((8 * (1 + List.length callee_int + List.length callee_float) + 15) / 16) * 16 in
+  let len1 = List.length callee_int in
+  let len2 = List.length callee_float in
   let prologue =
     let stack_alloc = oper ("addi sp, sp, -" ^ string_of_int size) in 
     let reg_alloc = List.mapi (fun i reg -> let offset = i * 8 in int_alloc reg offset) callee_int in
-    let reg_alloc2 = List.mapi (fun i reg -> let offset = i * 8 in float_alloc reg offset ) callee_float in
-    let ra_alloc = oper ("sd ra, " ^ string_of_int (size - 8) ^ "(sp)") in
-    (stack_alloc :: reg_alloc @ reg_alloc2 @ [ra_alloc]) in
+    let reg_alloc2 = List.mapi (fun i reg -> let offset = (i + len1) * 8 in float_alloc reg offset ) callee_float in
+    let ra_alloc = oper ("sd ra, " ^ string_of_int ((len1 + len2) * 8) ^ "(sp)") in
+    ((if size > 0 then [stack_alloc] else []) @ reg_alloc @ reg_alloc2 @ [ra_alloc]) in
   let epilogue = 
     let reg_dealloc = List.mapi (fun i reg -> let offset = i * 8 in int_dealloc reg offset) callee_int in
-    let reg_dealloc2 = List.mapi (fun i reg -> let offset = i * 8 in float_dealloc reg offset ) callee_float in
-    let ra_stack_dealloc_ret = [
-        oper ("ld ra, " ^ string_of_int (size - 8) ^ "(sp)");
+    let reg_dealloc2 = List.mapi (fun i reg -> let offset = (i + len1) * 8 in float_dealloc reg offset ) callee_float in
+    let ra_stack_dealloc_ret = if size > 0 then [
+        oper ("ld ra, " ^ string_of_int ((len1 + len2) * 8) ^ "(sp)");
         oper ("addi sp, sp, " ^ string_of_int size);
+        oper ("ret");
+        ] else [
+        oper ("ld ra, " ^ string_of_int ((len1 + len2) * 8) ^ "(sp)");
         oper ("ret");
         ] in
     (reg_dealloc @ reg_dealloc2 @ ra_stack_dealloc_ret)
@@ -67,25 +72,28 @@ let pro_epi (callee_int : string list) (callee_float : string list) : Asm.t * As
 
 let pre_post (caller_int : string list) (caller_float : string list) : Asm.t * Asm.t =
   let size = ((8 * (List.length caller_int + List.length caller_float) + 15) / 16) * 16 in
+  let len = List.length caller_int in
   let pre = 
     let stack_alloc = oper ("addi sp, sp, -" ^ string_of_int size) in 
     let reg_alloc = List.mapi (fun i reg -> let offset = i * 8 in int_alloc reg offset) caller_int in
-    let reg_alloc2 = List.mapi (fun i reg -> let offset = i * 8 in float_alloc reg offset ) caller_float in
-    (stack_alloc :: reg_alloc @ reg_alloc2) in
+    let reg_alloc2 = List.mapi (fun i reg -> let offset = (i + len) * 8 in float_alloc reg offset ) caller_float in
+    ((if size > 0 then [stack_alloc] else []) @ reg_alloc @ reg_alloc2) in
   let post =  
     let stack_dealloc = oper ("addi sp, sp, " ^ string_of_int size) in
     let reg_dealloc = List.mapi (fun i reg -> let offset = i * 8 in int_dealloc reg offset) caller_int in
-    let reg_dealloc2 = List.mapi (fun i reg -> let offset = i * 8 in float_dealloc reg offset ) caller_float in
-    (reg_dealloc @ reg_dealloc2 @ [stack_dealloc])
+    let reg_dealloc2 = List.mapi (fun i reg -> let offset = (i + len) * 8 in float_dealloc reg offset ) caller_float in
+    (reg_dealloc @ reg_dealloc2 @ (if size > 0 then [stack_dealloc] else []))
   in (pre, post)
 
 let generate (colors : string SMap.t) (fcolors : string SMap.t)
     (callee_saved : string list) (caller_saved : string list) (instrs : Asm.t) =
-  let callee_int = List.filter (fun r -> SMap.mem r colors) callee_saved in
-  let callee_float = List.filter (fun r -> SMap.mem r fcolors) callee_saved in
+  let found_int = SMap.fold (fun _ v acc -> SSet.add v acc) colors SSet.empty in 
+  let found_float = SMap.fold (fun _ v acc -> SSet.add v acc) fcolors SSet.empty in 
+  let callee_int = List.filter (fun r -> SSet.mem r found_int) callee_saved in
+  let callee_float = List.filter (fun r -> SSet.mem r found_float) callee_saved in
   let (prologue, epilogue) = pro_epi callee_int callee_float in
-  let caller_int = List.filter (fun r -> SMap.mem r colors) caller_saved in
-  let caller_float = List.filter (fun r -> SMap.mem r fcolors) caller_saved in
+  let caller_int = List.filter (fun r -> SSet.mem r found_int) caller_saved in
+  let caller_float = List.filter (fun r -> SSet.mem r found_float) caller_saved in
   let rec aux ins = 
       (match ins with
       | [] -> []

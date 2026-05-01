@@ -81,10 +81,10 @@ let asm_of_binop = function
   | Xor -> "xor"
   | Mod -> "rem"
   (* floating-point *)
-  | AddF -> "fadd.d"
-  | SubF -> "fsub.d"
-  | MulF -> "fmul.d"
-  | DivF -> "fdiv.d"
+  | AddF -> "fadd.s"
+  | SubF -> "fsub.s"
+  | MulF -> "fmul.s"
+  | DivF -> "fdiv.s"
   (* integer shifts *)
   | LShift -> "sll"
   | RShift -> "srl"
