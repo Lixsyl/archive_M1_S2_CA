@@ -6,9 +6,9 @@ li t7, 0
 bne t6, t7, L1
 L2:
 la t9, L_float_0
-fld f10, 0(t9)
-fmv.d f5, f10
-fmv.d fa0, f5
+flw f10, 0(t9)
+fmv.s f5, f10
+fmv.s fa0, f5
 jal ra, string_of_float
 mv t11, a0
 mv t2, t11

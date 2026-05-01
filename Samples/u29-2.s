@@ -12,8 +12,10 @@ main:
 
 # -------- Function main --------
 ILPmain:
-addi sp, sp, -16
-sd ra, 8(sp)
+addi sp, sp, -32
+sd s1, 0(sp)
+sd s2, 8(sp)
+sd ra, 16(sp)
 li s1, 11
 mv s2, s1
 li s1, 22
@@ -23,7 +25,9 @@ mv s2, s2
 mul s1, s2, s1
 mv s1, s1
 mul s1, s2, s1
-ld ra, 8(sp)
-addi sp, sp, 16
+ld s1, 0(sp)
+ld s2, 8(sp)
+ld ra, 16(sp)
+addi sp, sp, 32
 ret
 # -------- End of function main --------
